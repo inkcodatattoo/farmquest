@@ -1,0 +1,29 @@
+FROM node:24-bookworm-slim
+
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+ENV NODE_ENV=production
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends postgresql-client ca-certificates \
+  && rm -rf /var/lib/apt/lists/* \
+  && corepack enable \
+  && corepack prepare pnpm@12.7.0 --activate
+
+WORKDIR /app
+
+COPY . .
+
+RUN pnpm install --frozen-lockfile \
+      --allow-build=@prisma/engines \
+      --allow-build=prisma \
+      --allow-build=esbuild \
+  && pnpm db:generate \
+  && pnpm --filter @farmquest/api typecheck
+
+EXPOSE 3001
+
+HEALTHCHECK --interval=20s --timeout=5s --start-period=20s --retries=5 \
+  CMD node -e "fetch('http://127.0.0.1:3001/api/v1/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["pnpm", "--filter", "@farmquest/api", "start"]
