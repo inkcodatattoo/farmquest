@@ -8,7 +8,15 @@
   },
   "scripts": {
     "check:structure": "node scripts/check-structure.mjs",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
     "db:validate": "pnpm --filter @farmquest/database prisma:validate",
-    "db:generate": "pnpm --filter @farmquest/database prisma:generate"
+    "db:generate": "pnpm --filter @farmquest/database prisma:generate",
+    "openapi:generate": "pnpm --filter @farmquest/contracts openapi:generate"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.0",
+    "typescript": "7.0.2",
+    "vitest": "5.0.2"
   }
 }
