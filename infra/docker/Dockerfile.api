@@ -21,6 +21,8 @@ RUN pnpm install --frozen-lockfile \
 
 ENV NODE_ENV=production
 
+USER node
+
 EXPOSE 3001
 
 HEALTHCHECK --interval=20s --timeout=5s --start-period=20s --retries=5 \
