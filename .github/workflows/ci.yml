@@ -222,6 +222,9 @@ jobs:
           grep -q '"seedsConsumed":3' /tmp/plant-1.json
           grep -q '"seedsConsumed":3' /tmp/plant-2.json
 
+          echo "PLANT_RESPONSE_1=$(cat /tmp/plant-1.json)"
+          echo "PLANT_RESPONSE_2=$(cat /tmp/plant-2.json)"
+
           node - <<'NODE'
           const fs = require("fs");
           const assert = require("assert");
