@@ -118,61 +118,38 @@ jobs:
 
       - name: Verify database invariants and privileges
         run: |
-          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 <<'SQL'
-          DO $
-          BEGIN
-            IF (
-              SELECT pg_get_userbyid(datdba)
-              FROM pg_database
-              WHERE datname = current_database()
-            ) <> 'farmquest_owner' THEN
-              RAISE EXCEPTION 'farmquest_owner must own the database';
-            END IF;
+          set -euo pipefail
 
-            IF to_regclass('farmquest.farm') IS NULL THEN
-              RAISE EXCEPTION 'farmquest.farm was not created';
-            END IF;
+          DB_OWNER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT pg_get_userbyid(datdba) FROM pg_database WHERE datname = current_database()")
+          test "$DB_OWNER" = "farmquest_owner"
 
-            IF NOT EXISTS (
-              SELECT 1
-              FROM pg_indexes
-              WHERE schemaname = 'farmquest'
-                AND indexname = 'farm_user_streamer_active_uq'
-            ) THEN
-              RAISE EXCEPTION 'active farm partial unique index missing';
-            END IF;
+          FARM_TABLE=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT to_regclass('farmquest.farm') IS NOT NULL")
+          test "$FARM_TABLE" = "t"
 
-            IF NOT EXISTS (
-              SELECT 1
-              FROM pg_indexes
-              WHERE schemaname = 'farmquest'
-                AND indexname = 'planted_crop_active_uq'
-            ) THEN
-              RAISE EXCEPTION 'active planting partial unique index missing';
-            END IF;
+          FARM_INDEX=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT EXISTS (SELECT 1 FROM pg_indexes WHERE schemaname = 'farmquest' AND indexname = 'farm_user_streamer_active_uq')")
+          test "$FARM_INDEX" = "t"
 
-            IF has_table_privilege('farmquest_app', 'farmquest.coin_ledger', 'UPDATE') THEN
-              RAISE EXCEPTION 'farmquest_app must not UPDATE coin_ledger';
-            END IF;
+          PLANT_INDEX=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT EXISTS (SELECT 1 FROM pg_indexes WHERE schemaname = 'farmquest' AND indexname = 'planted_crop_active_uq')")
+          test "$PLANT_INDEX" = "t"
 
-            IF NOT has_table_privilege('farmquest_app', 'farmquest.coin_ledger', 'INSERT') THEN
-              RAISE EXCEPTION 'farmquest_app must be able to INSERT coin_ledger';
-            END IF;
+          CAN_UPDATE_LEDGER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT has_table_privilege('farmquest_app', 'farmquest.coin_ledger', 'UPDATE')")
+          test "$CAN_UPDATE_LEDGER" = "f"
 
-            IF has_schema_privilege('farmquest_app', 'farmquest', 'CREATE') THEN
-              RAISE EXCEPTION 'farmquest_app must not CREATE in schema';
-            END IF;
+          CAN_INSERT_LEDGER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT has_table_privilege('farmquest_app', 'farmquest.coin_ledger', 'INSERT')")
+          test "$CAN_INSERT_LEDGER" = "t"
 
-            IF to_regclass('farmquest.user_session') IS NULL THEN
-              RAISE EXCEPTION 'farmquest.user_session was not created';
-            END IF;
+          CAN_CREATE_SCHEMA=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT has_schema_privilege('farmquest_app', 'farmquest', 'CREATE')")
+          test "$CAN_CREATE_SCHEMA" = "f"
 
-            IF NOT has_table_privilege('farmquest_app', 'farmquest.user_session', 'INSERT,UPDATE,DELETE') THEN
-              RAISE EXCEPTION 'farmquest_app needs session lifecycle privileges';
-            END IF;
-          END
-          $$;
-          SQL
+          SESSION_TABLE=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT to_regclass('farmquest.user_session') IS NOT NULL")
+          test "$SESSION_TABLE" = "t"
+
+          SESSION_INSERT=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT has_table_privilege('farmquest_app', 'farmquest.user_session', 'INSERT')")
+          SESSION_UPDATE=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT has_table_privilege('farmquest_app', 'farmquest.user_session', 'UPDATE')")
+          SESSION_DELETE=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT has_table_privilege('farmquest_app', 'farmquest.user_session', 'DELETE')")
+          test "$SESSION_INSERT" = "t"
+          test "$SESSION_UPDATE" = "t"
+          test "$SESSION_DELETE" = "t"
 
       - name: Smoke test API with runtime role
         env:
