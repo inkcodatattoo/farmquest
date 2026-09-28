@@ -20,7 +20,9 @@ const IDS = {
   corn: "00000000-0000-4000-8000-000000000021",
   cropCorn: "00000000-0000-4000-8000-000000000022",
   seedInventory: "00000000-0000-4000-8000-000000000023",
-  shopCornSeed: "00000000-0000-4000-8000-000000000024"
+  shopCornSeed: "00000000-0000-4000-8000-000000000024",
+  xpPlant: "00000000-0000-4000-8000-000000000030",
+  xpNpcSell: "00000000-0000-4000-8000-000000000031"
 } as const;
 
 export const DEV_USER_ID = IDS.user;
@@ -28,6 +30,11 @@ export const DEV_USER_ID = IDS.user;
 export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
   await prisma.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT pg_advisory_xact_lock(2147483001)::text AS lock_result`;
+
+    const farmAlreadyExists = await tx.farm.findUnique({
+      where: { id: IDS.farm },
+      select: { id: true }
+    });
 
     await tx.user.upsert({
       where: { id: IDS.user },
@@ -105,6 +112,17 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
         status: "ACTIVE"
       }
     });
+
+    if (!farmAlreadyExists) {
+      await tx.communityMembershipHistory.create({
+        data: {
+          farmId: IDS.farm,
+          communityId: IDS.community,
+          status: "ACTIVE",
+          reason: "DEV_FIXTURE_INITIAL_MEMBERSHIP"
+        }
+      });
+    }
 
     for (const [index, id] of IDS.plots.entries()) {
       await tx.plot.upsert({
@@ -220,7 +238,7 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
       }
     });
 
-    if (!inventory) {
+    if (!farmAlreadyExists && !inventory) {
       await tx.inventoryItem.create({
         data: {
           id: IDS.seedInventory,
@@ -287,6 +305,25 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
           xpRequiredTotal,
           harvestCooldownSeconds: cooldown,
           unlocks: {}
+        }
+      });
+    }
+
+    const actionXp = [
+      [IDS.xpPlant, "PLANT", "ACTION", 5n],
+      [IDS.xpNpcSell, "NPC_SELL", "ACTION", 2n]
+    ] as const;
+
+    for (const [id, actionType, per, xpAmount] of actionXp) {
+      await tx.actionXpDefinition.upsert({
+        where: { id },
+        update: {},
+        create: {
+          id,
+          actionType,
+          per,
+          xpAmount,
+          activeFrom: new Date("2020-01-01T00:00:00.000Z")
         }
       });
     }

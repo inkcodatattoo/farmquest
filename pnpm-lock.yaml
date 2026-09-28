@@ -178,9 +178,15 @@ importers:
 
   apps/api:
     dependencies:
+      '@farmquest/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@farmquest/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@farmquest/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
       '@farmquest/game-rules':
         specifier: workspace:*
         version: link:../../packages/game-rules
@@ -219,6 +225,15 @@ importers:
       tsx:
         specifier: 4.23.15
         version: 4.23.15
+
+  packages/domain:
+    dependencies:
+      '@farmquest/database':
+        specifier: workspace:*
+        version: link:../database
+      '@farmquest/game-rules':
+        specifier: workspace:*
+        version: link:../game-rules
 
   packages/database:
     dependencies:

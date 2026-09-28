@@ -4,6 +4,7 @@ import { AuthService } from "./auth/auth.service.js";
 import { AuthController } from "./auth/auth.controller.js";
 import { DevSessionController } from "./auth/dev-session.controller.js";
 import { FarmsController } from "./farms/farms.controller.js";
+import { GameplayController } from "./farms/gameplay.controller.js";
 import { HealthController } from "./health/health.controller.js";
 
 @Module({
@@ -11,6 +12,7 @@ import { HealthController } from "./health/health.controller.js";
     AuthController,
     DevSessionController,
     FarmsController,
+    GameplayController,
     HealthController
   ],
   providers: [DatabaseService, AuthService]
