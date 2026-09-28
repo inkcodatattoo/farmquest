@@ -1,6 +1,7 @@
 import {
   Controller,
   HttpCode,
+  Inject,
   Post,
   Req,
   Res
@@ -10,7 +11,7 @@ import { AuthService } from "./auth.service.js";
 
 @Controller("api/v1/dev")
 export class DevSessionController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(@Inject(AuthService) private readonly auth: AuthService) {}
 
   @Post("session")
   @HttpCode(204)
