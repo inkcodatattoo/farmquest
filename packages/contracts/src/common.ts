@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "./zod.js";
 
 export const Uuid = z.uuid();
 export const BigIntString = z.string().regex(/^(0|[1-9]\d*)$/);
