@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import {
   Body,
   Controller,
@@ -38,7 +39,7 @@ function readEnvelope(
   return {
     data,
     meta: {
-      requestId: req.header("x-request-id") ?? crypto.randomUUID(),
+      requestId: req.header("x-request-id") ?? randomUUID(),
       serverTime: new Date().toISOString()
     }
   };
@@ -150,7 +151,7 @@ export class FarmEconomyController {
           details: { issues: parsed.error.issues }
         },
         meta: {
-          requestId: req.header("x-request-id") ?? crypto.randomUUID()
+          requestId: req.header("x-request-id") ?? randomUUID()
         }
       });
     }
@@ -189,7 +190,7 @@ export class FarmEconomyController {
           details: { issues: parsed.error.issues }
         },
         meta: {
-          requestId: req.header("x-request-id") ?? crypto.randomUUID()
+          requestId: req.header("x-request-id") ?? randomUUID()
         }
       });
     }
@@ -228,7 +229,7 @@ export class FarmEconomyController {
           details: { issues: parsed.error.issues }
         },
         meta: {
-          requestId: req.header("x-request-id") ?? crypto.randomUUID()
+          requestId: req.header("x-request-id") ?? randomUUID()
         }
       });
     }
@@ -270,7 +271,7 @@ export class ShopCatalogController {
           message: "farmId must be a UUID"
         },
         meta: {
-          requestId: req.header("x-request-id") ?? crypto.randomUUID()
+          requestId: req.header("x-request-id") ?? randomUUID()
         }
       });
     }
