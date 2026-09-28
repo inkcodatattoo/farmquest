@@ -7,7 +7,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "build": "tsc -p tsconfig.json",
-    "openapi:generate": "tsx src/openapi.ts"
+    "openapi:generate": "tsx src/generate-openapi.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "9.1.0",
