@@ -70,11 +70,16 @@ jobs:
         run: pnpm test
 
       - name: Generate OpenAPI 0.1
+        run: pnpm openapi:generate
+
+      - name: Verify generated OpenAPI has no drift
+        run: git diff --exit-code -- docs/openapi/farmquest-0.1.json
+
+      - name: Capture bootstrap lockfile
         run: |
-          pnpm openapi:generate
-          echo "=== FARMQUEST_OPENAPI_BEGIN ==="
-          cat docs/openapi/farmquest-0.1.json
-          echo "=== FARMQUEST_OPENAPI_END ==="
+          echo "=== FARMQUEST_PNPM_LOCK_BEGIN ==="
+          cat pnpm-lock.yaml
+          echo "=== FARMQUEST_PNPM_LOCK_END ==="
 
       - name: Provision database roles
         run: psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/bootstrap/roles.sql
