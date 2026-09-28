@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { PlantRequest, QuickSellRequest } from "./prototype-01.js";
+import { PlantBody, QuickSellBody } from "./prototype-0.1.js";
 
 describe("prototype 0.1 contracts", () => {
   it("rejects invalid crop identifiers and unexpected fields", () => {
-    const result = PlantRequest.safeParse({
+    const result = PlantBody.safeParse({
       cropDefinitionId: "not-a-uuid",
       coins: 999999
     });
@@ -11,7 +11,7 @@ describe("prototype 0.1 contracts", () => {
   });
 
   it("requires positive quick-sell quantity", () => {
-    const result = QuickSellRequest.safeParse({
+    const result = QuickSellBody.safeParse({
       inventoryItemId: "00000000-0000-4000-8000-000000000001",
       quantity: 0
     });
