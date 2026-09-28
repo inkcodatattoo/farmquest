@@ -63,6 +63,19 @@ jobs:
       - name: Generate Prisma client
         run: pnpm db:generate
 
+      - name: Typecheck workspace
+        run: pnpm typecheck
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Generate OpenAPI 0.1
+        run: |
+          pnpm openapi:generate
+          echo "=== FARMQUEST_OPENAPI_BEGIN ==="
+          cat docs/openapi/farmquest-0.1.json
+          echo "=== FARMQUEST_OPENAPI_END ==="
+
       - name: Provision database roles
         run: psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/bootstrap/roles.sql
 
