@@ -200,10 +200,8 @@ jobs:
             -H "Idempotency-Key: $PLANT_KEY" \
             --data '{"cropDefinitionId":"00000000-0000-4000-8000-000000000022"}' \
             http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/plant \
-            > /tmp/plant-1.json
-
-          grep -q '"code":"PLANT_OK"' /tmp/plant-1.json
-          grep -q '"seedsConsumed":3' /tmp/plant-1.json
+            > /tmp/plant-1.json &
+          PLANT_PID_1=$!
 
           curl --fail --silent --show-error \
             -b /tmp/farmquest-cookies.txt \
@@ -213,7 +211,28 @@ jobs:
             -H "Idempotency-Key: $PLANT_KEY" \
             --data '{"cropDefinitionId":"00000000-0000-4000-8000-000000000022"}' \
             http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/plant \
-            > /tmp/plant-2.json
+            > /tmp/plant-2.json &
+          PLANT_PID_2=$!
+
+          wait "$PLANT_PID_1"
+          wait "$PLANT_PID_2"
+
+          grep -q '"code":"PLANT_OK"' /tmp/plant-1.json
+          grep -q '"code":"PLANT_OK"' /tmp/plant-2.json
+          grep -q '"seedsConsumed":3' /tmp/plant-1.json
+          grep -q '"seedsConsumed":3' /tmp/plant-2.json
+
+          node - <<'NODE'
+          const fs = require("fs");
+          const a = JSON.parse(fs.readFileSync("/tmp/plant-1.json", "utf8"));
+          const b = JSON.parse(fs.readFileSync("/tmp/plant-2.json", "utf8"));
+          if (a.meta?.linearizedAt !== b.meta?.linearizedAt) {
+            throw new Error("idempotent plant replay changed linearizedAt");
+          }
+          if (JSON.stringify(a.data) !== JSON.stringify(b.data)) {
+            throw new Error("idempotent plant replay changed economic response");
+          }
+          NODE
 
           ACTIVE_CROPS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.planted_crop WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NULL")
           test "$ACTIVE_CROPS" -eq 3
@@ -234,9 +253,8 @@ jobs:
             -H "X-CSRF-Token: $CSRF" \
             -H "Idempotency-Key: $HARVEST_KEY" \
             http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/harvest \
-            > /tmp/harvest-1.json
-
-          grep -q '"code":"HARVEST_OK"' /tmp/harvest-1.json
+            > /tmp/harvest-1.json &
+          HARVEST_PID_1=$!
 
           curl --fail --silent --show-error \
             -b /tmp/farmquest-cookies.txt \
@@ -244,7 +262,26 @@ jobs:
             -H "X-CSRF-Token: $CSRF" \
             -H "Idempotency-Key: $HARVEST_KEY" \
             http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/harvest \
-            > /tmp/harvest-2.json
+            > /tmp/harvest-2.json &
+          HARVEST_PID_2=$!
+
+          wait "$HARVEST_PID_1"
+          wait "$HARVEST_PID_2"
+
+          grep -q '"code":"HARVEST_OK"' /tmp/harvest-1.json
+          grep -q '"code":"HARVEST_OK"' /tmp/harvest-2.json
+
+          node - <<'NODE'
+          const fs = require("fs");
+          const a = JSON.parse(fs.readFileSync("/tmp/harvest-1.json", "utf8"));
+          const b = JSON.parse(fs.readFileSync("/tmp/harvest-2.json", "utf8"));
+          if (a.meta?.linearizedAt !== b.meta?.linearizedAt) {
+            throw new Error("idempotent harvest replay changed linearizedAt");
+          }
+          if (JSON.stringify(a.data) !== JSON.stringify(b.data)) {
+            throw new Error("idempotent harvest replay changed economic response");
+          }
+          NODE
 
           HARVESTED_CROPS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.planted_crop WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NOT NULL")
           test "$HARVESTED_CROPS" -eq 3
@@ -261,6 +298,19 @@ jobs:
           FARM_COOLDOWN=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(next_harvest_at::text, '') FROM farmquest.farm WHERE id = '00000000-0000-4000-8000-000000000004'::uuid")
           test -n "$FARM_COOLDOWN"
 
+
+          curl --fail --silent --show-error \
+            -c /tmp/farmquest-cookies-relogin.txt \
+            -X POST \
+            -H "X-Dev-Login-Secret: ci-dev-login-secret" \
+            http://127.0.0.1:3001/api/v1/dev/session \
+            -o /dev/null
+
+          SEEDS_AFTER_RELOGIN=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(sum(quantity), 0) FROM farmquest.inventory_item WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid")
+          test "$SEEDS_AFTER_RELOGIN" -eq 0
+
+          INITIAL_SEED_GRANTS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.item_ledger WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid AND reason = 'INITIAL_GRANT'")
+          test "$INITIAL_SEED_GRANTS" -eq 1
 
           curl --fail --silent --show-error \
             -b /tmp/farmquest-cookies.txt \
