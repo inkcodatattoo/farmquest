@@ -11,6 +11,7 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA farmquest TO farmquest_app;
 -- Deletion is exceptional and only allowed for records whose lifecycle requires cleanup.
 GRANT DELETE ON TABLE
   farmquest.inventory_item,
+  farmquest.user_session,
   farmquest.idempotency_record,
   farmquest.outbox_message
 TO farmquest_app;
