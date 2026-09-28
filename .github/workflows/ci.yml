@@ -224,14 +224,19 @@ jobs:
 
           node - <<'NODE'
           const fs = require("fs");
+          const assert = require("assert");
           const a = JSON.parse(fs.readFileSync("/tmp/plant-1.json", "utf8"));
           const b = JSON.parse(fs.readFileSync("/tmp/plant-2.json", "utf8"));
-          if (a.meta?.linearizedAt !== b.meta?.linearizedAt) {
-            throw new Error("idempotent plant replay changed linearizedAt");
-          }
-          if (JSON.stringify(a.data) !== JSON.stringify(b.data)) {
-            throw new Error("idempotent plant replay changed economic response");
-          }
+          assert.strictEqual(
+            a.meta?.linearizedAt,
+            b.meta?.linearizedAt,
+            "idempotent plant replay changed linearizedAt"
+          );
+          assert.deepStrictEqual(
+            a.data,
+            b.data,
+            "idempotent plant replay changed economic response"
+          );
           NODE
 
           ACTIVE_CROPS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.planted_crop WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NULL")
@@ -273,14 +278,19 @@ jobs:
 
           node - <<'NODE'
           const fs = require("fs");
+          const assert = require("assert");
           const a = JSON.parse(fs.readFileSync("/tmp/harvest-1.json", "utf8"));
           const b = JSON.parse(fs.readFileSync("/tmp/harvest-2.json", "utf8"));
-          if (a.meta?.linearizedAt !== b.meta?.linearizedAt) {
-            throw new Error("idempotent harvest replay changed linearizedAt");
-          }
-          if (JSON.stringify(a.data) !== JSON.stringify(b.data)) {
-            throw new Error("idempotent harvest replay changed economic response");
-          }
+          assert.strictEqual(
+            a.meta?.linearizedAt,
+            b.meta?.linearizedAt,
+            "idempotent harvest replay changed linearizedAt"
+          );
+          assert.deepStrictEqual(
+            a.data,
+            b.data,
+            "idempotent harvest replay changed economic response"
+          );
           NODE
 
           HARVESTED_CROPS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.planted_crop WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NOT NULL")
