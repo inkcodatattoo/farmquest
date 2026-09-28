@@ -1,5 +1,6 @@
 import {
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException
@@ -23,7 +24,7 @@ type SessionWithUser = NonNullable<
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
   private csrfSecret(): string {
     const secret = process.env.CSRF_SECRET;
