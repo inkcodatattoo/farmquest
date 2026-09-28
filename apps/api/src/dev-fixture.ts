@@ -20,7 +20,9 @@ const IDS = {
   corn: "00000000-0000-4000-8000-000000000021",
   cropCorn: "00000000-0000-4000-8000-000000000022",
   seedInventory: "00000000-0000-4000-8000-000000000023",
-  shopCornSeed: "00000000-0000-4000-8000-000000000024"
+  shopCornSeed: "00000000-0000-4000-8000-000000000024",
+  xpPlant: "00000000-0000-4000-8000-000000000030",
+  xpNpcSell: "00000000-0000-4000-8000-000000000031"
 } as const;
 
 export const DEV_USER_ID = IDS.user;
@@ -287,6 +289,25 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
           xpRequiredTotal,
           harvestCooldownSeconds: cooldown,
           unlocks: {}
+        }
+      });
+    }
+
+    const actionXp = [
+      [IDS.xpPlant, "PLANT", "ACTION", 5n],
+      [IDS.xpNpcSell, "NPC_SELL", "ACTION", 2n]
+    ] as const;
+
+    for (const [id, actionType, per, xpAmount] of actionXp) {
+      await tx.actionXpDefinition.upsert({
+        where: { id },
+        update: {},
+        create: {
+          id,
+          actionType,
+          per,
+          xpAmount,
+          activeFrom: new Date("2020-01-01T00:00:00.000Z")
         }
       });
     }
