@@ -1,9 +1,9 @@
 import { createHash } from "node:crypto";
-import type { Prisma, PrismaClient } from "@farmquest/database";
+import type { PrismaClient } from "@farmquest/database";
 import { quickSellValues, stackSlots } from "@farmquest/game-rules";
 import { DomainError } from "./errors.js";
 
-type Tx = Prisma.TransactionClient;
+type Tx = Parameters<Parameters<PrismaClient["$transaction"]>[0]>[0];
 
 type EconomicInputBase = Readonly<{
   actorUserId: string;
