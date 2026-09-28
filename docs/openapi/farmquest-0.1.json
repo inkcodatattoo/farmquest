@@ -1,0 +1,1698 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FarmQuest API — Prototype 0.1",
+    "version": "0.1.0",
+    "description": "Generated from the canonical Zod contracts. BigInt economic values are decimal strings in JSON."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "ApiMeta": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128
+          },
+          "serverTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "linearizedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "requestId",
+          "serverTime"
+        ]
+      },
+      "EmptyMutationBody": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "ErrorEnvelope": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "FARM_LIMIT_REACHED",
+                  "FARM_NOT_FOUND",
+                  "FARM_SOLD",
+                  "FARM_ACCESS_REMOVED",
+                  "FARM_STREAMER_SUSPENDED",
+                  "USER_BANNED",
+                  "UNKNOWN_CROP",
+                  "CROP_LOCKED_BY_LEVEL",
+                  "NOT_ENOUGH_SEEDS",
+                  "NO_EMPTY_PLOTS",
+                  "PLOT_NOT_READY",
+                  "PLOT_ALREADY_HARVESTED",
+                  "NOTHING_TO_HARVEST",
+                  "HARVEST_COOLDOWN_ACTIVE",
+                  "INSUFFICIENT_COINS",
+                  "INVENTORY_INSUFFICIENT",
+                  "INVENTORY_FULL",
+                  "ITEM_ROTTEN",
+                  "ITEM_NOT_SELLABLE",
+                  "FORBIDDEN",
+                  "CSRF_INVALID",
+                  "RATE_LIMITED",
+                  "IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD",
+                  "PENDING_PRODUCT_DECISION"
+                ]
+              },
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object",
+                "additionalProperties": {}
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ]
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "requestId"
+            ]
+          }
+        },
+        "required": [
+          "error",
+          "meta"
+        ]
+      },
+      "FarmView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "level": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "xp": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "coins": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "inventorySlots": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "stackLimit": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "nextHarvestAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "level",
+          "xp",
+          "coins",
+          "inventorySlots",
+          "stackLimit",
+          "nextHarvestAt",
+          "status"
+        ]
+      },
+      "PlotView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "slotNumber": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "unlocked": {
+            "type": "boolean"
+          },
+          "seedsCapacity": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "EMPTY",
+              "PLANTED",
+              "READY",
+              "ROTTEN"
+            ]
+          },
+          "planted": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "cropDefinitionId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "cropName": {
+                "type": "string"
+              },
+              "seedCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "plantedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "growsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "rotsAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "cropDefinitionId",
+              "cropName",
+              "seedCount",
+              "plantedAt",
+              "growsAt",
+              "rotsAt"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "slotNumber",
+          "unlocked",
+          "seedsCapacity",
+          "state",
+          "planted"
+        ]
+      },
+      "PlantResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "PLANT_OK"
+            ]
+          },
+          "plantedPlots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "plotId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "seedCount": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                "growsAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "rotsAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "plotId",
+                "seedCount",
+                "growsAt",
+                "rotsAt"
+              ]
+            }
+          },
+          "seedsConsumed": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "code",
+          "plantedPlots",
+          "seedsConsumed"
+        ]
+      },
+      "HarvestResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "HARVEST_OK"
+            ]
+          },
+          "harvested": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "plotId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "itemDefinitionId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "quality": {
+                  "type": "string",
+                  "enum": [
+                    "COMMON",
+                    "GOOD",
+                    "EXCELLENT",
+                    "EXTRAORDINARY",
+                    "ROTTEN"
+                  ]
+                },
+                "quantity": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                },
+                "xpGranted": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9]\\d*)$"
+                }
+              },
+              "required": [
+                "plotId",
+                "itemDefinitionId",
+                "quality",
+                "quantity",
+                "xpGranted"
+              ]
+            }
+          },
+          "totalXpGranted": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "newLevel": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "nextHarvestAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "code",
+          "harvested",
+          "totalXpGranted",
+          "newLevel",
+          "nextHarvestAt"
+        ]
+      },
+      "InventoryItemView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "itemDefinitionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "COMMON",
+              "GOOD",
+              "EXCELLENT",
+              "EXTRAORDINARY",
+              "ROTTEN"
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reservedQuantity": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "itemDefinitionId",
+          "name",
+          "quality",
+          "quantity",
+          "reservedQuantity"
+        ]
+      },
+      "QuickSellResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "QUICK_SELL_OK"
+            ]
+          },
+          "quantitySold": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "grossValue": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "feeValue": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "payout": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "coinsAfter": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "xpGranted": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          }
+        },
+        "required": [
+          "code",
+          "quantitySold",
+          "grossValue",
+          "feeValue",
+          "payout",
+          "coinsAfter",
+          "xpGranted"
+        ]
+      },
+      "ShopOfferView": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "itemDefinitionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "itemName": {
+            "type": "string"
+          },
+          "buyPrice": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "minLevel": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "itemDefinitionId",
+          "itemName",
+          "buyPrice",
+          "minLevel",
+          "enabled"
+        ]
+      },
+      "FarmListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FarmView"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "FarmResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/FarmView"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "PlotListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlotView"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "PlantApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PlantResponse"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "HarvestApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/HarvestResponse"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "InventoryListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InventoryItemView"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "ShopListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShopOfferView"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "QuickSellApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/QuickSellResponse"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "ShopBuyResult": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "SHOP_BUY_OK"
+            ]
+          },
+          "coinsSpent": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "coinsAfter": {
+            "type": "string",
+            "pattern": "^(0|[1-9]\\d*)$"
+          },
+          "itemsAdded": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "code",
+          "coinsSpent",
+          "coinsAfter",
+          "itemsAdded"
+        ]
+      },
+      "ShopBuyApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ShopBuyResult"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      },
+      "DiscardResult": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "DISCARD_OK"
+            ]
+          },
+          "quantityDiscarded": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "code",
+          "quantityDiscarded"
+        ]
+      },
+      "DiscardApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DiscardResult"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ApiMeta"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/api/v1/dev/session": {
+      "post": {
+        "summary": "Create the protected Prototype 0.1 DEV session",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-dev-login-secret",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "DEV session created"
+          },
+          "403": {
+            "description": "Invalid DEV login secret",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "DEV login is unavailable in this environment"
+          }
+        }
+      }
+    },
+    "/api/v1/farms": {
+      "get": {
+        "summary": "List farms available to the current DEV user",
+        "responses": {
+          "200": {
+            "description": "Farm list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FarmListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}": {
+      "get": {
+        "summary": "Get one farm",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Farm",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FarmResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Farm not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/plots": {
+      "get": {
+        "summary": "Get calculated plot states using authoritative server time",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plots",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlotListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Farm not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/plant": {
+      "post": {
+        "summary": "Plant crop",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cropDefinitionId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "cropDefinitionId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Crop planted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlantApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/plots/{plotId}/plant": {
+      "post": {
+        "summary": "Plant crop",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "plotId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cropDefinitionId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "cropDefinitionId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Crop planted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlantApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/harvest": {
+      "post": {
+        "summary": "Harvest ready or rotten crops",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Harvest result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HarvestApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/plots/{plotId}/harvest": {
+      "post": {
+        "summary": "Harvest ready or rotten crops",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "plotId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyMutationBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Harvest result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HarvestApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/inventory": {
+      "get": {
+        "summary": "Get farm inventory",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inventory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InventoryListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/inventory/{inventoryItemId}/discard": {
+      "post": {
+        "summary": "Discard inventory item",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "inventoryItemId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quantity": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "quantity"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Item discarded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscardApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/shop": {
+      "get": {
+        "summary": "List provisional NPC shop offers (PD-06)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shop offers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/shop/buy": {
+      "post": {
+        "summary": "Buy from provisional NPC shop (PD-06)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "offerId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000
+                  }
+                },
+                "required": [
+                  "offerId",
+                  "quantity"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Purchase completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopBuyApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/market/quick-sell": {
+      "post": {
+        "summary": "Quick sell inventory with 2% fee",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "farmId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "idempotency-key",
+            "in": "header"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "x-csrf-token",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "inventoryItemId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "inventoryItemId",
+                  "quantity"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quick sale completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuickSellApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or CSRF validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency or concurrent-state conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Domain rule rejected the request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {}
+}
