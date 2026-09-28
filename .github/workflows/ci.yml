@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: farmquest_ci
+          POSTGRES_PASSWORD: farmquest_ci
+          POSTGRES_DB: farmquest_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U farmquest_ci -d farmquest_ci"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Verify PostgreSQL
+        env:
+          PGPASSWORD: farmquest_ci
+        run: pg_isready -h 127.0.0.1 -p 5432 -U farmquest_ci -d farmquest_ci
+      - name: Verify repository structure
+        run: node scripts/check-structure.mjs
