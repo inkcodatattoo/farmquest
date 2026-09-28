@@ -1,11 +1,8 @@
 import {
   OpenAPIRegistry,
-  OpenApiGeneratorV31,
-  extendZodWithOpenApi
+  OpenApiGeneratorV31
 } from "@asteasolutions/zod-to-openapi";
-import { z } from "zod";
-
-extendZodWithOpenApi(z);
+import { z } from "./zod.js";
 import {
   BigIntString,
   ErrorEnvelope,
