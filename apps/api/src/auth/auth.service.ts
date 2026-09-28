@@ -31,6 +31,13 @@ export class AuthService {
     return secret;
   }
 
+  private cookieSecure(): boolean {
+    return (
+      process.env.APP_STAGE === "prod" ||
+      process.env.SESSION_COOKIE_SECURE === "true"
+    );
+  }
+
   private devLoginSecret(): string {
     const secret = process.env.DEV_LOGIN_SECRET;
     if (!secret) throw new Error("DEV_LOGIN_SECRET is required when DEV login is enabled");
@@ -75,7 +82,7 @@ export class AuthService {
 
     res.cookie(SESSION_COOKIE, token, {
       httpOnly: true,
-      secure: true,
+      secure: this.cookieSecure(),
       sameSite: "lax",
       path: "/",
       maxAge: SESSION_DURATION_MS
@@ -143,7 +150,7 @@ export class AuthService {
 
     res.clearCookie(SESSION_COOKIE, {
       httpOnly: true,
-      secure: true,
+      secure: this.cookieSecure(),
       sameSite: "lax",
       path: "/"
     });
