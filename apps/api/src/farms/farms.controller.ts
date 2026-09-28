@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Inject,
   NotFoundException,
   Param,
   Req
@@ -13,8 +14,8 @@ import { DatabaseService } from "../database.service.js";
 @Controller("api/v1/farms")
 export class FarmsController {
   constructor(
-    private readonly db: DatabaseService,
-    private readonly auth: AuthService
+    @Inject(DatabaseService) private readonly db: DatabaseService,
+    @Inject(AuthService) private readonly auth: AuthService
   ) {}
 
   @Get()
