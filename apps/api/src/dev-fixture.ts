@@ -27,7 +27,7 @@ export const DEV_USER_ID = IDS.user;
 
 export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
   await prisma.$transaction(async (tx) => {
-    await tx.$queryRaw`SELECT pg_advisory_xact_lock(2147483001)`;
+    await tx.$queryRaw`SELECT pg_advisory_xact_lock(2147483001)::text AS lock_result`;
 
     await tx.user.upsert({
       where: { id: IDS.user },
