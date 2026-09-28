@@ -31,6 +31,11 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
   await prisma.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT pg_advisory_xact_lock(2147483001)::text AS lock_result`;
 
+    const farmAlreadyExists = await tx.farm.findUnique({
+      where: { id: IDS.farm },
+      select: { id: true }
+    });
+
     await tx.user.upsert({
       where: { id: IDS.user },
       update: {
@@ -222,7 +227,7 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
       }
     });
 
-    if (!inventory) {
+    if (!farmAlreadyExists && !inventory) {
       await tx.inventoryItem.create({
         data: {
           id: IDS.seedInventory,
