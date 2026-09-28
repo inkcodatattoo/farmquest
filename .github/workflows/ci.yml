@@ -47,7 +47,7 @@ jobs:
           pnpm --version
 
       - name: Install workspace dependencies
-        run: pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
+        run: pnpm install --frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
 
       - name: Verify PostgreSQL
         env:
@@ -74,12 +74,6 @@ jobs:
 
       - name: Verify generated OpenAPI has no drift
         run: git diff --exit-code -- docs/openapi/farmquest-0.1.json
-
-      - name: Capture bootstrap lockfile
-        run: |
-          echo "=== FARMQUEST_PNPM_LOCK_BEGIN ==="
-          cat pnpm-lock.yaml
-          echo "=== FARMQUEST_PNPM_LOCK_END ==="
 
       - name: Provision database roles
         run: psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/bootstrap/roles.sql
