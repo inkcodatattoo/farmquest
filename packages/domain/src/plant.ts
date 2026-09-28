@@ -300,5 +300,5 @@ export async function plant(
     });
 
     return response;
-  });
+  }, { timeout: 10_000 });
 }
