@@ -60,3 +60,15 @@ jobs:
 
       - name: Generate Prisma client
         run: pnpm db:generate
+
+      - name: Generate baseline migration SQL
+        run: |
+          pnpm --filter @farmquest/database exec prisma migrate diff \
+            --config prisma7.config.ts \
+            --from-empty \
+            --to-schema prisma/schema.prisma \
+            --script \
+            --output /tmp/farmquest-0001-init.sql
+          echo "=== FARMQUEST_BASELINE_SQL_BEGIN ==="
+          cat /tmp/farmquest-0001-init.sql
+          echo "=== FARMQUEST_BASELINE_SQL_END ==="
