@@ -30,22 +30,25 @@ export async function harvest(
       plotId: input.plotId ?? null
     });
 
-    const idem = await tx.idempotencyRecord.upsert({
+    await tx.$executeRaw`
+      INSERT INTO farmquest.idempotency_record
+        (actor_user_id, scope, key, request_hash)
+      VALUES
+        (${input.actorUserId}::uuid, ${scope}, ${input.idempotencyKey}, ${requestHash})
+      ON CONFLICT (actor_user_id, scope, key) DO NOTHING
+    `;
+
+    const idem = await tx.idempotencyRecord.findUnique({
       where: {
         actorUserId_scope_key: {
           actorUserId: input.actorUserId,
           scope,
           key: input.idempotencyKey
         }
-      },
-      update: {},
-      create: {
-        actorUserId: input.actorUserId,
-        scope,
-        key: input.idempotencyKey,
-        requestHash
       }
     });
+
+    if (!idem) throw new Error("IDEMPOTENCY_RECORD_MISSING");
 
     if (idem.requestHash !== requestHash) {
       throw new DomainError("IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD");
