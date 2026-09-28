@@ -113,6 +113,17 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
       }
     });
 
+    if (!farmAlreadyExists) {
+      await tx.communityMembershipHistory.create({
+        data: {
+          farmId: IDS.farm,
+          communityId: IDS.community,
+          status: "ACTIVE",
+          reason: "DEV_FIXTURE_INITIAL_MEMBERSHIP"
+        }
+      });
+    }
+
     for (const [index, id] of IDS.plots.entries()) {
       await tx.plot.upsert({
         where: { id },
