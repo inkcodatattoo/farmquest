@@ -248,7 +248,7 @@ jobs:
           SEEDS_LEFT=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(sum(quantity), 0) FROM farmquest.inventory_item WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid")
           test "$SEEDS_LEFT" -eq 0
 
-          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -c "UPDATE farmquest.planted_crop SET grows_at = clock_timestamp() - interval '1 second' WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NULL"
+          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -c "UPDATE farmquest.planted_crop SET planted_at = clock_timestamp() - interval '2 minutes', grows_at = clock_timestamp() - interval '1 minute' WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NULL"
 
 
           HARVEST_KEY="ci-harvest-idempotency-0001"
