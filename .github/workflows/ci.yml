@@ -1,11 +1,14 @@
 name: CI
+
 on:
   push:
     branches: [main, "feat/**"]
   pull_request:
+
 jobs:
   foundation:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:17
@@ -13,20 +16,43 @@ jobs:
           POSTGRES_USER: farmquest_ci
           POSTGRES_PASSWORD: farmquest_ci
           POSTGRES_DB: farmquest_ci
-        ports: ["5432:5432"]
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd="pg_isready -U farmquest_ci -d farmquest_ci"
           --health-interval=5s
           --health-timeout=5s
           --health-retries=10
+
+    env:
+      DATABASE_URL: postgresql://farmquest_ci:farmquest_ci@127.0.0.1:5432/farmquest_ci?schema=public
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@12.6.0 --activate
+          pnpm --version
+
+      - name: Install workspace dependencies
+        run: pnpm install --no-frozen-lockfile
+
       - name: Verify PostgreSQL
         env:
           PGPASSWORD: farmquest_ci
         run: pg_isready -h 127.0.0.1 -p 5432 -U farmquest_ci -d farmquest_ci
+
       - name: Verify repository structure
         run: node scripts/check-structure.mjs
+
+      - name: Validate Prisma 7 schema
+        run: pnpm db:validate
+
+      - name: Generate Prisma client
+        run: pnpm db:generate
