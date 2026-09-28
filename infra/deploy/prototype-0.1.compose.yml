@@ -1,0 +1,131 @@
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-farmquest}
+      POSTGRES_USER: farmquest_admin
+      POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD:?set POSTGRES_ADMIN_PASSWORD}
+      TZ: UTC
+    command:
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - effective_cache_size=1GB
+      - -c
+      - work_mem=4MB
+      - -c
+      - maintenance_work_mem=64MB
+      - -c
+      - max_connections=20
+    volumes:
+      - farmquest_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U farmquest_admin -d ${POSTGRES_DB:-farmquest}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    mem_limit: 900m
+    networks:
+      - farmquest_internal
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  db-provision:
+    image: ghcr.io/inkcodatattoo/farmquest-api:${FARMQUEST_IMAGE_TAG:-dev}
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: ${POSTGRES_DB:-farmquest}
+      PGUSER: farmquest_admin
+      PGPASSWORD: ${POSTGRES_ADMIN_PASSWORD:?set POSTGRES_ADMIN_PASSWORD}
+      FARMQUEST_MIGRATOR_DB_PASSWORD: ${FARMQUEST_MIGRATOR_DB_PASSWORD:?set FARMQUEST_MIGRATOR_DB_PASSWORD}
+      FARMQUEST_APP_DB_PASSWORD: ${FARMQUEST_APP_DB_PASSWORD:?set FARMQUEST_APP_DB_PASSWORD}
+      FARMQUEST_BACKUP_DB_PASSWORD: ${FARMQUEST_BACKUP_DB_PASSWORD:?set FARMQUEST_BACKUP_DB_PASSWORD}
+    command: ["sh", "infra/postgres/bootstrap/provision.sh"]
+    networks:
+      - farmquest_internal
+
+  migrate:
+    image: ghcr.io/inkcodatattoo/farmquest-api:${FARMQUEST_IMAGE_TAG:-dev}
+    restart: "no"
+    depends_on:
+      db-provision:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_MIGRATION_URL: postgresql://farmquest_migrator:${FARMQUEST_MIGRATOR_DB_PASSWORD}@postgres:5432/${POSTGRES_DB:-farmquest}?schema=farmquest
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: ${POSTGRES_DB:-farmquest}
+      PGUSER: farmquest_admin
+      PGPASSWORD: ${POSTGRES_ADMIN_PASSWORD:?set POSTGRES_ADMIN_PASSWORD}
+    command: ["sh", "infra/deploy/migrate.sh"]
+    networks:
+      - farmquest_internal
+
+  api:
+    image: ghcr.io/inkcodatattoo/farmquest-api:${FARMQUEST_IMAGE_TAG:-dev}
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      NODE_ENV: production
+      APP_STAGE: dev
+      PORT: "3001"
+      DATABASE_URL: postgresql://farmquest_app:${FARMQUEST_APP_DB_PASSWORD}@postgres:5432/${POSTGRES_DB:-farmquest}?schema=farmquest
+      DEV_LOGIN_ENABLED: "true"
+      DEV_LOGIN_SECRET: ${DEV_LOGIN_SECRET:?set DEV_LOGIN_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET}
+      CSRF_SECRET: ${CSRF_SECRET:?set CSRF_SECRET}
+      SESSION_COOKIE_SECURE: "true"
+      GAME_TIMEZONE: America/Sao_Paulo
+      TZ: UTC
+      LOG_LEVEL: info
+    expose:
+      - "3001"
+    mem_limit: 512m
+    networks:
+      - farmquest_internal
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  web:
+    image: ghcr.io/inkcodatattoo/farmquest-web:${FARMQUEST_IMAGE_TAG:-dev}
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+    expose:
+      - "3000"
+    mem_limit: 384m
+    networks:
+      - farmquest_internal
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  farmquest_postgres_data:
+
+networks:
+  farmquest_internal:
+    driver: bridge
