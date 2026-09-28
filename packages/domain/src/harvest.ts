@@ -343,5 +343,5 @@ export async function harvest(
     });
 
     return response;
-  });
+  }, { timeout: 10_000 });
 }
