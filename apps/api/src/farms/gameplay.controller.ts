@@ -1,25 +1,16 @@
-import { randomUUID } from "node:crypto";
 import {
   Body,
-  ConflictException,
   Controller,
-  ForbiddenException,
   Headers,
-  HttpException,
   Inject,
-  NotFoundException,
   Param,
   Post,
   Req,
   UnprocessableEntityException
 } from "@nestjs/common";
 import type { Request } from "express";
+import { PlantBody } from "@farmquest/contracts";
 import {
-  IdempotencyKey,
-  PlantBody
-} from "@farmquest/contracts";
-import {
-  DomainError,
   harvest,
   plant
 } from "@farmquest/domain";
@@ -29,69 +20,11 @@ import { DatabaseService } from "../database.service.js";
 
 const random = new CryptoRandomSource();
 
-function mapDomainError(error: unknown): never {
-  if (!(error instanceof DomainError)) throw error;
-
-  const payload = {
-    error: {
-      code: error.code,
-      message: error.code,
-      ...(error.details ? { details: error.details } : {})
-    }
-  };
-
-  switch (error.code) {
-    case "FARM_NOT_FOUND":
-      throw new NotFoundException(payload);
-
-    case "FARM_ACCESS_REMOVED":
-    case "FARM_STREAMER_SUSPENDED":
-    case "USER_BANNED":
-      throw new ForbiddenException(payload);
-
-    case "IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD":
-    case "PLOT_ALREADY_HARVESTED":
-      throw new ConflictException(payload);
-
-    default:
-      throw new UnprocessableEntityException(payload);
-  }
-}
-
-function requireIdempotencyKey(value: string | undefined): string {
-  const parsed = IdempotencyKey.safeParse(value);
-  if (!parsed.success) {
-    throw new UnprocessableEntityException({
-      error: {
-        code: "IDEMPOTENCY_KEY_INVALID",
-        message: "Idempotency-Key must contain 16 to 128 characters"
-      }
-    });
-  }
-  return parsed.data;
-}
-
-function envelope(
-  req: Request,
-  result: Record<string, unknown>
-): Record<string, unknown> {
-  const requestId = req.header("x-request-id") ?? randomUUID();
-  const linearizedAt =
-    typeof result.linearizedAt === "string"
-      ? result.linearizedAt
-      : undefined;
-
-  const { linearizedAt: _removed, ...data } = result;
-
-  return {
-    data,
-    meta: {
-      requestId,
-      serverTime: new Date().toISOString(),
-      ...(linearizedAt ? { linearizedAt } : {})
-    }
-  };
-}
+import {
+  mapDomainError,
+  mutationEnvelope,
+  requireIdempotencyKey
+} from "../http/economic-http.js";
 
 @Controller("api/v1/farms")
 export class GameplayController {
@@ -108,7 +41,7 @@ export class GameplayController {
     @Body() body: unknown
   ) {
     const session = await this.auth.requireCsrf(req);
-    const idempotencyKey = requireIdempotencyKey(idempotencyHeader);
+    const idempotencyKey = requireIdempotencyKey(req, idempotencyHeader);
     const parsed = PlantBody.safeParse(body);
 
     if (!parsed.success) {
@@ -128,9 +61,9 @@ export class GameplayController {
         cropDefinitionId: parsed.data.cropDefinitionId,
         idempotencyKey
       });
-      return envelope(req, result);
+      return mutationEnvelope(req, result);
     } catch (error) {
-      mapDomainError(error);
+      mapDomainError(req, error);
     }
   }
 
@@ -143,7 +76,7 @@ export class GameplayController {
     @Body() body: unknown
   ) {
     const session = await this.auth.requireCsrf(req);
-    const idempotencyKey = requireIdempotencyKey(idempotencyHeader);
+    const idempotencyKey = requireIdempotencyKey(req, idempotencyHeader);
     const parsed = PlantBody.safeParse(body);
 
     if (!parsed.success) {
@@ -164,9 +97,9 @@ export class GameplayController {
         cropDefinitionId: parsed.data.cropDefinitionId,
         idempotencyKey
       });
-      return envelope(req, result);
+      return mutationEnvelope(req, result);
     } catch (error) {
-      mapDomainError(error);
+      mapDomainError(req, error);
     }
   }
 
@@ -177,7 +110,7 @@ export class GameplayController {
     @Headers("idempotency-key") idempotencyHeader: string | undefined
   ) {
     const session = await this.auth.requireCsrf(req);
-    const idempotencyKey = requireIdempotencyKey(idempotencyHeader);
+    const idempotencyKey = requireIdempotencyKey(req, idempotencyHeader);
 
     try {
       const result = await harvest(this.db.client, random, {
@@ -185,9 +118,9 @@ export class GameplayController {
         farmId,
         idempotencyKey
       });
-      return envelope(req, result);
+      return mutationEnvelope(req, result);
     } catch (error) {
-      mapDomainError(error);
+      mapDomainError(req, error);
     }
   }
 
@@ -199,7 +132,7 @@ export class GameplayController {
     @Headers("idempotency-key") idempotencyHeader: string | undefined
   ) {
     const session = await this.auth.requireCsrf(req);
-    const idempotencyKey = requireIdempotencyKey(idempotencyHeader);
+    const idempotencyKey = requireIdempotencyKey(req, idempotencyHeader);
 
     try {
       const result = await harvest(this.db.client, random, {
@@ -208,9 +141,9 @@ export class GameplayController {
         plotId,
         idempotencyKey
       });
-      return envelope(req, result);
+      return mutationEnvelope(req, result);
     } catch (error) {
-      mapDomainError(error);
+      mapDomainError(req, error);
     }
   }
 }
