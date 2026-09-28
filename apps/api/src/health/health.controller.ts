@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Inject,
   Logger,
   ServiceUnavailableException
 } from "@nestjs/common";
@@ -10,7 +11,7 @@ import { DatabaseService } from "../database.service.js";
 export class HealthController {
   private readonly logger = new Logger(HealthController.name);
 
-  constructor(private readonly db: DatabaseService) {}
+  constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
   @Get("live")
   live() {
