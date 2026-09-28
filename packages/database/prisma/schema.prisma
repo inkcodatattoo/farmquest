@@ -1,0 +1,454 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  PLAYER
+  SUPPORT
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+  DELETED
+}
+
+enum AuthProvider {
+  TWITCH
+  DEV
+}
+
+enum StreamerApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum FarmStatus {
+  ACTIVE
+  SOLD
+}
+
+enum MembershipStatus {
+  ACTIVE
+  REMOVED
+  LEFT
+}
+
+enum ItemCategory {
+  SEED
+  CROP
+  ANIMAL_PRODUCT
+  FEED
+  REWARD_BOX
+  MISC
+}
+
+enum QualityCode {
+  NONE
+  COMMON
+  GOOD
+  EXCELLENT
+  EXTRAORDINARY
+  ROTTEN
+}
+
+enum ProgressTrack {
+  LEVEL_XP
+  COLLECTOR_XP
+  CONTRIBUTION_XP
+}
+
+enum OutboxStatus {
+  PENDING
+  IN_FLIGHT
+  DISPATCHED
+  EXPIRED
+}
+
+model User {
+  id            String       @id @default(uuid()) @db.Uuid
+  role          UserRole     @default(PLAYER)
+  status        UserStatus   @default(ACTIVE)
+  authProvider  AuthProvider @map("auth_provider")
+  displayName   String       @map("display_name")
+  avatarUrl     String?      @map("avatar_url")
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastLoginAt   DateTime?    @map("last_login_at") @db.Timestamptz(6)
+  deletedAt     DateTime?    @map("deleted_at") @db.Timestamptz(6)
+
+  streamer              Streamer?
+  farms                 Farm[]
+  marketplaceSeller     MarketplaceSellerState?
+  memberships           CommunityMembership[]
+  membershipChanges     CommunityMembershipHistory[] @relation("MembershipChangedBy")
+  idempotencyRecords    IdempotencyRecord[]
+  coinLedgerEntries     CoinLedger[]
+
+  @@map("user")
+}
+
+model Streamer {
+  id                 String                  @id @default(uuid()) @db.Uuid
+  userId             String                  @unique @map("user_id") @db.Uuid
+  twitchUserId       String                  @unique @map("twitch_user_id")
+  twitchLogin        String                  @map("twitch_login")
+  approvalStatus     StreamerApprovalStatus  @default(PENDING) @map("approval_status")
+  botEnabled         Boolean                 @default(false) @map("bot_enabled")
+  chatGameActive     Boolean                 @default(false) @map("chat_game_active")
+  approvedAt         DateTime?               @map("approved_at") @db.Timestamptz(6)
+  approvedByUserId   String?                 @map("approved_by_user_id") @db.Uuid
+  chatGameOpenedAt   DateTime?               @map("chat_game_opened_at") @db.Timestamptz(6)
+  chatGameClosedAt   DateTime?               @map("chat_game_closed_at") @db.Timestamptz(6)
+  createdAt          DateTime                @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime                @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  community  Community?
+  farms      Farm[]
+
+  @@map("streamer")
+}
+
+model Community {
+  id         String   @id @default(uuid()) @db.Uuid
+  streamerId String   @unique @map("streamer_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  streamer    Streamer              @relation(fields: [streamerId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  farms       Farm[]
+  memberships CommunityMembership[]
+
+  @@unique([id, streamerId])
+  @@map("community")
+}
+
+model MarketplaceSellerState {
+  userId        String    @id @map("user_id") @db.Uuid
+  nextListingAt DateTime? @map("next_listing_at") @db.Timestamptz(6)
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@map("marketplace_seller_state")
+}
+
+model Farm {
+  id              String     @id @default(uuid()) @db.Uuid
+  userId          String     @map("user_id") @db.Uuid
+  streamerId      String     @map("streamer_id") @db.Uuid
+  communityId     String     @map("community_id") @db.Uuid
+  status          FarmStatus @default(ACTIVE)
+  level           Int        @default(1)
+  xp              BigInt     @default(0)
+  coins           BigInt     @default(0)
+  inventorySlots  Int        @map("inventory_slots")
+  stackLimit      Int        @map("stack_limit")
+  nextHarvestAt   DateTime?  @map("next_harvest_at") @db.Timestamptz(6)
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  soldAt          DateTime?  @map("sold_at") @db.Timestamptz(6)
+
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  streamer      Streamer              @relation(fields: [streamerId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  community     Community             @relation(fields: [communityId, streamerId], references: [id, streamerId], onDelete: Restrict, onUpdate: Restrict)
+  membership    CommunityMembership?
+  plots         Plot[]
+  crops         PlantedCrop[]
+  inventory     InventoryItem[]
+  coinLedger    CoinLedger[]
+  itemLedger    ItemLedger[]
+  progressLedger ProgressLedger[]
+
+  @@unique([id, communityId])
+  @@index([userId])
+  @@index([streamerId])
+  @@map("farm")
+}
+
+model CommunityMembership {
+  farmId          String           @id @map("farm_id") @db.Uuid
+  communityId     String           @map("community_id") @db.Uuid
+  userId          String           @map("user_id") @db.Uuid
+  status          MembershipStatus @default(ACTIVE)
+  joinedAt        DateTime         @default(now()) @map("joined_at") @db.Timestamptz(6)
+  removedAt       DateTime?        @map("removed_at") @db.Timestamptz(6)
+  removedByUserId String?          @map("removed_by_user_id") @db.Uuid
+  readmittedAt    DateTime?        @map("readmitted_at") @db.Timestamptz(6)
+
+  farm      Farm      @relation(fields: [farmId, communityId], references: [id, communityId], onDelete: Restrict, onUpdate: Restrict)
+  community Community @relation(fields: [communityId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([farmId, communityId])
+  @@map("community_membership")
+}
+
+model CommunityMembershipHistory {
+  id              BigInt           @id @default(autoincrement())
+  farmId          String           @map("farm_id") @db.Uuid
+  communityId     String           @map("community_id") @db.Uuid
+  status          MembershipStatus
+  changedAt       DateTime         @default(now()) @map("changed_at") @db.Timestamptz(6)
+  changedByUserId String?          @map("changed_by_user_id") @db.Uuid
+  reason          String?
+
+  changedBy User? @relation("MembershipChangedBy", fields: [changedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([farmId, changedAt])
+  @@map("community_membership_history")
+}
+
+model Plot {
+  id            String  @id @default(uuid()) @db.Uuid
+  farmId        String  @map("farm_id") @db.Uuid
+  slotNumber    Int     @map("slot_number")
+  unlocked      Boolean @default(true)
+  seedsCapacity Int     @default(1) @map("seeds_capacity")
+
+  farm      Farm          @relation(fields: [farmId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  plantings PlantedCrop[]
+
+  @@unique([farmId, slotNumber])
+  @@map("plot")
+}
+
+model ItemDefinition {
+  id            String       @id @default(uuid()) @db.Uuid
+  key           String       @unique
+  name          String
+  category      ItemCategory
+  hasQuality    Boolean      @default(false) @map("has_quality")
+  basePrice     BigInt       @default(0) @map("base_price")
+  npcSellable   Boolean      @default(false) @map("npc_sellable")
+  p2pTradeable  Boolean      @default(false) @map("p2p_tradeable")
+  discardable   Boolean      @default(true)
+  aliases       String[]
+  enabled       Boolean      @default(true)
+  config        Json         @default("{}")
+
+  seedForCrops    CropDefinition[] @relation("CropSeed")
+  productForCrops CropDefinition[] @relation("CropProduct")
+  inventory       InventoryItem[]
+  itemLedger      ItemLedger[]
+  shopOffers      ShopOffer[]
+
+  @@map("item_definition")
+}
+
+model ItemQualityDefinition {
+  id                String      @id @default(uuid()) @db.Uuid
+  code              QualityCode @unique
+  name              String
+  color             String
+  sellMultiplierBps Int         @map("sell_multiplier_bps")
+  xpMultiplierBps   Int         @map("xp_multiplier_bps")
+  weight            Int         @default(0)
+  tractorWeight     Int         @default(0) @map("tractor_weight")
+  drawable          Boolean     @default(false)
+  isSystem          Boolean     @default(false) @map("is_system")
+  enabled           Boolean     @default(true)
+
+  inventory       InventoryItem[]
+  plantedResults  PlantedCrop[]
+  itemLedger      ItemLedger[]
+
+  @@map("item_quality_definition")
+}
+
+model CropDefinition {
+  id             String  @id @default(uuid()) @db.Uuid
+  key            String  @unique
+  name           String
+  seedItemId     String  @map("seed_item_id") @db.Uuid
+  productItemId  String  @map("product_item_id") @db.Uuid
+  yieldPerSeed   Int     @map("yield_per_seed")
+  unlockLevel    Int     @default(1) @map("unlock_level")
+  growthSeconds  Int     @map("growth_seconds")
+  xpReward       BigInt  @map("xp_reward")
+  enabled        Boolean @default(true)
+  config         Json    @default("{}")
+
+  seedItem     ItemDefinition @relation("CropSeed", fields: [seedItemId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  productItem  ItemDefinition @relation("CropProduct", fields: [productItemId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  plantings    PlantedCrop[]
+
+  @@map("crop_definition")
+}
+
+model PlantedCrop {
+  id                    String   @id @default(uuid()) @db.Uuid
+  farmId                String   @map("farm_id") @db.Uuid
+  plotId                String   @map("plot_id") @db.Uuid
+  cropDefinitionId      String   @map("crop_definition_id") @db.Uuid
+  seedCount             Int      @map("seed_count")
+  plantedAt             DateTime @map("planted_at") @db.Timestamptz(6)
+  growsAt               DateTime @map("grows_at") @db.Timestamptz(6)
+  rotsAt                DateTime @map("rots_at") @db.Timestamptz(6)
+  tractorBonusApplied   Boolean  @default(false) @map("tractor_bonus_applied")
+  harvestedAt           DateTime? @map("harvested_at") @db.Timestamptz(6)
+  resultQualityId       String?  @map("result_quality_id") @db.Uuid
+  resultQuantity        BigInt?  @map("result_quantity")
+  resultContributed     BigInt?  @map("result_contributed")
+
+  farm        Farm                  @relation(fields: [farmId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  plot        Plot                  @relation(fields: [plotId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  crop        CropDefinition        @relation(fields: [cropDefinitionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  quality     ItemQualityDefinition? @relation(fields: [resultQualityId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([farmId])
+  @@index([plotId])
+  @@map("planted_crop")
+}
+
+model InventoryItem {
+  id                String @id @default(uuid()) @db.Uuid
+  farmId            String @map("farm_id") @db.Uuid
+  itemDefinitionId  String @map("item_definition_id") @db.Uuid
+  qualityId         String @map("quality_id") @db.Uuid
+  quantity          BigInt @default(0)
+  reservedQuantity  BigInt @default(0) @map("reserved_quantity")
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  farm    Farm                  @relation(fields: [farmId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  item    ItemDefinition        @relation(fields: [itemDefinitionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  quality ItemQualityDefinition @relation(fields: [qualityId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([farmId, itemDefinitionId, qualityId])
+  @@map("inventory_item")
+}
+
+model LevelDefinition {
+  level                  Int    @id
+  xpRequiredTotal        BigInt @map("xp_required_total")
+  harvestCooldownSeconds Int    @map("harvest_cooldown_seconds")
+  unlocks                Json   @default("{}")
+
+  @@map("level_definition")
+}
+
+model ActionXpDefinition {
+  id         String   @id @default(uuid()) @db.Uuid
+  actionType String   @map("action_type")
+  per        String
+  xpAmount   BigInt   @map("xp_amount")
+  activeFrom DateTime @map("active_from") @db.Timestamptz(6)
+  activeTo   DateTime? @map("active_to") @db.Timestamptz(6)
+
+  @@index([actionType, activeFrom])
+  @@map("action_xp_definition")
+}
+
+model ShopOffer {
+  id               String  @id @default(uuid()) @db.Uuid
+  itemDefinitionId String  @map("item_definition_id") @db.Uuid
+  buyPrice         BigInt  @map("buy_price")
+  minLevel         Int     @default(1) @map("min_level")
+  enabled          Boolean @default(true)
+
+  item ItemDefinition @relation(fields: [itemDefinitionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@map("shop_offer")
+}
+
+model CoinLedger {
+  id             BigInt   @id @default(autoincrement())
+  farmId         String   @map("farm_id") @db.Uuid
+  userId         String   @map("user_id") @db.Uuid
+  delta          BigInt
+  balanceAfter   BigInt   @map("balance_after")
+  reason         String
+  referenceType  String?  @map("reference_type")
+  referenceId    String?  @map("reference_id")
+  idempotencyKey String?  @map("idempotency_key")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  farm Farm @relation(fields: [farmId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  user User @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([farmId, id])
+  @@map("coin_ledger")
+}
+
+model ItemLedger {
+  id                 BigInt   @id @default(autoincrement())
+  farmId             String   @map("farm_id") @db.Uuid
+  itemDefinitionId   String   @map("item_definition_id") @db.Uuid
+  qualityId          String   @map("quality_id") @db.Uuid
+  quantityDelta      BigInt   @map("quantity_delta")
+  reservedDelta      BigInt   @map("reserved_delta")
+  quantityAfter      BigInt   @map("quantity_after")
+  reservedAfter      BigInt   @map("reserved_after")
+  reason             String
+  referenceType      String?  @map("reference_type")
+  referenceId        String?  @map("reference_id")
+  idempotencyKey     String?  @map("idempotency_key")
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  farm    Farm                  @relation(fields: [farmId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  item    ItemDefinition        @relation(fields: [itemDefinitionId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  quality ItemQualityDefinition @relation(fields: [qualityId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([farmId, itemDefinitionId, qualityId, id])
+  @@map("item_ledger")
+}
+
+model ProgressLedger {
+  id            BigInt        @id @default(autoincrement())
+  farmId        String        @map("farm_id") @db.Uuid
+  track         ProgressTrack
+  delta         BigInt
+  valueAfter    BigInt        @map("value_after")
+  reason        String
+  referenceType String?       @map("reference_type")
+  referenceId   String?       @map("reference_id")
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  farm Farm @relation(fields: [farmId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([farmId, track, id])
+  @@map("progress_ledger")
+}
+
+model IdempotencyRecord {
+  id             BigInt   @id @default(autoincrement())
+  actorUserId    String   @map("actor_user_id") @db.Uuid
+  scope          String
+  key            String
+  requestHash    String   @map("request_hash")
+  responseJson   Json?    @map("response_json")
+  linearizedAt   DateTime? @map("linearized_at") @db.Timestamptz(6)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  completedAt    DateTime? @map("completed_at") @db.Timestamptz(6)
+
+  actor User @relation(fields: [actorUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([actorUserId, scope, key])
+  @@map("idempotency_record")
+}
+
+model OutboxMessage {
+  id            BigInt       @id @default(autoincrement())
+  topic         String
+  schemaVersion Int          @default(1) @map("schema_version")
+  aggregateType String       @map("aggregate_type")
+  aggregateId   String       @map("aggregate_id")
+  payloadJson   Json         @map("payload_json")
+  status        OutboxStatus @default(PENDING)
+  attempts      Int          @default(0)
+  availableAt   DateTime     @default(now()) @map("available_at") @db.Timestamptz(6)
+  leaseUntil    DateTime?    @map("lease_until") @db.Timestamptz(6)
+  dispatchedAt  DateTime?    @map("dispatched_at") @db.Timestamptz(6)
+  lastError     String?      @map("last_error")
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([status, availableAt])
+  @@map("outbox_message")
+}
