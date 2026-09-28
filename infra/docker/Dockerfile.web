@@ -18,6 +18,8 @@ RUN pnpm install --frozen-lockfile \
       --allow-build=esbuild \
   && pnpm --filter @farmquest/web build
 
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
 HEALTHCHECK --interval=20s --timeout=5s --start-period=20s --retries=5 \
