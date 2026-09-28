@@ -57,6 +57,22 @@ jobs:
       - name: Verify repository structure
         run: node scripts/check-structure.mjs
 
+      - name: Validate deployment files
+        env:
+          FARMQUEST_IMAGE_TAG: dev
+          POSTGRES_DB: farmquest
+          POSTGRES_ADMIN_PASSWORD: ci-admin-password
+          FARMQUEST_MIGRATOR_DB_PASSWORD: ci-migrator-password
+          FARMQUEST_APP_DB_PASSWORD: ci-app-password
+          FARMQUEST_BACKUP_DB_PASSWORD: ci-backup-password
+          DEV_LOGIN_SECRET: ci-dev-login-secret
+          SESSION_SECRET: ci-session-secret-0123456789
+          CSRF_SECRET: ci-csrf-secret-0123456789
+        run: |
+          sh -n infra/postgres/bootstrap/provision.sh
+          sh -n infra/deploy/migrate.sh
+          docker compose -f infra/deploy/prototype-0.1.compose.yml config > /tmp/farmquest-compose.yml
+
       - name: Validate Prisma 7 schema
         run: pnpm db:validate
 
@@ -79,19 +95,40 @@ jobs:
         run: git diff --exit-code -- docs/openapi/farmquest-0.1.json
 
       - name: Provision database roles
-        run: psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/bootstrap/roles.sql
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGDATABASE: farmquest_ci
+          PGUSER: farmquest_ci
+          PGPASSWORD: farmquest_ci
+          FARMQUEST_MIGRATOR_DB_PASSWORD: farmquest_migrator_ci
+          FARMQUEST_APP_DB_PASSWORD: farmquest_app_ci
+          FARMQUEST_BACKUP_DB_PASSWORD: farmquest_backup_ci
+        run: sh infra/postgres/bootstrap/provision.sh
 
-      - name: Apply committed migrations
-        run: pnpm --filter @farmquest/database exec prisma migrate deploy --config prisma7.config.ts
-
-      - name: Apply least-privilege grants
-        run: psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/bootstrap/grants.sql
+      - name: Apply committed migrations and grants
+        env:
+          DATABASE_MIGRATION_URL: postgresql://farmquest_migrator:farmquest_migrator_ci@127.0.0.1:5432/farmquest_ci?schema=farmquest
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGDATABASE: farmquest_ci
+          PGUSER: farmquest_ci
+          PGPASSWORD: farmquest_ci
+        run: sh infra/deploy/migrate.sh
 
       - name: Verify database invariants and privileges
         run: |
           psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 <<'SQL'
-          DO $$
+          DO $
           BEGIN
+            IF (
+              SELECT pg_get_userbyid(datdba)
+              FROM pg_database
+              WHERE datname = current_database()
+            ) <> 'farmquest_owner' THEN
+              RAISE EXCEPTION 'farmquest_owner must own the database';
+            END IF;
+
             IF to_regclass('farmquest.farm') IS NULL THEN
               RAISE EXCEPTION 'farmquest.farm was not created';
             END IF;
@@ -136,11 +173,6 @@ jobs:
           END
           $$;
           SQL
-
-      - name: Configure CI runtime role
-        run: |
-          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 \
-            -c "ALTER ROLE farmquest_app PASSWORD 'farmquest_app_ci';"
 
       - name: Smoke test API with runtime role
         env:
