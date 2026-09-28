@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Inject,
   HttpCode,
   Post,
   Req,
@@ -11,7 +12,7 @@ import { AuthService } from "./auth.service.js";
 
 @Controller("api/v1/auth")
 export class AuthController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(@Inject(AuthService) private readonly auth: AuthService) {}
 
   @Get("me")
   async me(@Req() req: Request) {
