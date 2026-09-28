@@ -187,6 +187,7 @@ model CommunityMembership {
   community Community @relation(fields: [communityId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   user      User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
 
+  @@unique([farmId, communityId])
   @@map("community_membership")
 }
 
