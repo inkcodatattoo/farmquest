@@ -60,13 +60,16 @@ export class AuthService {
     const tokenHash = hashSessionToken(token);
     const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
 
+    const ip = requestIp(req);
+    const userAgent = req.header("user-agent");
+
     await this.db.client.userSession.create({
       data: {
         tokenHash,
         userId: DEV_USER_ID,
         expiresAt,
-        ip: requestIp(req),
-        userAgent: req.header("user-agent")
+        ...(ip ? { ip } : {}),
+        ...(userAgent ? { userAgent } : {})
       }
     });
 
