@@ -122,6 +122,78 @@ jobs:
             IF has_schema_privilege('farmquest_app', 'farmquest', 'CREATE') THEN
               RAISE EXCEPTION 'farmquest_app must not CREATE in schema';
             END IF;
+
+            IF to_regclass('farmquest.user_session') IS NULL THEN
+              RAISE EXCEPTION 'farmquest.user_session was not created';
+            END IF;
+
+            IF NOT has_table_privilege('farmquest_app', 'farmquest.user_session', 'INSERT,UPDATE,DELETE') THEN
+              RAISE EXCEPTION 'farmquest_app needs session lifecycle privileges';
+            END IF;
           END
           $$;
           SQL
+
+      - name: Configure CI runtime role
+        run: |
+          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 \
+            -c "ALTER ROLE farmquest_app PASSWORD 'farmquest_app_ci';"
+
+      - name: Smoke test API with runtime role
+        env:
+          DATABASE_URL: postgresql://farmquest_app:farmquest_app_ci@127.0.0.1:5432/farmquest_ci
+          APP_STAGE: dev
+          DEV_LOGIN_ENABLED: "true"
+          DEV_LOGIN_SECRET: ci-dev-login-secret
+          CSRF_SECRET: ci-csrf-secret
+          SESSION_COOKIE_SECURE: "false"
+          PORT: "3001"
+        run: |
+          set -euo pipefail
+          PGPASSWORD=farmquest_app_ci psql -h 127.0.0.1 -U farmquest_app -d farmquest_ci -v ON_ERROR_STOP=1 -c "SELECT 1"
+          pnpm --filter @farmquest/api start > /tmp/farmquest-api.log 2>&1 &
+          API_PID=$!
+          trap 'kill "$API_PID" 2>/dev/null || true; cat /tmp/farmquest-api.log' EXIT
+
+          for i in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3001/api/v1/health/ready > /tmp/ready.json; then
+              break
+            fi
+            sleep 1
+          done
+
+          grep -q '"status":"ready"' /tmp/ready.json
+
+          curl --fail --silent --show-error \
+            -c /tmp/farmquest-cookies.txt \
+            -X POST \
+            -H "X-Dev-Login-Secret: ci-dev-login-secret" \
+            http://127.0.0.1:3001/api/v1/dev/session \
+            -o /dev/null
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            http://127.0.0.1:3001/api/v1/auth/me \
+            | grep -q '"displayName":"Coda"'
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            http://127.0.0.1:3001/api/v1/farms \
+            | grep -q '"coins":"100"'
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/plots \
+            | grep -q '"state":"EMPTY"'
+
+          CSRF=$(curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            http://127.0.0.1:3001/api/v1/auth/csrf \
+            | node -e 'let d=""; process.stdin.on("data",c=>d+=c); process.stdin.on("end",()=>process.stdout.write(JSON.parse(d).csrfToken));')
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            -X POST \
+            -H "X-CSRF-Token: $CSRF" \
+            http://127.0.0.1:3001/api/v1/auth/logout \
+            -o /dev/null

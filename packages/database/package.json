@@ -3,15 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/client.ts"
+  },
   "scripts": {
     "prisma:validate": "prisma validate --config prisma7.config.ts",
     "prisma:format": "prisma format --config prisma7.config.ts",
-    "prisma:generate": "prisma generate --config prisma7.config.ts"
+    "prisma:generate": "prisma generate --config prisma7.config.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/client": "7.10.0"
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "pg": "8.16.3"
   },
   "devDependencies": {
+    "@types/pg": "8.15.5",
     "dotenv": "17.2.2",
     "prisma": "7.10.0"
   }
