@@ -215,44 +215,17 @@ jobs:
             http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/plant \
             > /tmp/plant-2.json
 
-          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 <<'SQL'
-          DO $
-          DECLARE
-            active_crops integer;
-            plant_ledger integer;
-            seeds_left bigint;
-          BEGIN
-            SELECT count(*) INTO active_crops
-              FROM farmquest.planted_crop
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND harvested_at IS NULL;
-            IF active_crops <> 3 THEN
-              RAISE EXCEPTION 'expected 3 active crops after idempotent plant, got %', active_crops;
-            END IF;
+          ACTIVE_CROPS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.planted_crop WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NULL")
+          test "$ACTIVE_CROPS" -eq 3
 
-            SELECT count(*) INTO plant_ledger
-              FROM farmquest.item_ledger
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND reason = 'PLANT';
-            IF plant_ledger <> 1 THEN
-              RAISE EXCEPTION 'plant ledger duplicated: %', plant_ledger;
-            END IF;
+          PLANT_LEDGER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.item_ledger WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND reason = 'PLANT'")
+          test "$PLANT_LEDGER" -eq 1
 
-            SELECT COALESCE(sum(quantity), 0) INTO seeds_left
-              FROM farmquest.inventory_item
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid;
-            IF seeds_left <> 0 THEN
-              RAISE EXCEPTION 'expected zero seeds after planting, got %', seeds_left;
-            END IF;
+          SEEDS_LEFT=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(sum(quantity), 0) FROM farmquest.inventory_item WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid")
+          test "$SEEDS_LEFT" -eq 0
 
-            UPDATE farmquest.planted_crop
-              SET grows_at = clock_timestamp() - interval '1 second'
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND harvested_at IS NULL;
-          END
-          $;
-          SQL
+          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 -c "UPDATE farmquest.planted_crop SET grows_at = clock_timestamp() - interval '1 second' WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NULL"
+
 
           HARVEST_KEY="ci-harvest-idempotency-0001"
           curl --fail --silent --show-error \
@@ -273,51 +246,21 @@ jobs:
             http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/harvest \
             > /tmp/harvest-2.json
 
-          psql "$CI_DATABASE_ADMIN_URL" -v ON_ERROR_STOP=1 <<'SQL'
-          DO $
-          DECLARE
-            harvested_crops integer;
-            harvest_ledger integer;
-            crop_units bigint;
-            farm_xp bigint;
-            farm_cooldown timestamptz;
-          BEGIN
-            SELECT count(*) INTO harvested_crops
-              FROM farmquest.planted_crop
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND harvested_at IS NOT NULL;
-            IF harvested_crops <> 3 THEN
-              RAISE EXCEPTION 'expected exactly 3 harvested crops, got %', harvested_crops;
-            END IF;
+          HARVESTED_CROPS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.planted_crop WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND harvested_at IS NOT NULL")
+          test "$HARVESTED_CROPS" -eq 3
 
-            SELECT count(*) INTO harvest_ledger
-              FROM farmquest.item_ledger
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND reason = 'HARVEST';
-            IF harvest_ledger <> 3 THEN
-              RAISE EXCEPTION 'harvest ledger duplicated or incomplete: %', harvest_ledger;
-            END IF;
+          HARVEST_LEDGER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.item_ledger WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND reason = 'HARVEST'")
+          test "$HARVEST_LEDGER" -eq 3
 
-            SELECT COALESCE(sum(quantity), 0) INTO crop_units
-              FROM farmquest.inventory_item
-              WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid
-                AND item_definition_id = '00000000-0000-4000-8000-000000000021'::uuid;
-            IF crop_units <> 3 THEN
-              RAISE EXCEPTION 'expected 3 harvested corn units, got %', crop_units;
-            END IF;
+          CROP_UNITS=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(sum(quantity), 0) FROM farmquest.inventory_item WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000021'::uuid")
+          test "$CROP_UNITS" -eq 3
 
-            SELECT xp, next_harvest_at INTO farm_xp, farm_cooldown
-              FROM farmquest.farm
-              WHERE id = '00000000-0000-4000-8000-000000000004'::uuid;
-            IF farm_xp < 20 THEN
-              RAISE EXCEPTION 'expected at least 20 XP after plant+harvest, got %', farm_xp;
-            END IF;
-            IF farm_cooldown IS NULL THEN
-              RAISE EXCEPTION 'harvest cooldown was not persisted';
-            END IF;
-          END
-          $;
-          SQL
+          FARM_XP=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT xp FROM farmquest.farm WHERE id = '00000000-0000-4000-8000-000000000004'::uuid")
+          test "$FARM_XP" -ge 20
+
+          FARM_COOLDOWN=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(next_harvest_at::text, '') FROM farmquest.farm WHERE id = '00000000-0000-4000-8000-000000000004'::uuid")
+          test -n "$FARM_COOLDOWN"
+
 
           curl --fail --silent --show-error \
             -b /tmp/farmquest-cookies.txt \
