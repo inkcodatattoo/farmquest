@@ -6,7 +6,7 @@ const app = await NestFactory.create(AppModule, {
   logger: ["error", "warn", "log"]
 });
 
-app.disable("x-powered-by");
+app.getHttpAdapter().getInstance().disable("x-powered-by");
 
 const port = Number(process.env.PORT ?? 3001);
 await app.listen(port, "0.0.0.0");
