@@ -16,7 +16,7 @@ RUN pnpm install --frozen-lockfile \
       --allow-build=@prisma/engines \
       --allow-build=prisma \
       --allow-build=esbuild \
-  && pnpm db:generate \
+  && DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build?schema=farmquest pnpm db:generate \
   && pnpm --filter @farmquest/api typecheck
 
 ENV NODE_ENV=production
