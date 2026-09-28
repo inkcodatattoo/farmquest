@@ -47,7 +47,7 @@ jobs:
           pnpm --version
 
       - name: Install workspace dependencies
-        run: pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma
+        run: pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
 
       - name: Verify PostgreSQL
         env:
