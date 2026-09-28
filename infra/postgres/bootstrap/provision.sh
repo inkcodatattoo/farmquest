@@ -24,6 +24,7 @@ ALTER ROLE farmquest_migrator PASSWORD :'migrator_password';
 ALTER ROLE farmquest_app PASSWORD :'app_password';
 ALTER ROLE farmquest_backup PASSWORD :'backup_password';
 
+ALTER DATABASE :"db_name" OWNER TO farmquest_owner;
 REVOKE ALL ON DATABASE :"db_name" FROM PUBLIC;
 GRANT CONNECT ON DATABASE :"db_name"
   TO farmquest_migrator, farmquest_app, farmquest_backup;
