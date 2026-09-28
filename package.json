@@ -1,7 +1,14 @@
 {
-  "name":"farmquest",
-  "version":"0.1.0",
-  "private":true,
-  "engines":{"node":">=24 <25"},
-  "scripts":{"check:structure":"node scripts/check-structure.mjs"}
+  "name": "farmquest",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@12.6.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "check:structure": "node scripts/check-structure.mjs",
+    "db:validate": "pnpm --filter @farmquest/database prisma:validate",
+    "db:generate": "pnpm --filter @farmquest/database prisma:generate"
+  }
 }
