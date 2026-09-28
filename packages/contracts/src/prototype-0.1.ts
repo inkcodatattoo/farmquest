@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "./zod.js";
 import { BigIntString, IsoDateTime, Uuid } from "./common.js";
 
 export const QualityCode = z.enum([
