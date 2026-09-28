@@ -41,11 +41,11 @@ jobs:
       - name: Enable pnpm
         run: |
           corepack enable
-          corepack prepare pnpm@12.6.0 --activate
+          corepack prepare pnpm@12.7.0 --activate
           pnpm --version
 
       - name: Install workspace dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma
 
       - name: Verify PostgreSQL
         env:
