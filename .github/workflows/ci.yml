@@ -5,9 +5,6 @@ on:
     branches: [main, "feat/**"]
   pull_request:
 
-permissions:
-  contents: write
-
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -50,20 +47,7 @@ jobs:
           pnpm --version
 
       - name: Install workspace dependencies
-        run: pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
-
-      - name: Commit refreshed lockfile
-        if: github.ref == 'refs/heads/feat/prototype-0.1-api'
-        run: |
-          if git diff --quiet -- pnpm-lock.yaml; then
-            echo "Lockfile already current"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add pnpm-lock.yaml
-            git commit -m "chore: refresh lockfile for API dependencies"
-            git push origin HEAD:feat/prototype-0.1-api
-          fi
+        run: pnpm install --frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
 
       - name: Verify PostgreSQL
         env:
