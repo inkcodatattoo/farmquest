@@ -141,7 +141,7 @@ jobs:
 
       - name: Smoke test API with runtime role
         env:
-          DATABASE_URL: postgresql://farmquest_app:farmquest_app_ci@127.0.0.1:5432/farmquest_ci?schema=farmquest
+          DATABASE_URL: postgresql://farmquest_app:farmquest_app_ci@127.0.0.1:5432/farmquest_ci
           APP_STAGE: dev
           DEV_LOGIN_ENABLED: "true"
           DEV_LOGIN_SECRET: ci-dev-login-secret
@@ -150,6 +150,7 @@ jobs:
           PORT: "3001"
         run: |
           set -euo pipefail
+          PGPASSWORD=farmquest_app_ci psql -h 127.0.0.1 -U farmquest_app -d farmquest_ci -v ON_ERROR_STOP=1 -c "SELECT 1"
           pnpm --filter @farmquest/api start > /tmp/farmquest-api.log 2>&1 &
           API_PID=$!
           trap 'kill "$API_PID" 2>/dev/null || true; cat /tmp/farmquest-api.log' EXIT
