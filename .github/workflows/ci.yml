@@ -308,6 +308,120 @@ jobs:
           FARM_COOLDOWN=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(next_harvest_at::text, '') FROM farmquest.farm WHERE id = '00000000-0000-4000-8000-000000000004'::uuid")
           test -n "$FARM_COOLDOWN"
 
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/inventory \
+            > /tmp/inventory-before-sale.json
+
+          CORN_INVENTORY_ID=$(node - <<'NODE'
+          const fs = require("fs");
+          const payload = JSON.parse(fs.readFileSync("/tmp/inventory-before-sale.json", "utf8"));
+          const row = payload.data.find(
+            (item) => item.itemDefinitionId === "00000000-0000-4000-8000-000000000021"
+          );
+          if (!row) throw new Error("harvested corn missing from inventory");
+          process.stdout.write(row.id);
+          NODE
+          )
+
+          COINS_BEFORE_SALE=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT coins FROM farmquest.farm WHERE id = '00000000-0000-4000-8000-000000000004'::uuid")
+          QUICK_SELL_KEY="ci-quick-sell-idempotency-0001"
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-CSRF-Token: $CSRF" \
+            -H "Idempotency-Key: $QUICK_SELL_KEY" \
+            --data "{\"inventoryItemId\":\"$CORN_INVENTORY_ID\",\"quantity\":1}" \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/market/quick-sell \
+            > /tmp/quick-sell-1.json
+
+          grep -q '"code":"QUICK_SELL_OK"' /tmp/quick-sell-1.json
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-CSRF-Token: $CSRF" \
+            -H "Idempotency-Key: $QUICK_SELL_KEY" \
+            --data "{\"inventoryItemId\":\"$CORN_INVENTORY_ID\",\"quantity\":1}" \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/market/quick-sell \
+            > /tmp/quick-sell-2.json
+
+          QUICK_SELL_LEDGER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.item_ledger WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND reason = 'QUICK_SELL'")
+          test "$QUICK_SELL_LEDGER" -eq 1
+
+          COINS_AFTER_SALE=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT coins FROM farmquest.farm WHERE id = '00000000-0000-4000-8000-000000000004'::uuid")
+          test "$COINS_AFTER_SALE" -gt "$COINS_BEFORE_SALE"
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            "http://127.0.0.1:3001/api/v1/shop?farmId=00000000-0000-4000-8000-000000000004" \
+            > /tmp/shop.json
+
+          OFFER_ID=$(node - <<'NODE'
+          const fs = require("fs");
+          const payload = JSON.parse(fs.readFileSync("/tmp/shop.json", "utf8"));
+          const offer = payload.data.find(
+            (item) => item.itemDefinitionId === "00000000-0000-4000-8000-000000000020"
+          );
+          if (!offer) throw new Error("corn seed shop offer missing");
+          process.stdout.write(offer.id);
+          NODE
+          )
+
+          SHOP_KEY="ci-shop-idempotency-0001"
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-CSRF-Token: $CSRF" \
+            -H "Idempotency-Key: $SHOP_KEY" \
+            --data "{\"offerId\":\"$OFFER_ID\",\"quantity\":1}" \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/shop/buy \
+            > /tmp/shop-buy.json
+
+          grep -q '"code":"SHOP_BUY_OK"' /tmp/shop-buy.json
+          grep -q '"coinsSpent":"5"' /tmp/shop-buy.json
+
+          SEEDS_AFTER_BUY=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(sum(quantity), 0) FROM farmquest.inventory_item WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid")
+          test "$SEEDS_AFTER_BUY" -eq 1
+
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/inventory \
+            > /tmp/inventory-after-buy.json
+
+          SEED_INVENTORY_ID=$(node - <<'NODE'
+          const fs = require("fs");
+          const payload = JSON.parse(fs.readFileSync("/tmp/inventory-after-buy.json", "utf8"));
+          const row = payload.data.find(
+            (item) => item.itemDefinitionId === "00000000-0000-4000-8000-000000000020"
+          );
+          if (!row) throw new Error("purchased seed missing from inventory");
+          process.stdout.write(row.id);
+          NODE
+          )
+
+          DISCARD_KEY="ci-discard-idempotency-0001"
+          curl --fail --silent --show-error \
+            -b /tmp/farmquest-cookies.txt \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "X-CSRF-Token: $CSRF" \
+            -H "Idempotency-Key: $DISCARD_KEY" \
+            --data '{"quantity":1}' \
+            http://127.0.0.1:3001/api/v1/farms/00000000-0000-4000-8000-000000000004/inventory/$SEED_INVENTORY_ID/discard \
+            > /tmp/discard.json
+
+          grep -q '"code":"DISCARD_OK"' /tmp/discard.json
+
+          SEEDS_AFTER_DISCARD=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT COALESCE(sum(quantity), 0) FROM farmquest.inventory_item WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND item_definition_id = '00000000-0000-4000-8000-000000000020'::uuid")
+          test "$SEEDS_AFTER_DISCARD" -eq 0
+
+          DISCARD_LEDGER=$(psql "$CI_DATABASE_ADMIN_URL" -Atc "SELECT count(*) FROM farmquest.item_ledger WHERE farm_id = '00000000-0000-4000-8000-000000000004'::uuid AND reason = 'DISCARD'")
+          test "$DISCARD_LEDGER" -eq 1
 
           curl --fail --silent --show-error \
             -c /tmp/farmquest-cookies-relogin.txt \
