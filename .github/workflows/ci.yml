@@ -29,7 +29,7 @@ jobs:
           --health-retries=10
 
     env:
-      DATABASE_URL: postgresql://farmquest_ci:farmquest_ci@127.0.0.1:5432/farmquest_ci?schema=public
+      DATABASE_URL: postgresql://farmquest_ci:farmquest_ci@127.0.0.1:5432/farmquest_ci?schema=farmquest
 
     steps:
       - uses: actions/checkout@v4
