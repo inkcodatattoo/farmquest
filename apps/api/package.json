@@ -9,7 +9,9 @@
     "start": "tsx src/main.ts"
   },
   "dependencies": {
+    "@farmquest/contracts": "workspace:*",
     "@farmquest/database": "workspace:*",
+    "@farmquest/domain": "workspace:*",
     "@farmquest/game-rules": "workspace:*",
     "@nestjs/common": "12.1.0",
     "@nestjs/core": "12.1.0",
