@@ -49,8 +49,10 @@ jobs:
           corepack prepare pnpm@12.7.0 --activate
           pnpm --version
 
-      - name: Install workspace dependencies
-        run: pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
+      - name: Rebuild lockfile and install workspace dependencies
+        run: |
+          rm -f pnpm-lock.yaml
+          pnpm install --no-frozen-lockfile --allow-build=@prisma/engines --allow-build=prisma --allow-build=esbuild
 
       - name: Commit refreshed lockfile
         if: github.ref == 'refs/heads/feat/prototype-0.1-api'
