@@ -2931,3 +2931,67 @@
     left: 51% !important;
   }
 }
+
+
+/* FarmQuest v1.13 — limpeza final do HUD e leitura do cenário */
+
+.fq-farm-name {
+  justify-content: center;
+  padding: 8px 30px;
+}
+
+.fq-farm-name > span {
+  width: 100%;
+  text-align: center;
+}
+
+.fq-home-scene .fq-home-market {
+  width: 252px !important;
+  height: 252px !important;
+}
+
+.fq-home-plots {
+  gap: 24px;
+}
+
+.fq-home-plot::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 18px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(86,59,30,.18);
+  filter: blur(3px);
+  z-index: 0;
+}
+
+.fq-home-plot .fq-home-plot-art {
+  z-index: 2;
+}
+
+.fq-home-nav button {
+  min-height: 66px;
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+}
+
+.fq-home-nav button strong {
+  font-size: 16px;
+}
+
+.fq-home-nav button .fq-pixel-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.fq-home-nav button:hover {
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+}
+
+@media (max-width: 1350px) {
+  .fq-home-scene .fq-home-market {
+    width: 228px !important;
+    height: 228px !important;
+  }
+}
