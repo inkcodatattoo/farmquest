@@ -207,7 +207,8 @@ export function FarmWorld(props: Props) {
             </div>
 
             <div className="fq-hud-panel fq-farm-name">
-              Fazenda do {userName}
+              <PixelIcon src={FARM_ICONS.buildings.farmhouse} alt="" />
+              <span>Fazenda do {userName}</span>
             </div>
 
             <div className="fq-home-system-actions">
