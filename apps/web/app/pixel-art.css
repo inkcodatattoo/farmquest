@@ -2177,3 +2177,40 @@
   bottom: 24%;
   transform: rotate(-3deg) scale(.74);
 }
+
+
+/* FarmQuest v1.6 — navegação interna sem sidebar */
+
+.pixel-ui-shell.farm-game-shell {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 90px minmax(0, 1fr) 88px;
+  grid-template-areas:
+    "top"
+    "stage"
+    "dock";
+}
+
+.pixel-ui-shell .farm-game-sidebar {
+  display: none;
+}
+
+.pixel-ui-shell .farm-game-dock {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+@media (max-width: 980px) {
+  .pixel-ui-shell .farm-game-dock {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    height: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .pixel-ui-shell.farm-game-shell {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .pixel-ui-shell .farm-game-dock {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
