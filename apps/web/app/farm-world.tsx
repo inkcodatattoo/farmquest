@@ -172,254 +172,166 @@ export function FarmWorld(props: Props) {
   }
 
   function homeScene() {
-    const readyCount = plots.filter((plot) => plotState(plot, nowMs) === "READY").length;
+    const activePlots = plots.slice(0, 3);
+    const readyCount = activePlots.filter((plot) => plotState(plot, nowMs) === "READY").length;
     const seedCount = inventory
       .filter((item) => item.name.toLowerCase().includes("semente"))
       .reduce((sum, item) => sum + item.quantity, 0);
-    const xpValue = Number(farm.xp) || 0;
-    const xpGoal = farm.level <= 1 ? 100 : farm.level === 2 ? 200 : Math.max(300, farm.level * 100);
-    const xpProgress = Math.max(0, Math.min(100, (xpValue / xpGoal) * 100));
+
+    const sidebarItems: Array<{ section: Section; label: string; className: string }> = [
+      { section: "inicio", label: "Início", className: "fq-map-nav-inicio" },
+      { section: "plantacoes", label: "Plantações", className: "fq-map-nav-plantacoes" },
+      { section: "animais", label: "Animais", className: "fq-map-nav-animais" },
+      { section: "celeiro", label: "Celeiro", className: "fq-map-nav-celeiro" },
+      { section: "mercado", label: "Mercado", className: "fq-map-nav-mercado" },
+      { section: "comunidade", label: "Comunidade", className: "fq-map-nav-comunidade" },
+      { section: "ranking", label: "Ranking", className: "fq-map-nav-ranking" }
+    ];
 
     return (
-      <section className="fq-home-stage">
-        <div className="fq-home-scene">
-          <aside className="fq-home-sidebar" aria-label="Navegação principal">
-            <button
-              className="fq-home-brand"
-              onClick={() => setSection("inicio")}
-              aria-label="Ir para o início da FarmQuest"
-            >
-              <img
-                src="/game-assets/brand/farmquest-logo.png"
-                alt="FarmQuest"
-                draggable={false}
+      <section className="fq-official-home-stage">
+        <div className="fq-official-home-map">
+          <img
+            className="fq-official-home-art"
+            src="/game-assets/home/farmquest-home-official.webp"
+            alt="Fazenda principal FarmQuest"
+            draggable={false}
+          />
+
+          <nav className="fq-map-nav" aria-label="Navegação da Home">
+            {sidebarItems.map((item) => (
+              <button
+                key={item.section}
+                className={`fq-map-hotspot fq-map-nav-button ${item.className}`}
+                onClick={() => setSection(item.section)}
+                aria-label={item.label}
+                title={item.label}
               />
-            </button>
-
-            <nav className="fq-home-nav">
-              <button className="active" onClick={() => setSection("inicio")} aria-current="page">
-                <PixelIcon src={FARM_ICONS.buildings.farmhouse} alt="" />
-                <strong>Início</strong>
-              </button>
-              <button onClick={() => setSection("plantacoes")}>
-                <PixelIcon src={FARM_ICONS.actions.plant} alt="" />
-                <strong>Plantações</strong>
-              </button>
-              <button onClick={() => setSection("animais")}>
-                <PixelIcon src={FARM_ICONS.animals.cow} alt="" />
-                <strong>Animais</strong>
-              </button>
-              <button onClick={() => setSection("celeiro")}>
-                <PixelIcon src={FARM_ICONS.ui.inventory} alt="" />
-                <strong>Celeiro</strong>
-              </button>
-              <button onClick={() => setSection("mercado")}>
-                <PixelIcon src={FARM_ICONS.buildings.market} alt="" />
-                <strong>Mercado</strong>
-              </button>
-              <button onClick={() => setSection("comunidade")}>
-                <PixelIcon src={FARM_ICONS.community.goal} alt="" />
-                <strong>Comunidade</strong>
-              </button>
-              <button onClick={() => setSection("ranking")}>
-                <PixelIcon src={FARM_ICONS.ui.ranking} alt="" />
-                <strong>Ranking</strong>
-              </button>
-            </nav>
-
-            <div className="fq-sidebar-summary" aria-label={`Nível ${farm.level}`}>
-              <PixelIcon src={FARM_ICONS.ui.level} alt="" />
-              <span><small>Nível</small><strong>{farm.level}</strong></span>
-            </div>
-          </aside>
-
-          <header className="fq-home-hud">
-            <div className="fq-hud-panel fq-coins-panel">
-              <PixelIcon src={FARM_ICONS.ui.coins} alt="Moedas" />
-              <span><small>Moedas</small><strong>{farm.coins}</strong></span>
-            </div>
-
-            <div className="fq-hud-panel fq-xp-panel">
-              <div className="fq-level-badge">
-                <PixelIcon src={FARM_ICONS.ui.level} alt="Nível" />
-                <strong>{farm.level}</strong>
-              </div>
-              <div className="fq-xp-copy">
-                <div className="fq-xp-track">
-                  <span style={{ width: `${xpProgress}%` }} />
-                </div>
-                <strong>{xpValue}/{xpGoal}</strong>
-              </div>
-            </div>
-
-            <div className="fq-hud-panel fq-farm-name">
-              <span><small>Minha fazenda</small><strong>Fazenda do {userName}</strong></span>
-            </div>
-
-            <div className="fq-home-system-actions">
-              <button onClick={props.onRefresh} disabled={Boolean(busy)} title="Atualizar">↻</button>
-              <button onClick={props.onLogout} disabled={Boolean(busy)} title="Sair">×</button>
-            </div>
-          </header>
-
-          <div className="fq-river" aria-hidden="true">
-            <span className="fq-river-shine fq-river-shine-a" />
-            <span className="fq-river-shine fq-river-shine-b" />
-            <span className="fq-river-bank" />
-            <span className="fq-pier"><i /><i /><i /><i /></span>
-            <span className="fq-boat" />
-          </div>
-
-          <div className="fq-road-network" aria-hidden="true">
-            <span className="fq-road fq-road-main" />
-            <span className="fq-road fq-road-market" />
-            <span className="fq-road fq-road-crops" />
-          </div>
-
-          <div className="scene-tree fq-tree-left" aria-hidden="true" />
-          <div className="scene-tree fq-tree-center" aria-hidden="true" />
-          <div className="scene-tree fq-tree-right" aria-hidden="true" />
-          <div className="fq-apple-tree" aria-hidden="true"><i /><i /><i /></div>
+            ))}
+          </nav>
 
           <button
-            className="scene-building farmhouse pixel-scene-building fq-home-house"
+            className="fq-map-hotspot fq-map-house-hotspot"
             onClick={() => setSection("plantacoes")}
-            title="Abrir plantações"
-          >
-            <PixelIcon
-              src={FARM_ICONS.buildings.farmhouse}
-              alt="Casa da fazenda"
-              className="scene-building-art farmhouse-art"
-            />
-            <span className="fq-location-sign fq-house-sign">Fazenda</span>
-          </button>
-
+            aria-label="Casa da fazenda"
+            title="Casa da fazenda"
+          />
           <button
-            className="scene-building barn-building pixel-scene-building fq-home-barn"
+            className="fq-map-hotspot fq-map-barn-hotspot"
             onClick={() => setSection("celeiro")}
-            title="Abrir inventário"
-          >
-            <PixelIcon
-              src={FARM_ICONS.buildings.barn}
-              alt="Celeiro"
-              className="scene-building-art barn-art"
-            />
-            <span className="fq-location-sign fq-barn-sign">Celeiro</span>
-          </button>
-
+            aria-label="Celeiro"
+            title="Abrir celeiro"
+          />
           <button
-            className="scene-building market-building pixel-scene-building fq-home-market"
-            onClick={() => setSection("mercado")}
-            title="Abrir mercado"
-          >
-            <PixelIcon
-              src={FARM_ICONS.buildings.market}
-              alt="Mercado rural"
-              className="scene-building-art market-art"
-            />
-            <span className="fq-location-sign fq-market-sign">Mercado</span>
-          </button>
-
-          <button
-            className="fq-home-animal-pen"
+            className="fq-map-hotspot fq-map-cow-hotspot"
             onClick={() => setSection("animais")}
+            aria-label="Curral da vaca"
             title="Abrir animais"
-          >
-            <span className="fq-pen-fence" />
-            <span className="fq-coop" aria-hidden="true" />
-            <span className="fq-water-trough" aria-hidden="true" />
-            <PixelIcon src={FARM_ICONS.animals.cow} alt="Vaca" className="fq-home-cow" />
-            <PixelIcon src={FARM_ICONS.animals.pig} alt="Porco" className="fq-home-pig" />
-            <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-home-chicken fq-home-chicken-a" />
-            <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-home-chicken fq-home-chicken-b" />
-            <span className="fq-location-sign fq-animal-sign">Animais</span>
-          </button>
+          />
+          <button
+            className="fq-map-hotspot fq-map-coop-hotspot"
+            onClick={() => setSection("animais")}
+            aria-label="Galinheiro"
+            title="Abrir galinheiro"
+          />
 
-          <div className="fq-home-decor" aria-hidden="true">
-            <span className="fq-lantern-post fq-lantern-left"><i /></span>
-            <span className="fq-lantern-post fq-lantern-right"><i /></span>
-            <span className="fq-barrel fq-barrel-house" />
-            <span className="fq-barrel fq-barrel-barn" />
-            <span className="fq-hay-bale fq-hay-one" />
-            <span className="fq-hay-bale fq-hay-two" />
-            <span className="fq-hay-bale fq-hay-three" />
-            <span className="fq-flower-patch fq-flowers-a"><i /><i /><i /><i /></span>
-            <span className="fq-flower-patch fq-flowers-b"><i /><i /><i /></span>
-            <span className="fq-stone-group fq-stones-a"><i /><i /><i /></span>
-            <span className="fq-stone-group fq-stones-b"><i /><i /></span>
-            <span className="fq-fence-segment fq-fence-a"><i /><i /><i /><i /></span>
-            <span className="fq-fence-segment fq-fence-b"><i /><i /><i /></span>
-            <span className="fq-fence-segment fq-fence-c"><i /><i /><i /></span>
-            <span className="fq-wood-crate fq-crate-house" />
-            <span className="fq-wood-crate fq-crate-market" />
-          </div>
-
-          <div className="fq-home-plots" aria-label="Canteiros da fazenda">
-            {plots.map((plot) => {
+          <div className="fq-map-active-plots" aria-label="3 canteiros iniciais">
+            {activePlots.map((plot, index) => {
               const state = plotState(plot, nowMs);
               const canInteract = state === "EMPTY" || state === "READY" || state === "ROTTEN";
               return (
                 <button
                   key={plot.id}
-                  className={`fq-home-plot fq-home-plot-${plot.slotNumber} is-${state.toLowerCase()}`}
+                  className={`fq-map-plot fq-map-plot-${index + 1} is-${state.toLowerCase()}`}
                   onClick={() => interactPlot(plot)}
-                  disabled={Boolean(busy) || !canInteract || (state !== "EMPTY" && cooldownText !== "Livre")}
+                  disabled={
+                    Boolean(busy) ||
+                    !canInteract ||
+                    (state !== "EMPTY" && cooldownText !== "Livre")
+                  }
                   title={
                     state === "EMPTY"
-                      ? "Plantar"
+                      ? `Canteiro ${index + 1}: plantar`
                       : state === "PLANTED"
-                        ? `Crescendo: ${timerText(plot, nowMs)}`
+                        ? `Canteiro ${index + 1}: crescendo ${timerText(plot, nowMs)}`
                         : state === "READY"
-                          ? "Colher"
-                          : "Colheita apodrecida"
+                          ? `Canteiro ${index + 1}: colher`
+                          : `Canteiro ${index + 1}: apodrecido`
                   }
                 >
                   <PixelIcon
-                    src={state === "EMPTY" ? FARM_ICONS.plots.empty : plotIcon(plot, nowMs)}
+                    src={FARM_ICONS.plots.empty}
                     alt=""
-                    className="fq-home-plot-art"
+                    className="fq-map-plot-base"
                   />
-                  {state === "PLANTED" ? <span className="fq-plot-timer">{timerText(plot, nowMs)}</span> : null}
+                  {state !== "EMPTY" ? (
+                    <PixelIcon
+                      src={plotIcon(plot, nowMs)}
+                      alt={plot.planted?.cropName ?? ""}
+                      className="fq-map-plot-crop"
+                    />
+                  ) : null}
+                  {state === "PLANTED" ? (
+                    <span className="fq-map-plot-timer">{timerText(plot, nowMs)}</span>
+                  ) : null}
                 </button>
               );
             })}
           </div>
 
-          <div className="fq-home-actions">
-            <button
-              className="fq-panel-button fq-plant-button"
-              onClick={props.onPlantAll}
-              disabled={Boolean(busy)}
-            >
-              <PixelIcon src={FARM_ICONS.actions.plant} alt="" />
-              <strong>{busy === "plant-all" ? "Plantando..." : "Plantar"}</strong>
-            </button>
-            <button
-              className="fq-panel-button fq-harvest-button"
-              onClick={props.onHarvestAll}
-              disabled={Boolean(busy) || cooldownText !== "Livre"}
-            >
-              <PixelIcon src={FARM_ICONS.actions.harvest} alt="" />
-              <strong>{busy === "harvest-all" ? "Colhendo..." : "Colher"}</strong>
-            </button>
+          <div className="fq-map-locked-plots" aria-label="Canteiros bloqueados">
+            {Array.from({ length: 7 }, (_, index) => (
+              <button
+                key={index}
+                className={`fq-map-locked-plot fq-map-locked-${index + 1}`}
+                disabled
+                aria-label={`Canteiro bloqueado ${index + 4}. Será desbloqueado por nível.`}
+                title="Bloqueado — será desbloqueado por nível"
+              />
+            ))}
           </div>
 
-          <aside className="fq-task-panel">
-            <h2>Minhas Tarefas</h2>
-            <div className="fq-task-row">
-              <PixelIcon src={FARM_ICONS.plots.empty} alt="" />
-              <span><strong>{plots.length}</strong> canteiros</span>
-            </div>
-            <div className="fq-task-row">
-              <PixelIcon src={FARM_ICONS.seeds.milho} alt="" />
-              <span><strong>{seedCount}</strong> sementes</span>
-            </div>
-            <div className="fq-task-row">
-              <PixelIcon src={FARM_ICONS.crops.milho} alt="" />
-              <span><strong>{readyCount}</strong> {readyCount === 1 ? "colheita pronta" : "colheitas prontas"}</span>
-            </div>
-          </aside>
+          <button
+            className="fq-map-hotspot fq-map-plant-all"
+            onClick={props.onPlantAll}
+            disabled={Boolean(busy)}
+            aria-label="Plantar nos canteiros disponíveis"
+            title="Plantar"
+          />
+          <button
+            className="fq-map-hotspot fq-map-harvest-all"
+            onClick={props.onHarvestAll}
+            disabled={Boolean(busy) || cooldownText !== "Livre"}
+            aria-label="Colher canteiros prontos"
+            title="Colher"
+          />
 
+          <button
+            className="fq-map-hotspot fq-map-refresh"
+            onClick={props.onRefresh}
+            disabled={Boolean(busy)}
+            aria-label="Atualizar fazenda"
+            title="Atualizar"
+          />
+          <button
+            className="fq-map-hotspot fq-map-logout"
+            onClick={props.onLogout}
+            disabled={Boolean(busy)}
+            aria-label="Sair"
+            title="Sair"
+          />
+
+          <div className="fq-map-live-coins" aria-label={`${farm.coins} moedas`}>
+            <strong>{farm.coins}</strong>
+          </div>
+
+          <div className="fq-map-live-tasks" aria-label="Resumo da fazenda">
+            <span><strong>3</strong> canteiros</span>
+            <span><strong>{seedCount}</strong> sementes</span>
+            <span>
+              <strong>{readyCount}</strong> {readyCount === 1 ? "colheita pronta" : "colheitas prontas"}
+            </span>
+          </div>
         </div>
       </section>
     );
