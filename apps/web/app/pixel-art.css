@@ -5077,3 +5077,158 @@
   width: 14.2%;
   height: 19.2%;
 }
+
+
+/* FarmQuest official Home polish v2 — screenshot calibrated */
+
+/* Ajuste fino usando a arte oficial 1672x941 como referência. */
+.fq-map-plot-1 {
+  left: 22.20%;
+  top: 44.65%;
+  width: 10.90%;
+  height: 9.15%;
+}
+
+.fq-map-plot-2 {
+  left: 33.45%;
+  top: 41.15%;
+  width: 11.45%;
+  height: 10.10%;
+}
+
+.fq-map-plot-3 {
+  left: 41.55%;
+  top: 46.75%;
+  width: 10.30%;
+  height: 9.35%;
+}
+
+.fq-map-plot-base {
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+}
+
+.fq-map-plot-crop {
+  inset: 9%;
+  width: 82%;
+  height: 82%;
+}
+
+.fq-map-plot.is-ready .fq-map-plot-crop {
+  inset: 3%;
+  width: 94%;
+  height: 94%;
+}
+
+/* Mantém a madeira original visível; cobre apenas os valores impressos na arte. */
+.fq-map-live-coins {
+  left: 16.45%;
+  top: 3.55%;
+  width: 3.15%;
+  height: 2.85%;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #bd632b 0%, #b25a27 100%);
+  box-shadow: none;
+  font-size: clamp(11px, 1.18vw, 20px);
+}
+
+.fq-map-live-xp {
+  left: 26.30%;
+  top: 3.70%;
+  width: 10.95%;
+  height: 2.55%;
+  gap: 3px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.fq-map-live-xp-track {
+  height: 52%;
+  border: 1px solid #4d2a16;
+}
+
+.fq-map-live-xp strong {
+  min-width: 49px;
+  padding: 2px 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #bd632b 0%, #b25a27 100%);
+  font-size: clamp(7px, .68vw, 11px);
+}
+
+/* Nome ocupa só a área do texto central, preservando quase toda a prancha de madeira. */
+.fq-map-live-farm-name {
+  left: 57.95%;
+  top: 3.55%;
+  width: 13.35%;
+  height: 2.75%;
+  background: linear-gradient(180deg, #b95f2a 0%, #ad5625 100%);
+  box-shadow: none;
+  border-radius: 3px;
+  font-size: clamp(9px, .98vw, 16px);
+}
+
+/* Substitui somente o algarismo de cada linha do painel de tarefas. */
+.fq-map-live-tasks {
+  left: 88.55%;
+  top: 79.35%;
+  width: 1.35%;
+  height: 13.45%;
+  padding: 0;
+  background: transparent;
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  justify-items: stretch;
+}
+
+.fq-map-live-tasks span {
+  width: 100%;
+  height: 42%;
+  min-height: 16px;
+  display: grid;
+  place-items: center;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 2px;
+  background: #f3ddb0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.fq-map-live-tasks strong {
+  font-size: clamp(8px, .70vw, 12px);
+  line-height: 1;
+}
+
+/* O nível também cobre somente o número original. */
+.fq-map-live-level {
+  left: 7.55%;
+  top: 58.12%;
+  width: 1.65%;
+  height: 1.95%;
+  border-radius: 2px;
+  background: #9d4f22;
+  font-size: clamp(7px, .65vw, 11px);
+}
+
+/* Hotspots totalmente transparentes, inclusive durante clique. */
+.fq-map-hotspot,
+.fq-map-hotspot:hover,
+.fq-map-hotspot:active,
+.fq-map-hotspot:focus,
+.fq-map-hotspot:focus-visible {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fq-map-hotspot::after,
+.fq-map-hotspot:hover::after,
+.fq-map-hotspot:active::after,
+.fq-map-hotspot:focus::after {
+  opacity: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
