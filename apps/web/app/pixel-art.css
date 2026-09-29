@@ -1,0 +1,354 @@
+/* FarmQuest — integração oficial Pixel Art v2
+   Este arquivo entra DEPOIS de globals.css para substituir somente os visuais provisórios. */
+
+.fq-pixel-icon {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  user-select: none;
+  pointer-events: none;
+}
+
+.pixel-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pixel-logo .fq-pixel-icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+}
+
+.pixel-resource-symbol {
+  padding: 0 !important;
+  overflow: visible;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.pixel-resource-symbol .fq-pixel-icon {
+  width: 31px;
+  height: 31px;
+}
+
+.pixel-sidebar-brand {
+  display: grid;
+  place-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.pixel-sidebar-brand .fq-pixel-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.pixel-nav-icon,
+.pixel-dock-icon {
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.pixel-nav-icon .fq-pixel-icon {
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+
+.pixel-dock-icon .fq-pixel-icon {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+}
+
+/* Construções: substitui os desenhos CSS pela arte oficial. */
+.pixel-scene-building {
+  display: grid !important;
+  place-items: center;
+  overflow: visible !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.pixel-scene-building::before {
+  display: none !important;
+}
+
+.pixel-scene-building::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 12%;
+  bottom: 3%;
+  height: 15%;
+  border-radius: 50%;
+  background: rgba(45, 47, 26, 0.2);
+  filter: blur(4px);
+  z-index: -1;
+}
+
+.pixel-scene-building .scene-building-art {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 7px 3px rgba(42, 42, 24, 0.2));
+  transition: transform 130ms ease, filter 130ms ease;
+}
+
+.pixel-scene-building:hover .scene-building-art {
+  transform: translateY(-4px) scale(1.03);
+  filter: drop-shadow(0 10px 4px rgba(42, 42, 24, 0.23)) brightness(1.04);
+}
+
+.farmhouse.pixel-scene-building {
+  width: 162px;
+  height: 162px;
+}
+
+.barn-building.pixel-scene-building {
+  width: 166px;
+  height: 166px;
+}
+
+.market-building.pixel-scene-building {
+  width: 144px;
+  height: 144px;
+}
+
+.pixel-scene-building .scene-caption {
+  bottom: -16px;
+}
+
+/* Curral: mantém a cerca funcional e usa animais PNG por cima. */
+.pixel-animal-pen {
+  overflow: visible !important;
+}
+
+.pixel-animal-pen .pixel-animal {
+  position: absolute;
+  z-index: 3;
+  transition: transform 140ms ease;
+}
+
+.pixel-animal-pen:hover .pixel-animal {
+  transform: translateY(-2px);
+}
+
+.pixel-cow {
+  left: 22px;
+  top: 27px;
+  width: 88px;
+  height: 88px;
+}
+
+.pixel-chicken-one {
+  right: 25px;
+  top: 22px;
+  width: 51px;
+  height: 51px;
+}
+
+.pixel-chicken-two {
+  right: 65px;
+  bottom: 13px;
+  width: 44px;
+  height: 44px;
+}
+
+/* Canteiros no mapa. */
+.pixel-scene-plot .pixel-plot-mark {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pixel-scene-plot.is-empty .pixel-plot-mark {
+  width: 66px;
+  height: 66px;
+}
+
+.pixel-scene-plot.is-rotten .pixel-plot-mark {
+  filter: saturate(0.78);
+}
+
+.pixel-scene-plot .pixel-plot-mark .fq-pixel-icon {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 2px rgba(37, 27, 17, 0.22));
+}
+
+/* Tela de plantações. */
+.pixel-game-plot-art {
+  font-size: 0 !important;
+}
+
+.pixel-game-plot-art .fq-pixel-icon {
+  width: 102px;
+  height: 102px;
+  filter: drop-shadow(0 7px 3px rgba(37, 27, 17, 0.22));
+}
+
+/* Inventário / loja. */
+.pixel-item-art {
+  overflow: visible;
+  background: rgba(233, 209, 139, 0.5) !important;
+}
+
+.pixel-item-art .fq-pixel-icon {
+  width: 48px;
+  height: 48px;
+  margin: auto;
+}
+
+.pixel-quality-line {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+}
+
+.quality-pixel-icon {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 auto;
+}
+
+.pixel-price {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.pixel-price .fq-pixel-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Botões e atalhos. */
+.icon-action {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.icon-action .fq-pixel-icon,
+.button-pixel-icon {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 auto;
+}
+
+.icon-action.compact .fq-pixel-icon,
+.icon-action.compact .button-pixel-icon {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.icon-action.centered {
+  justify-content: center;
+}
+
+.fields-shortcut {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fields-shortcut .fq-pixel-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.pixel-empty-state > .fq-pixel-icon {
+  width: 68px;
+  height: 68px;
+  margin-bottom: 3px;
+}
+
+.pixel-future-icon {
+  width: 86px !important;
+  height: 86px !important;
+  padding: 0 !important;
+  overflow: visible;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.pixel-future-icon .fq-pixel-icon {
+  width: 86px;
+  height: 86px;
+}
+
+/* Mantém a leitura nítida em telas pequenas. */
+@media (max-width: 1050px) {
+  .farmhouse.pixel-scene-building,
+  .barn-building.pixel-scene-building {
+    width: 145px;
+    height: 145px;
+  }
+
+  .market-building.pixel-scene-building {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 760px) {
+  .farmhouse.pixel-scene-building,
+  .barn-building.pixel-scene-building {
+    width: 132px;
+    height: 132px;
+  }
+
+  .market-building.pixel-scene-building {
+    width: 118px;
+    height: 118px;
+  }
+
+  .pixel-nav-icon .fq-pixel-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .pixel-dock-icon .fq-pixel-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .pixel-game-plot-art .fq-pixel-icon {
+    width: 88px;
+    height: 88px;
+  }
+}
+
+/* Tela de entrada do protótipo: usa a casa oficial no lugar do FQ provisório. */
+.logo-mark {
+  overflow: visible;
+  font-size: 0 !important;
+  color: transparent !important;
+  background:
+    url('/game-assets/icons/buildings/casa_fazenda.png') center / contain no-repeat !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  image-rendering: pixelated;
+}

@@ -1,6 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import {
+  FARM_ICONS,
+  iconForCropName,
+  iconForItemName,
+  iconForQuality
+} from "./farm-icons";
 
 export type FarmWorldFarm = {
   id: string;
@@ -71,17 +77,34 @@ type Props = {
   onBuy: (offerId: string) => void;
 };
 
+type PixelIconProps = {
+  src: string;
+  alt?: string;
+  className?: string;
+};
+
+function PixelIcon({ src, alt = "", className = "" }: PixelIconProps) {
+  return (
+    <img
+      className={`fq-pixel-icon ${className}`.trim()}
+      src={src}
+      alt={alt}
+      draggable={false}
+    />
+  );
+}
+
 const menu: Array<{ key: Section; label: string; icon: string }> = [
-  { key: "inicio", label: "Início", icon: "⌂" },
-  { key: "fazenda", label: "Fazenda", icon: "▦" },
-  { key: "plantacoes", label: "Plantações", icon: "♧" },
-  { key: "animais", label: "Animais", icon: "●" },
-  { key: "celeiro", label: "Celeiro", icon: "□" },
-  { key: "mercado", label: "Mercado", icon: "▤" },
-  { key: "pedidos", label: "Pedidos", icon: "✓" },
-  { key: "exploracao", label: "Exploração", icon: "⌖" },
-  { key: "ranking", label: "Ranking", icon: "♛" },
-  { key: "conquistas", label: "Conquistas", icon: "★" }
+  { key: "inicio", label: "Início", icon: FARM_ICONS.buildings.farmhouse },
+  { key: "fazenda", label: "Fazenda", icon: FARM_ICONS.plots.empty },
+  { key: "plantacoes", label: "Plantações", icon: FARM_ICONS.actions.plant },
+  { key: "animais", label: "Animais", icon: FARM_ICONS.animals.chicken },
+  { key: "celeiro", label: "Celeiro", icon: FARM_ICONS.buildings.barn },
+  { key: "mercado", label: "Mercado", icon: FARM_ICONS.buildings.market },
+  { key: "pedidos", label: "Pedidos", icon: FARM_ICONS.community.harvestBox },
+  { key: "exploracao", label: "Exploração", icon: FARM_ICONS.rare.leafFossil },
+  { key: "ranking", label: "Ranking", icon: FARM_ICONS.ui.ranking },
+  { key: "conquistas", label: "Conquistas", icon: FARM_ICONS.ui.collector }
 ];
 
 function plotState(plot: FarmWorldPlot, nowMs: number): FarmWorldPlot["state"] {
@@ -110,6 +133,13 @@ function qualityLabel(quality: FarmWorldInventoryItem["quality"]): string {
     case "EXTRAORDINARY": return "Extraordinário";
     case "ROTTEN": return "Apodrecido";
   }
+}
+
+function plotIcon(plot: FarmWorldPlot, nowMs: number): string {
+  const state = plotState(plot, nowMs);
+  if (state === "EMPTY") return FARM_ICONS.plots.empty;
+  if (state === "ROTTEN") return FARM_ICONS.quality.rottenItem;
+  return iconForCropName(plot.planted?.cropName);
 }
 
 export function FarmWorld(props: Props) {
@@ -142,7 +172,7 @@ export function FarmWorld(props: Props) {
   function homeScene() {
     return (
       <section className="world-scene-shell">
-        <div className="world-scene">
+        <div className="world-scene pixel-world">
           <div className="scene-nameplate">
             <span>Fazenda de {userName}</span>
             <strong>Nível {farm.level}</strong>
@@ -174,63 +204,65 @@ export function FarmWorld(props: Props) {
           <div className="scene-tree tree-d" />
 
           <button
-            className="scene-building farmhouse"
+            className="scene-building farmhouse pixel-scene-building"
             onClick={() => setSection("fazenda")}
             title="Fazenda"
           >
-            <span className="house-roof" />
-            <span className="house-body">
-              <span className="house-door" />
-              <span className="house-window house-window-a" />
-              <span className="house-window house-window-b" />
-            </span>
+            <PixelIcon
+              src={FARM_ICONS.buildings.farmhouse}
+              alt="Casa da fazenda"
+              className="scene-building-art farmhouse-art"
+            />
             <span className="scene-caption">Fazenda</span>
           </button>
 
           <button
-            className="scene-building barn-building"
+            className="scene-building barn-building pixel-scene-building"
             onClick={() => setSection("celeiro")}
             title="Abrir celeiro"
           >
-            <span className="barn-main">
-              <span className="barn-big-door" />
-            </span>
-            <span className="barn-top" />
+            <PixelIcon
+              src={FARM_ICONS.buildings.barn}
+              alt="Celeiro"
+              className="scene-building-art barn-art"
+            />
             <span className="scene-caption">Celeiro</span>
           </button>
 
           <button
-            className="scene-building market-building"
+            className="scene-building market-building pixel-scene-building"
             onClick={() => setSection("mercado")}
             title="Abrir mercado"
           >
-            <span className="market-awning" />
-            <span className="market-counter" />
+            <PixelIcon
+              src={FARM_ICONS.buildings.market}
+              alt="Mercado rural"
+              className="scene-building-art market-art"
+            />
             <span className="scene-caption">Mercado</span>
           </button>
 
           <button
-            className="scene-building animal-pen"
+            className="scene-building animal-pen pixel-animal-pen"
             onClick={() => setSection("animais")}
             title="Animais"
           >
             <span className="pen-fence" />
-            <span className="cow-sprite cow-one">
-              <span className="cow-head" />
-              <span className="cow-body" />
-              <span className="cow-leg cow-leg-a" />
-              <span className="cow-leg cow-leg-b" />
-            </span>
-            <span className="chicken-sprite chicken-one">
-              <span className="chicken-body" />
-              <span className="chicken-head" />
-              <span className="chicken-comb" />
-            </span>
-            <span className="chicken-sprite chicken-two">
-              <span className="chicken-body" />
-              <span className="chicken-head" />
-              <span className="chicken-comb" />
-            </span>
+            <PixelIcon
+              src={FARM_ICONS.animals.cow}
+              alt="Vaca"
+              className="pixel-cow pixel-animal"
+            />
+            <PixelIcon
+              src={FARM_ICONS.animals.chicken}
+              alt="Galinha"
+              className="pixel-chicken pixel-chicken-one pixel-animal"
+            />
+            <PixelIcon
+              src={FARM_ICONS.animals.chicken}
+              alt="Galinha"
+              className="pixel-chicken pixel-chicken-two pixel-animal"
+            />
             <span className="scene-caption">Animais</span>
           </button>
 
@@ -266,15 +298,12 @@ export function FarmWorld(props: Props) {
           <div className="scene-plots" aria-label="Canteiros da fazenda">
             {plots.map((plot) => {
               const state = plotState(plot, nowMs);
-              const canInteract =
-                state === "EMPTY" ||
-                state === "READY" ||
-                state === "ROTTEN";
+              const canInteract = state === "EMPTY" || state === "READY" || state === "ROTTEN";
 
               return (
                 <button
                   key={plot.id}
-                  className={`scene-plot scene-plot-${plot.slotNumber} is-${state.toLowerCase()}`}
+                  className={`scene-plot scene-plot-${plot.slotNumber} is-${state.toLowerCase()} pixel-scene-plot`}
                   onClick={() => interactPlot(plot)}
                   disabled={Boolean(busy) || !canInteract || (state !== "EMPTY" && cooldownText !== "Livre")}
                   title={
@@ -286,8 +315,8 @@ export function FarmWorld(props: Props) {
                   }
                 >
                   <span className="plot-furrows" />
-                  <span className="plot-crop-mark">
-                    {state === "EMPTY" ? "+" : state === "PLANTED" ? "♧" : state === "READY" ? "♦" : "×"}
+                  <span className="plot-crop-mark pixel-plot-mark">
+                    <PixelIcon src={plotIcon(plot, nowMs)} alt="" />
                   </span>
                   <span className="plot-bubble">
                     C{plot.slotNumber} · {state === "PLANTED" ? timerText(plot, nowMs) : state === "EMPTY" ? "Plantar" : state === "READY" ? "Colher" : "Apodrecido"}
@@ -301,6 +330,7 @@ export function FarmWorld(props: Props) {
             className="scene-shortcut fields-shortcut"
             onClick={() => setSection("plantacoes")}
           >
+            <PixelIcon src={FARM_ICONS.actions.plant} alt="" className="button-pixel-icon" />
             Ver plantações
           </button>
         </div>
@@ -319,17 +349,19 @@ export function FarmWorld(props: Props) {
           </div>
           <div className="game-page-actions">
             <button
-              className="game-action secondary"
+              className="game-action secondary icon-action"
               onClick={props.onPlantAll}
               disabled={Boolean(busy)}
             >
+              <PixelIcon src={FARM_ICONS.actions.plant} alt="" />
               {busy === "plant-all" ? "Plantando..." : "Plantar milho"}
             </button>
             <button
-              className="game-action"
+              className="game-action icon-action"
               onClick={props.onHarvestAll}
               disabled={Boolean(busy) || cooldownText !== "Livre"}
             >
+              <PixelIcon src={FARM_ICONS.actions.harvest} alt="" />
               {busy === "harvest-all" ? "Colhendo..." : "Colher tudo"}
             </button>
           </div>
@@ -344,8 +376,8 @@ export function FarmWorld(props: Props) {
                   <strong>Canteiro {plot.slotNumber}</strong>
                   <span>{state === "EMPTY" ? "Vazio" : state === "PLANTED" ? "Crescendo" : state === "READY" ? "Pronto" : "Apodrecido"}</span>
                 </div>
-                <div className="game-plot-art">
-                  <span>{state === "EMPTY" ? "＋" : state === "PLANTED" ? "♧" : state === "READY" ? "♦" : "×"}</span>
+                <div className="game-plot-art pixel-game-plot-art">
+                  <PixelIcon src={plotIcon(plot, nowMs)} alt={plot.planted?.cropName ?? "Canteiro vazio"} />
                 </div>
                 <div className="game-plot-info">
                   <strong>{plot.planted?.cropName ?? "Terreno livre"}</strong>
@@ -360,7 +392,7 @@ export function FarmWorld(props: Props) {
                   </small>
                 </div>
                 <button
-                  className="game-action wide"
+                  className="game-action wide icon-action centered"
                   onClick={() => interactPlot(plot)}
                   disabled={
                     Boolean(busy) ||
@@ -368,6 +400,10 @@ export function FarmWorld(props: Props) {
                     ((state === "READY" || state === "ROTTEN") && cooldownText !== "Livre")
                   }
                 >
+                  <PixelIcon
+                    src={state === "EMPTY" ? FARM_ICONS.actions.plant : FARM_ICONS.actions.harvest}
+                    alt=""
+                  />
                   {state === "EMPTY"
                     ? busy === `plant-${plot.id}` ? "Plantando..." : "Plantar"
                     : state === "PLANTED"
@@ -395,39 +431,49 @@ export function FarmWorld(props: Props) {
 
         <div className="game-inventory-grid">
           {inventory.length === 0 ? (
-            <div className="game-empty-state">
+            <div className="game-empty-state pixel-empty-state">
+              <PixelIcon src={FARM_ICONS.ui.inventory} alt="Inventário vazio" />
               <strong>Seu celeiro está vazio</strong>
               <span>Colha uma plantação para guardar produtos aqui.</span>
             </div>
           ) : (
-            inventory.map((item) => (
-              <article key={item.id} className={`game-inventory-card q-${item.quality.toLowerCase()}`}>
-                <div className="game-item-art">{item.name.includes("Semente") ? "●" : "♦"}</div>
-                <div className="game-item-copy">
-                  <strong>{item.name}</strong>
-                  <span>{qualityLabel(item.quality)}</span>
-                  <small>Quantidade: {item.quantity}</small>
-                </div>
-                <div className="game-item-actions">
-                  {item.quality !== "NONE" && item.quality !== "ROTTEN" ? (
+            inventory.map((item) => {
+              const qualityIcon = iconForQuality(item.quality);
+              return (
+                <article key={item.id} className={`game-inventory-card q-${item.quality.toLowerCase()}`}>
+                  <div className="game-item-art pixel-item-art">
+                    <PixelIcon src={iconForItemName(item.name)} alt={item.name} />
+                  </div>
+                  <div className="game-item-copy">
+                    <strong>{item.name}</strong>
+                    <span className="pixel-quality-line">
+                      {qualityIcon ? <PixelIcon src={qualityIcon} alt="" className="quality-pixel-icon" /> : null}
+                      {qualityLabel(item.quality)}
+                    </span>
+                    <small>Quantidade: {item.quantity}</small>
+                  </div>
+                  <div className="game-item-actions">
+                    {item.quality !== "NONE" && item.quality !== "ROTTEN" ? (
+                      <button
+                        className="game-mini-action sell"
+                        onClick={() => props.onSell(item.id)}
+                        disabled={Boolean(busy)}
+                      >
+                        {busy === `sell-${item.id}` ? "Vendendo..." : "Vender 1"}
+                      </button>
+                    ) : null}
                     <button
-                      className="game-mini-action sell"
-                      onClick={() => props.onSell(item.id)}
+                      className="game-mini-action icon-action compact"
+                      onClick={() => props.onDiscard(item.id)}
                       disabled={Boolean(busy)}
                     >
-                      {busy === `sell-${item.id}` ? "Vendendo..." : "Vender 1"}
+                      <PixelIcon src={FARM_ICONS.actions.discard} alt="" />
+                      {busy === `discard-${item.id}` ? "Descartando..." : "Descartar 1"}
                     </button>
-                  ) : null}
-                  <button
-                    className="game-mini-action"
-                    onClick={() => props.onDiscard(item.id)}
-                    disabled={Boolean(busy)}
-                  >
-                    {busy === `discard-${item.id}` ? "Descartando..." : "Descartar 1"}
-                  </button>
-                </div>
-              </article>
-            ))
+                  </div>
+                </article>
+              );
+            })
           )}
         </div>
       </section>
@@ -448,13 +494,18 @@ export function FarmWorld(props: Props) {
         <div className="game-shop-grid">
           {shop.map((offer) => (
             <article key={offer.id} className="game-shop-card">
-              <div className="game-shop-art">●</div>
+              <div className="game-shop-art pixel-item-art">
+                <PixelIcon src={iconForItemName(offer.itemName)} alt={offer.itemName} />
+              </div>
               <div className="game-item-copy">
                 <strong>{offer.itemName}</strong>
                 <span>Nível mínimo {offer.minLevel}</span>
               </div>
               <div className="game-shop-buy">
-                <strong>{offer.buyPrice} moedas</strong>
+                <strong className="pixel-price">
+                  <PixelIcon src={FARM_ICONS.ui.coins} alt="" />
+                  {offer.buyPrice} moedas
+                </strong>
                 <button
                   className="game-action"
                   onClick={() => props.onBuy(offer.id)}
@@ -470,10 +521,12 @@ export function FarmWorld(props: Props) {
     );
   }
 
-  function unavailable(title: string, text: string) {
+  function unavailable(title: string, text: string, icon: string) {
     return (
-      <section className="game-page-panel future-panel">
-        <div className="future-icon">FQ</div>
+      <section className="game-page-panel future-panel pixel-future-panel">
+        <div className="future-icon pixel-future-icon">
+          <PixelIcon src={icon} alt="" />
+        </div>
         <span>EM DESENVOLVIMENTO</span>
         <h2>{title}</h2>
         <p>{text}</p>
@@ -496,22 +549,45 @@ export function FarmWorld(props: Props) {
       case "mercado":
         return market();
       case "animais":
-        return unavailable("Animais", "O espaço já está reservado na nova interface. O sistema de animais será ligado ao backend na fase prevista da arquitetura.");
+        return unavailable(
+          "Animais",
+          "O espaço já está reservado na nova interface. O sistema de animais será ligado ao backend na fase prevista da arquitetura.",
+          FARM_ICONS.animals.cow
+        );
       case "pedidos":
-        return unavailable("Pedidos", "A navegação está pronta. Os pedidos serão ativados quando o módulo correspondente entrar no protótipo.");
+        return unavailable(
+          "Pedidos",
+          "A navegação está pronta. Os pedidos serão ativados quando o módulo correspondente entrar no protótipo.",
+          FARM_ICONS.community.harvestBox
+        );
       case "exploracao":
-        return unavailable("Exploração", "A área visual já existe, mas nenhuma regra de exploração foi adicionada ao 0.1.");
+        return unavailable(
+          "Exploração",
+          "A área visual já existe, mas nenhuma regra de exploração foi adicionada ao 0.1.",
+          FARM_ICONS.rare.leafFossil
+        );
       case "ranking":
-        return unavailable("Ranking", "O ranking está previsto para uma fase posterior e ainda não possui endpoint no protótipo.");
+        return unavailable(
+          "Ranking",
+          "O ranking está previsto para uma fase posterior e ainda não possui endpoint no protótipo.",
+          FARM_ICONS.ui.ranking
+        );
       case "conquistas":
-        return unavailable("Conquistas", "Esta tela ficará responsável por títulos e conquistas quando esses dados estiverem disponíveis.");
+        return unavailable(
+          "Conquistas",
+          "Esta tela ficará responsável por títulos e conquistas quando esses dados estiverem disponíveis.",
+          FARM_ICONS.ui.collector
+        );
     }
   }
 
   return (
-    <main className="farm-game-shell">
+    <main className="farm-game-shell pixel-ui-shell">
       <header className="farm-game-topbar">
-        <div className="farm-game-logo">FarmQuest</div>
+        <div className="farm-game-logo pixel-logo">
+          <PixelIcon src={FARM_ICONS.buildings.farmhouse} alt="" />
+          <span>FarmQuest</span>
+        </div>
 
         <div className="farm-identity">
           <strong>Fazenda de {userName}</strong>
@@ -520,17 +596,23 @@ export function FarmWorld(props: Props) {
 
         <div className="farm-resources">
           <div className="resource-chip coin-chip">
-            <span className="resource-symbol">●</span>
+            <span className="resource-symbol pixel-resource-symbol">
+              <PixelIcon src={FARM_ICONS.ui.coins} alt="Moedas" />
+            </span>
             <strong>{farm.coins}</strong>
             <small>moedas</small>
           </div>
           <div className="resource-chip">
-            <span className="resource-symbol">XP</span>
+            <span className="resource-symbol pixel-resource-symbol">
+              <PixelIcon src={FARM_ICONS.ui.xp} alt="Experiência" />
+            </span>
             <strong>{farm.xp}</strong>
             <small>experiência</small>
           </div>
           <div className="resource-chip">
-            <span className="resource-symbol">⌛</span>
+            <span className="resource-symbol pixel-resource-symbol">
+              <PixelIcon src={FARM_ICONS.actions.harvest} alt="Colheita" />
+            </span>
             <strong>{cooldownText}</strong>
             <small>colheita</small>
           </div>
@@ -543,7 +625,9 @@ export function FarmWorld(props: Props) {
       </header>
 
       <aside className="farm-game-sidebar">
-        <div className="sidebar-brand-mini">FQ</div>
+        <div className="sidebar-brand-mini pixel-sidebar-brand">
+          <PixelIcon src={FARM_ICONS.ui.level} alt="FarmQuest" />
+        </div>
         <nav>
           {menu.map((item) => (
             <button
@@ -551,7 +635,7 @@ export function FarmWorld(props: Props) {
               className={section === item.key || (section === "fazenda" && item.key === "inicio") ? "active" : ""}
               onClick={() => setSection(item.key)}
             >
-              <span>{item.icon}</span>
+              <span className="pixel-nav-icon"><PixelIcon src={item.icon} alt="" /></span>
               <strong>{item.label}</strong>
             </button>
           ))}
@@ -566,17 +650,17 @@ export function FarmWorld(props: Props) {
 
       <footer className="farm-game-dock">
         <button onClick={() => setSection("plantacoes")}>
-          <span>♧</span>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.actions.plant} alt="" /></span>
           <strong>Plantações</strong>
           <small>{plots.length} canteiros</small>
         </button>
         <button onClick={() => setSection("mercado")}>
-          <span>▤</span>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.buildings.market} alt="" /></span>
           <strong>Mercado</strong>
           <small>Comprar</small>
         </button>
         <button onClick={() => setSection("celeiro")}>
-          <span>□</span>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.buildings.barn} alt="" /></span>
           <strong>Celeiro</strong>
           <small>{inventoryCount} itens</small>
         </button>
