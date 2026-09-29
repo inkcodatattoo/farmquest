@@ -8,3 +8,6 @@ dist
 coverage
 .turbo
 *.log
+
+# Local one-click development secrets
+.farmquest-local.cmd
