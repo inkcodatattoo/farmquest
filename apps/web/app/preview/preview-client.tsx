@@ -89,6 +89,12 @@ const INITIAL_INVENTORY: FarmWorldInventoryItem[] = [
     name: "Batata",
     quality: "GOOD",
     quantity: 3
+  },
+  {
+    id: "preview-rotten-corn",
+    name: "Milho",
+    quality: "ROTTEN",
+    quantity: 1
   }
 ];
 
