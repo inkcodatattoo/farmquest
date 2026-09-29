@@ -2641,3 +2641,39 @@
     animation: none !important;
   }
 }
+
+
+/* FarmQuest v1.10 — correções de posicionamento e qualidades */
+
+.pixel-ui-shell .resource-chip,
+.pixel-ui-shell .farm-game-sidebar button {
+  position: relative;
+}
+
+.pixel-ui-shell .game-inventory-card.q-common {
+  filter: drop-shadow(0 7px 3px rgba(70,62,50,.20));
+}
+
+.pixel-ui-shell .game-inventory-card.q-good {
+  filter:
+    drop-shadow(0 7px 3px rgba(54,105,52,.18))
+    drop-shadow(0 0 8px rgba(91,154,72,.12));
+}
+
+.pixel-ui-shell .game-inventory-card.q-excellent {
+  filter:
+    drop-shadow(0 7px 3px rgba(42,83,122,.20))
+    drop-shadow(0 0 9px rgba(67,135,199,.16));
+}
+
+.pixel-ui-shell .game-inventory-card.q-extraordinary {
+  filter:
+    drop-shadow(0 7px 3px rgba(90,48,123,.22))
+    drop-shadow(0 0 11px rgba(145,74,201,.20));
+}
+
+.pixel-ui-shell .game-inventory-card.q-rotten {
+  filter:
+    saturate(.78)
+    drop-shadow(0 7px 3px rgba(73,54,69,.20));
+}
