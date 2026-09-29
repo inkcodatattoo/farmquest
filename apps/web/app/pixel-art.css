@@ -4909,3 +4909,171 @@
   font-size: clamp(7px, .72vw, 12px);
   pointer-events: none;
 }
+
+
+/* FarmQuest official Home polish — exact overlay alignment */
+
+/* Hotspots ficam realmente invisíveis: a própria arte é a interface. */
+.fq-map-hotspot::after,
+.fq-map-plot::after {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fq-map-hotspot:hover::after,
+.fq-map-plot:hover::after {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fq-map-hotspot:focus-visible,
+.fq-map-plot:focus-visible {
+  outline: 3px solid rgba(255, 223, 112, .92);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* Ajuste fino dos três canteiros ativos sobre os terrenos da arte. */
+.fq-map-plot-1 {
+  left: 22.05%;
+  top: 44.15%;
+  width: 11.75%;
+  height: 9.45%;
+}
+
+.fq-map-plot-2 {
+  left: 33.05%;
+  top: 41.35%;
+  width: 11.85%;
+  height: 9.65%;
+}
+
+.fq-map-plot-3 {
+  left: 41.00%;
+  top: 46.55%;
+  width: 11.15%;
+  height: 9.70%;
+}
+
+.fq-map-plot-base {
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 2px rgba(47, 31, 13, .14));
+}
+
+.fq-map-plot-crop {
+  inset: 7%;
+  width: 86%;
+  height: 86%;
+}
+
+.fq-map-plot.is-ready .fq-map-plot-crop {
+  inset: 1%;
+  width: 98%;
+  height: 98%;
+}
+
+.fq-map-plot-timer {
+  bottom: -16%;
+}
+
+/* HUD vivo sem cobrir a moldura de madeira já desenhada. */
+.fq-map-live-coins {
+  left: 15.25%;
+  top: 3.55%;
+  width: 4.75%;
+  height: 3.1%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.025) 0 2px,
+      rgba(74,33,12,.035) 2px 4px
+    ),
+    linear-gradient(#c36a2d, #aa5224);
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgba(84, 43, 17, .18);
+}
+
+.fq-map-live-xp {
+  left: 25.55%;
+  top: 3.65%;
+  width: 11.20%;
+  height: 2.7%;
+  padding: 0;
+  gap: 4px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.fq-map-live-xp-track {
+  height: 54%;
+  border-width: 1px;
+}
+
+.fq-map-live-xp strong {
+  min-width: 39px;
+  font-size: clamp(7px, .62vw, 10px);
+  color: #3d210f;
+  text-shadow: 0 1px rgba(255,218,126,.35);
+}
+
+.fq-map-live-farm-name {
+  top: 3.45%;
+  height: 2.8%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.018) 0 2px,
+      rgba(74,33,12,.025) 2px 4px
+    ),
+    rgba(174, 83, 35, .94);
+  box-shadow: inset 0 0 0 1px rgba(80, 41, 17, .14);
+  border-radius: 4px;
+}
+
+/* No painel de tarefas atualizamos só os números, preservando a arte e os rótulos. */
+.fq-map-live-tasks {
+  left: 89.10%;
+  top: 80.45%;
+  width: 2.55%;
+  height: 10.9%;
+  padding: 0;
+  background: transparent;
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+
+.fq-map-live-tasks span {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: rgba(246, 222, 170, .96);
+  border-radius: 3px;
+  line-height: 1;
+}
+
+.fq-map-live-tasks strong {
+  font-family: Georgia, serif;
+  font-size: clamp(8px, .74vw, 12px);
+  color: #4e321e;
+}
+
+/* Hotspots dos animais acompanham apenas as áreas úteis e não exibem borda. */
+.fq-map-cow-hotspot {
+  left: 43.8%;
+  top: 20.6%;
+  width: 16.0%;
+  height: 18.0%;
+}
+
+.fq-map-coop-hotspot {
+  left: 72.2%;
+  top: 40.0%;
+  width: 14.2%;
+  height: 19.2%;
+}
