@@ -177,6 +177,9 @@ export function FarmWorld(props: Props) {
     const seedCount = inventory
       .filter((item) => item.name.toLowerCase().includes("semente"))
       .reduce((sum, item) => sum + item.quantity, 0);
+    const xpValue = Number(farm.xp) || 0;
+    const xpGoal = farm.level <= 1 ? 100 : farm.level === 2 ? 200 : Math.max(300, farm.level * 100);
+    const xpProgress = Math.max(0, Math.min(100, (xpValue / xpGoal) * 100));
 
     const sidebarItems: Array<{ section: Section; label: string; className: string }> = [
       { section: "inicio", label: "Início", className: "fq-map-nav-inicio" },
@@ -323,6 +326,21 @@ export function FarmWorld(props: Props) {
 
           <div className="fq-map-live-coins" aria-label={`${farm.coins} moedas`}>
             <strong>{farm.coins}</strong>
+          </div>
+
+          <div className="fq-map-live-xp" aria-label={`${xpValue} de ${xpGoal} de experiência`}>
+            <span className="fq-map-live-xp-track">
+              <i style={{ width: `${xpProgress}%` }} />
+            </span>
+            <strong>{xpValue}/{xpGoal}</strong>
+          </div>
+
+          <div className="fq-map-live-farm-name">
+            <strong>Fazenda do {userName}</strong>
+          </div>
+
+          <div className="fq-map-live-level" aria-label={`Nível ${farm.level}`}>
+            <strong>{farm.level}</strong>
           </div>
 
           <div className="fq-map-live-tasks" aria-label="Resumo da fazenda">
