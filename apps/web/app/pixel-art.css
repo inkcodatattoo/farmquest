@@ -2038,3 +2038,51 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* FarmQuest v1.4 — microanimações pixel art */
+
+@keyframes fq-water-drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 80px 8px, 0 0; }
+}
+
+@keyframes fq-ready-crop {
+  0%, 100% { transform: translateY(3px) scale(1); }
+  50% { transform: translateY(-1px) scale(1.035); }
+}
+
+@keyframes fq-lantern-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(255,203,73,.28), inset 0 0 0 2px #e3a64b; }
+  50% { box-shadow: 0 0 16px rgba(255,203,73,.48), inset 0 0 0 2px #f0bb5c; }
+}
+
+.fq-river {
+  animation: fq-water-drift 16s linear infinite;
+}
+
+.fq-home-plot.is-ready .fq-home-plot-art {
+  animation: fq-ready-crop 1.7s steps(2, end) infinite;
+}
+
+.fq-lantern-post i {
+  animation: fq-lantern-glow 2.4s ease-in-out infinite;
+}
+
+.fq-home-nav button,
+.fq-panel-button,
+.fq-home-system-actions button,
+.pixel-ui-shell .game-action,
+.pixel-ui-shell .game-mini-action,
+.pixel-ui-shell .farm-game-dock button,
+.pixel-ui-shell .farm-game-sidebar button {
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fq-river,
+  .fq-home-plot.is-ready .fq-home-plot-art,
+  .fq-lantern-post i {
+    animation: none !important;
+  }
+}
