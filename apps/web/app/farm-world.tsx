@@ -343,12 +343,13 @@ export function FarmWorld(props: Props) {
             <strong>{farm.level}</strong>
           </div>
 
-          <div className="fq-map-live-tasks" aria-label="Resumo da fazenda">
-            <span><strong>3</strong> canteiros</span>
-            <span><strong>{seedCount}</strong> sementes</span>
-            <span>
-              <strong>{readyCount}</strong> {readyCount === 1 ? "colheita pronta" : "colheitas prontas"}
-            </span>
+          <div
+            className="fq-map-live-tasks"
+            aria-label={`3 canteiros, ${seedCount} sementes, ${readyCount} ${readyCount === 1 ? "colheita pronta" : "colheitas prontas"}`}
+          >
+            <span><strong>3</strong></span>
+            <span><strong>{seedCount}</strong></span>
+            <span><strong>{readyCount}</strong></span>
           </div>
         </div>
       </section>
