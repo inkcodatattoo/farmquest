@@ -352,3 +352,728 @@
   box-shadow: none !important;
   image-rendering: pixelated;
 }
+
+
+/* FarmQuest Home v1 — painel oficial + layout funcional */
+
+.fq-home-shell {
+  min-height: 100vh;
+  overflow: auto;
+  background:
+    linear-gradient(rgba(15, 35, 20, .18), rgba(15, 35, 20, .18)),
+    #244d2c;
+  color: #3b2415;
+}
+
+.fq-home-stage {
+  min-height: 100vh;
+  padding: 8px;
+}
+
+.fq-home-scene {
+  position: relative;
+  min-width: 1120px;
+  min-height: 760px;
+  height: calc(100vh - 16px);
+  max-height: 980px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 4px solid #64391f;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 12% 71%, rgba(255,255,255,.13) 0 2px, transparent 3px) 0 0/26px 26px,
+    radial-gradient(circle at 82% 62%, rgba(54,113,47,.20) 0 18px, transparent 19px) 0 0/90px 90px,
+    linear-gradient(180deg, #6fb352 0%, #75b856 56%, #55973f 100%);
+  box-shadow:
+    inset 0 0 0 3px rgba(255,255,255,.09),
+    inset 0 -45px 110px rgba(32,76,35,.28),
+    0 12px 40px rgba(0,0,0,.28);
+}
+
+.fq-home-scene::before {
+  content: "";
+  position: absolute;
+  inset: 20% 0 8%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, transparent 0 44%, rgba(222,184,111,.58) 45% 51%, transparent 52%) 20% 10%/470px 320px no-repeat,
+    linear-gradient(35deg, transparent 0 44%, rgba(219,179,103,.50) 45% 51%, transparent 52%) 53% 42%/500px 330px no-repeat,
+    linear-gradient(160deg, transparent 0 45%, rgba(222,184,111,.42) 46% 51%, transparent 52%) 72% 66%/420px 250px no-repeat;
+  opacity: .92;
+}
+
+.fq-home-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 3% 48%, rgba(40,100,41,.38) 0 78px, transparent 79px),
+    radial-gradient(circle at 96% 46%, rgba(34,89,37,.36) 0 86px, transparent 87px),
+    radial-gradient(circle at 7% 96%, rgba(30,78,36,.48) 0 110px, transparent 111px),
+    radial-gradient(circle at 80% 98%, rgba(29,78,35,.43) 0 100px, transparent 101px);
+}
+
+.fq-home-hud {
+  position: absolute;
+  inset: 14px 14px auto;
+  height: 100px;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 300px 230px minmax(300px, 360px) minmax(240px, 1fr) 92px;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.fq-home-hud > * {
+  pointer-events: auto;
+}
+
+.fq-home-logo {
+  position: relative;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 7px 25px 12px;
+  color: #fff0cd;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.13), transparent 20%),
+    repeating-linear-gradient(0deg, rgba(70,38,20,.16) 0 3px, transparent 3px 18px),
+    linear-gradient(180deg, #8c512a, #5d341c);
+  border: 5px solid #4c2a17;
+  border-radius: 16px 16px 22px 22px;
+  box-shadow:
+    inset 0 0 0 3px #b97939,
+    inset 0 -8px 0 rgba(59,31,17,.22),
+    0 7px 0 rgba(54,30,18,.28);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 3vw, 51px);
+  font-weight: 950;
+  letter-spacing: -.07em;
+  text-shadow:
+    0 3px 0 #3c2315,
+    2px 0 0 #3c2315,
+    -2px 0 0 #3c2315;
+}
+
+.fq-home-logo::before,
+.fq-home-logo::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 16px;
+  border-radius: 90% 10% 90% 10%;
+  background: #74a93d;
+  border: 3px solid #365f2d;
+}
+.fq-home-logo::before { left: 16px; top: -5px; transform: rotate(-21deg); }
+.fq-home-logo::after { right: 16px; top: -5px; transform: scaleX(-1) rotate(-21deg); }
+
+.fq-home-logo strong {
+  color: #ffb21f;
+}
+
+.fq-hud-panel {
+  min-width: 0;
+  min-height: 72px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 5px 2px rgba(43,28,14,.24));
+}
+
+.fq-coins-panel {
+  gap: 10px;
+  padding: 8px 24px 8px 54px;
+}
+
+.fq-coins-panel .fq-pixel-icon {
+  position: absolute;
+  left: 13px;
+  width: 39px;
+  height: 39px;
+}
+
+.fq-coins-panel strong {
+  margin: auto;
+  font-size: 25px;
+  font-weight: 950;
+  color: #422715;
+  text-shadow: 0 1px 0 #ffe1a6;
+}
+
+.fq-xp-panel {
+  gap: 8px;
+  padding: 8px 23px 8px 58px;
+}
+
+.fq-level-badge {
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+}
+
+.fq-level-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('/game-assets/panels/painel_card_item.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  z-index: -1;
+}
+
+.fq-level-badge .fq-pixel-icon {
+  width: 38px;
+  height: 38px;
+}
+
+.fq-level-badge strong {
+  position: absolute;
+  font-size: 16px;
+  font-weight: 950;
+  color: #56300f;
+  text-shadow: 0 1px 0 #fff0ba;
+}
+
+.fq-xp-copy {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.fq-xp-track {
+  height: 20px;
+  overflow: hidden;
+  border: 4px solid #4d2b1c;
+  border-radius: 11px;
+  background: #3c281f;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.45);
+}
+
+.fq-xp-track span {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.45), transparent 35%),
+    linear-gradient(180deg, #8ad849, #4fad2f);
+  border-right: 2px solid #2f7a24;
+}
+
+.fq-xp-copy strong {
+  min-width: 66px;
+  font-size: 15px;
+  font-weight: 950;
+  color: #432717;
+  text-align: right;
+}
+
+.fq-farm-name {
+  justify-content: center;
+  padding: 8px 32px 8px 56px;
+  overflow: hidden;
+  color: #4a2b18;
+  font-size: 18px;
+  font-weight: 950;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fq-home-system-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.fq-home-system-actions button {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: #fff5d6;
+  background: url('/game-assets/panels/painel_card_item.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 4px 2px rgba(0,0,0,.28));
+  font-size: 21px;
+  font-weight: 950;
+  text-shadow: 0 2px 0 #3c281b;
+}
+
+.fq-home-system-actions button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 6px 2px rgba(0,0,0,.25)) brightness(1.06);
+}
+
+.fq-river {
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  top: 0;
+  height: 31%;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(170deg, rgba(190,239,255,.20) 0 5px, transparent 5px 30px),
+    linear-gradient(180deg, #42b6dc 0%, #2a91c6 55%, #2479ac 100%);
+}
+
+.fq-river-bank {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -34px;
+  height: 80px;
+  background:
+    radial-gradient(circle at 10% 0%, #d1c69d 0 34px, transparent 35px) 0 0/170px 70px repeat-x,
+    #69a849;
+  border-top: 8px solid rgba(229,217,161,.86);
+}
+
+.fq-river-shine {
+  position: absolute;
+  height: 5px;
+  border-radius: 8px;
+  background: rgba(220,247,255,.55);
+}
+.fq-river-shine-a { left: 41%; top: 53%; width: 130px; transform: rotate(-6deg); }
+.fq-river-shine-b { left: 62%; top: 37%; width: 95px; transform: rotate(5deg); }
+
+.fq-pier {
+  position: absolute;
+  left: 37%;
+  bottom: 8px;
+  width: 100px;
+  height: 86px;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  transform: rotate(4deg);
+  background: #744522;
+  border: 4px solid #4f2d19;
+  box-shadow: 0 5px 0 rgba(40,25,15,.22);
+}
+.fq-pier i {
+  flex: 1;
+  background: linear-gradient(90deg,#a66a34,#7c4928);
+  border: 1px solid rgba(63,36,20,.5);
+}
+
+.fq-boat {
+  position: absolute;
+  left: 46%;
+  bottom: 38px;
+  width: 72px;
+  height: 28px;
+  border: 5px solid #5d321c;
+  border-radius: 50% 50% 60% 60%;
+  background: #a75b25;
+  transform: rotate(-5deg);
+  box-shadow: inset 0 0 0 7px #d8893f;
+}
+
+.fq-home-scene .scene-tree,
+.fq-apple-tree {
+  z-index: 3;
+}
+
+.fq-tree-left { left: 2.5% !important; top: 22% !important; transform: scale(1.25); }
+.fq-tree-center { left: 31% !important; top: 20% !important; transform: scale(1.05); }
+.fq-tree-right { right: 3% !important; top: 21% !important; transform: scale(1.24); }
+
+.fq-apple-tree {
+  position: absolute;
+  right: 2%;
+  top: 17%;
+  width: 130px;
+  height: 145px;
+  border-radius: 52%;
+  background:
+    radial-gradient(circle at 30% 30%, #83c34a 0 27px, transparent 28px),
+    radial-gradient(circle at 70% 35%, #5da441 0 34px, transparent 35px),
+    radial-gradient(circle at 48% 62%, #3d8538 0 54px, transparent 55px);
+  filter: drop-shadow(0 12px 6px rgba(0,0,0,.17));
+}
+.fq-apple-tree::after {
+  content: "";
+  position: absolute;
+  left: 57px;
+  bottom: -18px;
+  width: 18px;
+  height: 70px;
+  background: #704523;
+  border-radius: 8px;
+  z-index: -1;
+}
+.fq-apple-tree i {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #e53d2e;
+  border: 2px solid #8f291d;
+}
+.fq-apple-tree i:nth-child(1){left:30px;top:40px}
+.fq-apple-tree i:nth-child(2){right:32px;top:55px}
+.fq-apple-tree i:nth-child(3){left:62px;top:78px}
+
+.fq-home-scene .pixel-scene-building {
+  z-index: 8;
+}
+
+.fq-home-scene .fq-home-house {
+  left: 3.5% !important;
+  top: 22% !important;
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.fq-home-scene .fq-home-barn {
+  left: 53% !important;
+  right: auto !important;
+  top: 21% !important;
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.fq-home-scene .fq-home-market {
+  left: 5% !important;
+  right: auto !important;
+  bottom: 14% !important;
+  width: 205px !important;
+  height: 205px !important;
+}
+
+.fq-home-scene .pixel-scene-building::after {
+  bottom: 6%;
+  height: 12%;
+}
+
+.fq-home-animal-pen {
+  position: absolute;
+  right: 3.2%;
+  top: 34%;
+  z-index: 9;
+  width: 285px;
+  height: 225px;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 24% 44%, rgba(255,255,255,.08) 0 3px, transparent 4px) 0 0/34px 34px,
+    #c59a53;
+  box-shadow: inset 0 0 0 4px rgba(104,64,31,.22);
+}
+
+.fq-pen-fence {
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  background:
+    linear-gradient(#9a5d31,#764422) 0 0/100% 10px no-repeat,
+    linear-gradient(#9a5d31,#764422) 0 100%/100% 10px no-repeat,
+    linear-gradient(90deg,#9a5d31,#764422) 0 0/10px 100% no-repeat,
+    linear-gradient(90deg,#9a5d31,#764422) 100% 0/10px 100% no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 38px, #70401f 38px 47px, transparent 47px 74px),
+    repeating-linear-gradient(0deg, transparent 0 38px, #70401f 38px 47px, transparent 47px 74px);
+  pointer-events: none;
+}
+
+.fq-home-animal-pen .fq-pixel-icon {
+  position: absolute;
+  filter: drop-shadow(0 5px 2px rgba(0,0,0,.18));
+  transition: transform 140ms ease;
+}
+.fq-home-animal-pen:hover .fq-pixel-icon { transform: translateY(-3px); }
+.fq-home-cow { left: 28px; top: 62px; width: 120px; height: 120px; }
+.fq-home-chicken { width: 63px; height: 63px; }
+.fq-home-chicken-a { right: 30px; top: 58px; }
+.fq-home-chicken-b { right: 72px; bottom: 28px; }
+
+.fq-coop {
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  width: 82px;
+  height: 64px;
+  background:
+    linear-gradient(145deg, transparent 0 22%, #a7432c 23% 72%, transparent 73%) 0 -9px/100% 38px no-repeat,
+    linear-gradient(#9b5b2e,#70401f);
+  border: 4px solid #5f361f;
+  border-radius: 5px;
+}
+.fq-coop::after {
+  content: "";
+  position: absolute;
+  left: 31px;
+  bottom: -24px;
+  width: 27px;
+  height: 34px;
+  background: #d7a35a;
+  border: 3px solid #69401f;
+}
+
+.fq-water-trough {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  width: 56px;
+  height: 30px;
+  border: 5px solid #654020;
+  border-radius: 8px 8px 15px 15px;
+  background: #55b8db;
+}
+
+.fq-home-plots {
+  position: absolute;
+  left: 35%;
+  top: 51%;
+  z-index: 11;
+  width: 41%;
+  height: 175px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.fq-home-plot {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  filter: drop-shadow(0 6px 3px rgba(41,31,18,.18));
+  transition: transform 120ms ease, filter 120ms ease;
+}
+.fq-home-plot::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: url('/game-assets/icons/plots/canteiro_vazio.png') center / contain no-repeat;
+  image-rendering: pixelated;
+}
+.fq-home-plot:not(:disabled):hover {
+  transform: translateY(-5px) scale(1.03);
+  filter: drop-shadow(0 10px 4px rgba(41,31,18,.23)) brightness(1.05);
+}
+.fq-home-plot:disabled { cursor: default; }
+.fq-home-plot .fq-home-plot-art {
+  position: relative;
+  z-index: 2;
+  width: 76%;
+  height: 76%;
+  filter: drop-shadow(0 5px 2px rgba(51,34,17,.18));
+}
+.fq-home-plot.is-empty .fq-home-plot-art {
+  opacity: 0;
+}
+.fq-home-plot.is-planted .fq-home-plot-art {
+  width: 48%;
+  height: 48%;
+  transform: translateY(9px);
+}
+.fq-home-plot.is-ready .fq-home-plot-art {
+  width: 78%;
+  height: 78%;
+  transform: translateY(-2px);
+}
+.fq-home-plot.is-rotten .fq-home-plot-art {
+  width: 66%;
+  height: 66%;
+  filter: saturate(.75) drop-shadow(0 5px 2px rgba(51,34,17,.18));
+}
+.fq-plot-timer {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  z-index: 3;
+  transform: translateX(-50%);
+  padding: 4px 7px;
+  border-radius: 6px;
+  color: #fff4cc;
+  background: rgba(68,43,22,.86);
+  border: 2px solid #a6743b;
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.fq-home-actions {
+  position: absolute;
+  left: 38%;
+  bottom: 105px;
+  z-index: 20;
+  width: 34%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.fq-panel-button {
+  position: relative;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  padding: 13px 35px;
+  border: 0;
+  color: #3f2718;
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 5px 2px rgba(46,29,16,.27));
+}
+.fq-panel-button::before {
+  content: "";
+  position: absolute;
+  inset: 17% 10%;
+  z-index: 0;
+  border-radius: 8px;
+  opacity: .72;
+}
+.fq-plant-button::before { background: #75ba38; }
+.fq-harvest-button::before { background: #e7a735; }
+.fq-panel-button > * { position: relative; z-index: 1; }
+.fq-panel-button .fq-pixel-icon { width: 42px; height: 42px; }
+.fq-panel-button strong {
+  font-size: 22px;
+  font-weight: 950;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+.fq-panel-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 8px 3px rgba(46,29,16,.25)) brightness(1.04);
+}
+.fq-panel-button:disabled { filter: grayscale(.25) brightness(.88); }
+
+.fq-task-panel {
+  position: absolute;
+  right: 12px;
+  bottom: 95px;
+  z-index: 22;
+  width: 285px;
+  min-height: 265px;
+  padding: 50px 34px 36px;
+  background: url('/game-assets/panels/painel_principal.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 7px 3px rgba(45,29,17,.28));
+}
+
+.fq-task-panel h2 {
+  margin: 0 0 14px;
+  color: #45291a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 950;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff0c9;
+}
+
+.fq-task-row {
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  gap: 8px;
+  border-top: 2px solid rgba(142,92,42,.20);
+  color: #51301b;
+  font-size: 15px;
+  font-weight: 800;
+}
+.fq-task-row:first-of-type { border-top: 0; }
+.fq-task-row .fq-pixel-icon { width: 45px; height: 45px; }
+.fq-task-row strong { font-size: 18px; }
+
+.fq-home-nav {
+  position: absolute;
+  left: 12px;
+  right: 300px;
+  bottom: 8px;
+  z-index: 25;
+  height: 88px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0,1fr));
+  gap: 7px;
+}
+
+.fq-home-nav button {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  align-items: center;
+  gap: 4px;
+  padding: 9px 24px 9px 18px;
+  border: 0;
+  color: #472a18;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 4px 2px rgba(47,29,16,.24));
+  text-align: center;
+}
+.fq-home-nav button .fq-pixel-icon {
+  width: 48px;
+  height: 48px;
+}
+.fq-home-nav button strong {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 950;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.fq-home-nav button:hover {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 7px 3px rgba(47,29,16,.22)) brightness(1.05);
+}
+
+.fq-home-toast {
+  position: fixed !important;
+  left: 50%;
+  top: 110px !important;
+  z-index: 100;
+  transform: translateX(-50%);
+  margin: 0 !important;
+}
+
+@media (max-width: 1350px) {
+  .fq-home-hud {
+    grid-template-columns: 270px 200px 300px minmax(220px, 1fr) 85px;
+  }
+  .fq-home-logo { font-size: 38px; }
+  .fq-home-scene .fq-home-house { left: 2% !important; }
+  .fq-home-scene .fq-home-barn { left: 51% !important; }
+  .fq-home-animal-pen { right: 2%; width: 255px; }
+  .fq-task-panel { width: 260px; }
+  .fq-home-nav { right: 270px; }
+}
+
+@media (max-width: 1160px) {
+  .fq-home-stage { overflow-x: auto; }
+}
+
+@media (max-height: 820px) and (min-width: 1161px) {
+  .fq-home-scene {
+    min-height: 720px;
+    height: 720px;
+  }
+}
