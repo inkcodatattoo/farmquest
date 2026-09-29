@@ -19,6 +19,7 @@ export type FarmWorldPlot = {
     cropName: string;
     seedCount: number;
     growsAt: string;
+    rotsAt: string;
   };
 };
 
@@ -85,7 +86,9 @@ const menu: Array<{ key: Section; label: string; icon: string }> = [
 
 function plotState(plot: FarmWorldPlot, nowMs: number): FarmWorldPlot["state"] {
   if (!plot.planted) return "EMPTY";
-  return plot.state;
+  if (nowMs >= Date.parse(plot.planted.rotsAt)) return "ROTTEN";
+  if (nowMs >= Date.parse(plot.planted.growsAt)) return "READY";
+  return "PLANTED";
 }
 
 function timerText(plot: FarmWorldPlot, nowMs: number): string {
