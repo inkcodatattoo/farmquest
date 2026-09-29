@@ -142,7 +142,7 @@ export default function FarmPreviewClient() {
   const [farm, setFarm] = useState(INITIAL_FARM);
   const [plots, setPlots] = useState<FarmWorldPlot[]>(() => createPlots(Date.now()));
   const [inventory, setInventory] = useState<FarmWorldInventoryItem[]>(INITIAL_INVENTORY);
-  const [notice, setNotice] = useState("Modo de prévia visual — nada aqui altera sua fazenda real.");
+  const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
