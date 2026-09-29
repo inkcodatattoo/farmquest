@@ -729,20 +729,30 @@ export function FarmWorld(props: Props) {
           <strong>Fazenda</strong>
           <small>Início</small>
         </button>
-        <button onClick={() => setSection("plantacoes")}>
-          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.actions.plant} alt="" /></span>
-          <strong>Plantações</strong>
-          <small>{plots.length} canteiros</small>
+        <button onClick={() => setSection("celeiro")}>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.ui.inventory} alt="" /></span>
+          <strong>Inventário</strong>
+          <small>{inventoryCount} itens</small>
         </button>
         <button onClick={() => setSection("mercado")}>
           <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.buildings.market} alt="" /></span>
           <strong>Mercado</strong>
           <small>Comprar</small>
         </button>
-        <button onClick={() => setSection("celeiro")}>
-          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.buildings.barn} alt="" /></span>
-          <strong>Celeiro</strong>
-          <small>{inventoryCount} itens</small>
+        <button onClick={() => setSection("animais")}>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.animals.cow} alt="" /></span>
+          <strong>Animais</strong>
+          <small>Fazenda</small>
+        </button>
+        <button onClick={() => setSection("comunidade")}>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.community.goal} alt="" /></span>
+          <strong>Comunidade</strong>
+          <small>Cooperativo</small>
+        </button>
+        <button onClick={() => setSection("ranking")}>
+          <span className="pixel-dock-icon"><PixelIcon src={FARM_ICONS.ui.ranking} alt="" /></span>
+          <strong>Ranking</strong>
+          <small>Classificação</small>
         </button>
       </footer>
     </main>
