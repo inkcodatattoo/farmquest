@@ -583,3 +583,310 @@ button:disabled {
     flex: 1;
   }
 }
+
+
+/* Prototype 0.1 — game HUD polish */
+.farm-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.farm-brand-mark {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 15px;
+  color: #f9f1d9;
+  background:
+    linear-gradient(145deg, rgba(127, 164, 93, 0.36), transparent),
+    var(--green-dark);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 -4px 0 rgba(0, 0, 0, 0.18),
+    0 8px 22px rgba(0, 0, 0, 0.18);
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  font-size: 20px;
+}
+
+.farm-subtitle {
+  display: block;
+  margin-top: 5px;
+  color: rgba(247, 239, 217, 0.64);
+  font-size: 12px;
+}
+
+.stat-card {
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 13px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -24px -30px auto;
+  width: 74px;
+  height: 74px;
+  border-radius: 999px;
+  background: rgba(79, 111, 59, 0.07);
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(48, 74, 41, 0.09);
+  border: 1px solid rgba(48, 74, 41, 0.08);
+  font-size: 23px;
+}
+
+.stat-card.coins .stat-icon {
+  background: rgba(128, 85, 13, 0.09);
+}
+
+.stat-card small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.section-copy {
+  max-width: 580px;
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.plot-card {
+  box-shadow: 0 7px 20px rgba(62, 41, 22, 0.12);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.plot-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(62, 41, 22, 0.18);
+}
+
+.plot-ground {
+  min-height: 232px;
+}
+
+.plot-state {
+  position: absolute;
+  top: 11px;
+  right: 12px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(42, 29, 18, 0.52);
+}
+
+.state-planted {
+  color: #eff7df;
+  background: rgba(63, 92, 47, 0.82);
+}
+
+.state-ready {
+  color: #2f311f;
+  background: rgba(238, 207, 105, 0.92);
+  text-shadow: none;
+}
+
+.state-rotten {
+  color: #f9e2dc;
+  background: rgba(118, 54, 44, 0.9);
+}
+
+.plot-ready .crop-icon {
+  animation: crop-ready 1.8s ease-in-out infinite;
+}
+
+@keyframes crop-ready {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-4px) rotate(1deg);
+  }
+}
+
+.plot-meta {
+  width: min(250px, 88%);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 10px;
+  font-weight: 800;
+  opacity: 0.82;
+}
+
+.growth-track {
+  width: min(250px, 88%);
+  height: 8px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(39, 27, 16, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+
+.growth-fill {
+  height: 100%;
+  min-width: 3px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8daf67, #cbdc83);
+  transition: width 500ms linear;
+}
+
+.capacity {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid var(--line);
+}
+
+.inventory-row {
+  position: relative;
+  overflow: hidden;
+}
+
+.inventory-row::before {
+  content: "";
+  width: 4px;
+  align-self: stretch;
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: #b2aa90;
+}
+
+.inventory-good::before {
+  background: #65964e;
+}
+
+.inventory-excellent::before {
+  background: #4d85bd;
+}
+
+.inventory-extraordinary::before {
+  background: #8d59bb;
+}
+
+.inventory-rotten::before {
+  background: #965a4a;
+}
+
+.quality {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.46);
+}
+
+.quality-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.item-qty {
+  padding: 5px 8px;
+  border-radius: 9px;
+  background: rgba(47, 49, 31, 0.07);
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  min-height: 116px;
+}
+
+.empty-state strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.empty-state > span:not(.empty-icon) {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.empty-icon {
+  font-size: 30px;
+  filter: grayscale(0.15);
+}
+
+.shop-row {
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease;
+}
+
+.shop-row:hover {
+  transform: translateY(-1px);
+  border-color: rgba(79, 111, 59, 0.28);
+}
+
+@media (max-width: 620px) {
+  .farm-brand {
+    align-items: flex-start;
+  }
+
+  .farm-brand-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .stat-card {
+    min-height: 82px;
+    gap: 9px;
+    padding: 12px;
+  }
+
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 19px;
+  }
+
+  .stat-card strong {
+    font-size: 19px;
+  }
+
+  .stat-card small {
+    display: none;
+  }
+}

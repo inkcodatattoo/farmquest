@@ -106,6 +106,32 @@ function formatDuration(milliseconds: number): string {
   return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
 }
 
+function plotStateLabel(state: Plot["state"]): string {
+  switch (state) {
+    case "EMPTY":
+      return "Vazio";
+    case "PLANTED":
+      return "Crescendo";
+    case "READY":
+      return "Pronto";
+    case "ROTTEN":
+      return "Apodrecido";
+  }
+}
+
+function growthProgress(plot: Plot, nowMs: number): number {
+  if (!plot.planted) return 0;
+
+  const plantedAt = Date.parse(plot.planted.plantedAt);
+  const growsAt = Date.parse(plot.planted.growsAt);
+  const duration = growsAt - plantedAt;
+
+  if (duration <= 0) return 100;
+
+  const elapsed = nowMs - plantedAt;
+  return Math.max(0, Math.min(100, Math.round((elapsed / duration) * 100)));
+}
+
 function friendlyApiMessage(
   code: string,
   details?: Record<string, unknown>
@@ -492,9 +518,13 @@ export function FarmQuestClient() {
   return (
     <main className="game-shell">
       <header className="topbar">
-        <div>
-          <span className="eyebrow">FARMQUEST · PROTÓTIPO 0.1</span>
-          <h1>Fazenda de {user.displayName}</h1>
+        <div className="farm-brand">
+          <div className="farm-brand-mark" aria-hidden="true">FQ</div>
+          <div>
+            <span className="eyebrow">FARMQUEST · PROTÓTIPO 0.1</span>
+            <h1>Fazenda de {user.displayName}</h1>
+            <span className="farm-subtitle">Sua fazenda local está ativa e conectada ao PostgreSQL.</span>
+          </div>
         </div>
 
         <div className="topbar-actions">
@@ -516,21 +546,37 @@ export function FarmQuestClient() {
       </header>
 
       <section className="stats-grid">
-        <article className="stat-card">
-          <span>Nível</span>
-          <strong>{farm.level}</strong>
+        <article className="stat-card level-card">
+          <div className="stat-icon" aria-hidden="true">⭐</div>
+          <div>
+            <span>Nível</span>
+            <strong>{farm.level}</strong>
+            <small>Progressão da fazenda</small>
+          </div>
         </article>
         <article className="stat-card">
-          <span>XP</span>
-          <strong>{farm.xp}</strong>
+          <div className="stat-icon" aria-hidden="true">🌾</div>
+          <div>
+            <span>XP</span>
+            <strong>{farm.xp}</strong>
+            <small>Experiência acumulada</small>
+          </div>
         </article>
         <article className="stat-card coins">
-          <span>Moedas</span>
-          <strong>🪙 {farm.coins}</strong>
+          <div className="stat-icon" aria-hidden="true">🪙</div>
+          <div>
+            <span>Moedas</span>
+            <strong>{farm.coins}</strong>
+            <small>Saldo disponível</small>
+          </div>
         </article>
-        <article className="stat-card">
-          <span>Colheita</span>
-          <strong>{cooldownText}</strong>
+        <article className="stat-card harvest-card">
+          <div className="stat-icon" aria-hidden="true">⏱️</div>
+          <div>
+            <span>Colheita</span>
+            <strong>{cooldownText}</strong>
+            <small>{cooldownText === "Livre" ? "Pode colher agora" : "Tempo restante"}</small>
+          </div>
         </article>
       </section>
 
@@ -550,6 +596,7 @@ export function FarmQuestClient() {
           <div>
             <span className="eyebrow">TERRENO</span>
             <h2>Seus canteiros</h2>
+            <p className="section-copy">Plante, acompanhe o crescimento e colha quando estiver pronto.</p>
           </div>
           <div className="heading-actions">
             <button
@@ -584,6 +631,7 @@ export function FarmQuestClient() {
             const remaining = plot.planted
               ? Date.parse(plot.planted.growsAt) - nowMs
               : 0;
+            const progress = growthProgress(plot, nowMs);
 
             return (
               <article
@@ -592,6 +640,9 @@ export function FarmQuestClient() {
               >
                 <div className="plot-ground">
                   <span className="plot-number">Canteiro {plot.slotNumber}</span>
+                  <span className={`plot-state state-${state.toLowerCase()}`}>
+                    {plotStateLabel(state)}
+                  </span>
                   <span className="crop-icon">
                     {state === "EMPTY"
                       ? "🟫"
@@ -617,6 +668,27 @@ export function FarmQuestClient() {
                           ? "Apodrecido — ainda pode colher"
                           : "Disponível para plantio"}
                   </span>
+
+                  <div className="plot-meta">
+                    <span>
+                      {plot.planted
+                        ? `${plot.planted.seedCount} semente${plot.planted.seedCount === 1 ? "" : "s"}`
+                        : `Capacidade: ${plot.seedsCapacity}`}
+                    </span>
+                    {state === "PLANTED" ? <span>{progress}%</span> : null}
+                  </div>
+
+                  {state === "PLANTED" ? (
+                    <div
+                      className="growth-track"
+                      aria-label={`Crescimento ${progress}%`}
+                    >
+                      <div
+                        className="growth-fill"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  ) : null}
                 </div>
 
                 {state === "EMPTY" ? (
@@ -663,22 +735,30 @@ export function FarmQuestClient() {
               <h2>Inventário</h2>
             </div>
             <span className="capacity">
-              {inventory.length} linhas · {farm.inventorySlots} slots
+              <strong>{inventory.length}</strong> linhas · <strong>{farm.inventorySlots}</strong> slots
             </span>
           </div>
 
           <div className="inventory-list">
             {inventory.length === 0 ? (
-              <p className="empty-state">Seu inventário está vazio.</p>
+              <div className="empty-state">
+                <span className="empty-icon" aria-hidden="true">📦</span>
+                <strong>Seu celeiro está vazio</strong>
+                <span>Colha sua produção para ver os itens aqui.</span>
+              </div>
             ) : (
               inventory.map((item) => (
-                <article key={item.id} className="inventory-row">
+                <article
+                  key={item.id}
+                  className={`inventory-row inventory-${item.quality.toLowerCase()}`}
+                >
                   <div className="item-icon">
                     {item.name.includes("Semente") ? "🌰" : "🌽"}
                   </div>
                   <div className="item-main">
                     <strong>{item.name}</strong>
                     <span className={`quality q-${item.quality.toLowerCase()}`}>
+                      <span className="quality-dot" aria-hidden="true" />
                       {qualityLabel(item.quality)}
                     </span>
                   </div>
@@ -729,6 +809,7 @@ export function FarmQuestClient() {
             <div>
               <span className="eyebrow">LOJA NPC · PROVISÓRIO</span>
               <h2>Mercado rural</h2>
+              <p className="section-copy">Compre suprimentos para manter a produção girando.</p>
             </div>
           </div>
 
