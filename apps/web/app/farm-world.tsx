@@ -295,6 +295,11 @@ export function FarmWorld(props: Props) {
             <span className="fq-flower-patch fq-flowers-b"><i /><i /><i /></span>
             <span className="fq-stone-group fq-stones-a"><i /><i /><i /></span>
             <span className="fq-stone-group fq-stones-b"><i /><i /></span>
+            <span className="fq-fence-segment fq-fence-a"><i /><i /><i /><i /></span>
+            <span className="fq-fence-segment fq-fence-b"><i /><i /><i /></span>
+            <span className="fq-fence-segment fq-fence-c"><i /><i /><i /></span>
+            <span className="fq-wood-crate fq-crate-house" />
+            <span className="fq-wood-crate fq-crate-market" />
           </div>
 
           <div className="fq-home-plots" aria-label="Canteiros da fazenda">
