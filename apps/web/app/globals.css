@@ -890,3 +890,171 @@ button:disabled {
     display: none;
   }
 }
+
+
+/* Prototype 0.1 — stable CSS-drawn farm visuals */
+.crop-visual {
+  width: 72px;
+  height: 72px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 7px 6px rgba(0, 0, 0, 0.2));
+}
+
+.soil-tile {
+  width: 48px;
+  height: 40px;
+  border-radius: 8px 8px 12px 12px;
+  background:
+    radial-gradient(circle at 28% 32%, #b77a46 0 3px, transparent 4px),
+    radial-gradient(circle at 68% 62%, #5c351e 0 3px, transparent 4px),
+    linear-gradient(180deg, #a96c39, #6d4126);
+  border: 3px solid rgba(47, 28, 16, 0.7);
+  box-shadow:
+    inset 0 4px 0 rgba(255,255,255,0.07),
+    inset 0 -6px 0 rgba(0,0,0,0.12);
+  transform: perspective(80px) rotateX(8deg);
+}
+
+.sprout-visual,
+.corn-visual,
+.wilted-visual {
+  width: 58px;
+  height: 68px;
+  position: relative;
+  display: block;
+}
+
+.sprout-stem {
+  position: absolute;
+  left: 27px;
+  bottom: 11px;
+  width: 5px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(#6da451, #3f7135);
+}
+
+.sprout-leaf {
+  position: absolute;
+  width: 24px;
+  height: 14px;
+  background: linear-gradient(145deg, #94c76a, #4c853f);
+  border-radius: 100% 0 100% 0;
+}
+
+.leaf-left {
+  left: 8px;
+  top: 25px;
+  transform: rotate(-28deg);
+}
+
+.leaf-right {
+  right: 6px;
+  top: 16px;
+  transform: scaleX(-1) rotate(-28deg);
+}
+
+.corn-cob {
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  width: 25px;
+  height: 46px;
+  border-radius: 48% 48% 42% 42%;
+  background:
+    radial-gradient(circle, rgba(128,82,8,.32) 0 1.5px, transparent 2px) 0 0/8px 8px,
+    linear-gradient(#f6d95a, #d7a92a);
+  border: 2px solid rgba(96, 64, 11, 0.58);
+  box-shadow: inset 0 3px 0 rgba(255,255,255,.25);
+}
+
+.corn-leaf {
+  position: absolute;
+  bottom: 7px;
+  width: 34px;
+  height: 15px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(145deg, #78a94e, #3e7336);
+}
+
+.corn-leaf-left {
+  left: 2px;
+  transform: rotate(56deg);
+}
+
+.corn-leaf-right {
+  right: 0;
+  transform: scaleX(-1) rotate(56deg);
+}
+
+.wilted-stem {
+  position: absolute;
+  left: 27px;
+  bottom: 8px;
+  width: 4px;
+  height: 39px;
+  border-radius: 999px;
+  background: #73513c;
+  transform: rotate(9deg);
+}
+
+.wilted-head {
+  position: absolute;
+  left: 27px;
+  top: 14px;
+  width: 23px;
+  height: 15px;
+  border-radius: 45% 55% 70% 30%;
+  background: linear-gradient(145deg, #9b6b51, #654536);
+  transform: rotate(28deg);
+}
+
+.plot-ready .crop-visual {
+  animation: crop-ready 1.8s ease-in-out infinite;
+}
+
+.empty-barn-icon {
+  width: 45px;
+  height: 45px;
+  position: relative;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.barn-roof {
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 36px;
+  height: 22px;
+  background: #8f5739;
+  clip-path: polygon(50% 0, 100% 72%, 86% 72%, 86% 100%, 14% 100%, 14% 72%, 0 72%);
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.14));
+}
+
+.barn-body {
+  position: absolute;
+  left: 8px;
+  top: 17px;
+  width: 30px;
+  height: 25px;
+  border-radius: 2px 2px 5px 5px;
+  background: linear-gradient(180deg, #c9794d, #a95e3c);
+  border: 2px solid #744329;
+}
+
+.barn-door {
+  position: absolute;
+  left: 8px;
+  bottom: 0;
+  width: 10px;
+  height: 14px;
+  background:
+    linear-gradient(45deg, transparent 44%, rgba(255,255,255,.55) 45% 55%, transparent 56%),
+    linear-gradient(-45deg, transparent 44%, rgba(255,255,255,.55) 45% 55%, transparent 56%),
+    #6f432e;
+  border: 1px solid #5c3423;
+}
