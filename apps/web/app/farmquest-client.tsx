@@ -643,14 +643,30 @@ export function FarmQuestClient() {
                   <span className={`plot-state state-${state.toLowerCase()}`}>
                     {plotStateLabel(state)}
                   </span>
-                  <span className="crop-icon">
-                    {state === "EMPTY"
-                      ? "🟫"
-                      : state === "PLANTED"
-                        ? "🌱"
-                        : state === "READY"
-                          ? "🌽"
-                          : "🥀"}
+                  <span
+                    className={`crop-visual crop-${state.toLowerCase()}`}
+                    aria-hidden="true"
+                  >
+                    {state === "EMPTY" ? (
+                      <span className="soil-tile" />
+                    ) : state === "PLANTED" ? (
+                      <span className="sprout-visual">
+                        <span className="sprout-stem" />
+                        <span className="sprout-leaf leaf-left" />
+                        <span className="sprout-leaf leaf-right" />
+                      </span>
+                    ) : state === "READY" ? (
+                      <span className="corn-visual">
+                        <span className="corn-cob" />
+                        <span className="corn-leaf corn-leaf-left" />
+                        <span className="corn-leaf corn-leaf-right" />
+                      </span>
+                    ) : (
+                      <span className="wilted-visual">
+                        <span className="wilted-stem" />
+                        <span className="wilted-head" />
+                      </span>
+                    )}
                   </span>
 
                   <strong>
@@ -742,7 +758,12 @@ export function FarmQuestClient() {
           <div className="inventory-list">
             {inventory.length === 0 ? (
               <div className="empty-state">
-                <span className="empty-icon" aria-hidden="true">📦</span>
+                <span className="empty-barn-icon" aria-hidden="true">
+                  <span className="barn-roof" />
+                  <span className="barn-body">
+                    <span className="barn-door" />
+                  </span>
+                </span>
                 <strong>Seu celeiro está vazio</strong>
                 <span>Colha sua produção para ver os itens aqui.</span>
               </div>
