@@ -1547,3 +1547,494 @@
     right: 294px;
   }
 }
+
+
+/* FarmQuest v1.3 — páginas internas coerentes com a Home */
+
+.pixel-ui-shell.farm-game-shell {
+  grid-template-columns: 176px minmax(0, 1fr);
+  grid-template-rows: 90px minmax(0, 1fr) 86px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.08) 0 2px, transparent 3px) 0 0/24px 24px,
+    linear-gradient(180deg, #6ea850, #4f823e);
+  color: #432919;
+}
+
+.pixel-ui-shell .farm-game-topbar {
+  gap: 10px;
+  padding: 10px 14px;
+  background:
+    repeating-linear-gradient(0deg, rgba(76,42,22,.10) 0 2px, transparent 2px 15px),
+    linear-gradient(180deg, #9d6133, #70421f);
+  border-bottom: 5px solid #4d2b17;
+  box-shadow:
+    inset 0 -4px 0 rgba(52,28,15,.20),
+    0 5px 0 rgba(51,30,17,.20);
+}
+
+.pixel-ui-shell .farm-game-logo {
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 20px 8px 10px;
+  border: 0;
+  border-radius: 0;
+  color: #fff0c9;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 4px 2px rgba(44,26,15,.24));
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  text-shadow: 0 2px 0 #5b321a;
+}
+
+.pixel-ui-shell .farm-game-logo .fq-pixel-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.pixel-ui-shell .farm-identity,
+.pixel-ui-shell .resource-chip {
+  min-height: 57px;
+  border: 0;
+  border-radius: 0;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 4px 2px rgba(44,26,15,.20));
+}
+
+.pixel-ui-shell .farm-identity {
+  justify-content: center;
+  padding: 9px 28px 9px 48px;
+  color: #4d2d19;
+}
+
+.pixel-ui-shell .farm-identity strong {
+  font-size: 14px;
+}
+
+.pixel-ui-shell .farm-identity span {
+  color: #76502c;
+  font-size: 10px;
+}
+
+.pixel-ui-shell .resource-chip {
+  grid-template-columns: 36px 1fr;
+  padding: 8px 24px 8px 46px;
+}
+
+.pixel-ui-shell .resource-chip .resource-symbol {
+  position: absolute;
+  left: 9px;
+  width: 34px;
+  height: 34px;
+}
+
+.pixel-ui-shell .resource-chip strong {
+  color: #482a18;
+  font-size: 14px;
+}
+
+.pixel-ui-shell .resource-chip small {
+  color: #7a5939;
+}
+
+.pixel-ui-shell .farm-system-actions button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 0;
+  color: #56331d;
+  background: url('/game-assets/panels/painel_card_item.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 4px 2px rgba(44,26,15,.22));
+  text-shadow: 0 1px 0 #fff0c7;
+}
+
+.pixel-ui-shell .farm-game-sidebar {
+  padding: 12px 8px;
+  background:
+    repeating-linear-gradient(90deg, rgba(69,36,18,.08) 0 2px, transparent 2px 17px),
+    linear-gradient(180deg, #8a542d, #633b20);
+  border-right: 5px solid #4d2b17;
+  box-shadow: 5px 0 0 rgba(50,29,17,.17);
+}
+
+.pixel-ui-shell .farm-game-sidebar nav {
+  gap: 7px;
+}
+
+.pixel-ui-shell .farm-game-sidebar button {
+  min-height: 49px;
+  grid-template-columns: 34px 1fr;
+  gap: 7px;
+  padding: 7px 18px 7px 13px;
+  border: 0;
+  border-radius: 0;
+  color: #4c2c18;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 3px 1px rgba(50,29,17,.20));
+}
+
+.pixel-ui-shell .farm-game-sidebar button > span {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.pixel-ui-shell .farm-game-sidebar button strong {
+  font-size: 11px;
+}
+
+.pixel-ui-shell .farm-game-sidebar button:hover {
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 5px 2px rgba(50,29,17,.20)) brightness(1.06);
+}
+
+.pixel-ui-shell .farm-game-sidebar button.active {
+  color: #315e29;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  border: 0;
+  box-shadow: none;
+  filter:
+    drop-shadow(0 4px 2px rgba(50,29,17,.22))
+    saturate(1.12)
+    brightness(1.04);
+}
+
+.pixel-ui-shell .farm-game-sidebar button.active::after {
+  content: "";
+  position: absolute;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #64a443;
+  box-shadow: 0 0 0 2px #315a2c;
+}
+
+.pixel-ui-shell .farm-game-stage {
+  padding: 14px;
+  background:
+    radial-gradient(circle at 16% 70%, rgba(255,255,255,.10) 0 2px, transparent 3px) 0 0/27px 27px,
+    linear-gradient(180deg, #74ad51, #5b9344);
+}
+
+.pixel-ui-shell .game-page-panel {
+  min-height: calc(100% - 2px);
+  padding: 68px 74px 72px;
+  border: 0;
+  border-radius: 0;
+  color: #4a2d1b;
+  background:
+    url('/game-assets/panels/painel_principal.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 10px 5px rgba(48,30,17,.25));
+}
+
+.pixel-ui-shell .game-page-heading {
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 0 16px;
+  border-bottom: 3px solid rgba(142,90,39,.18);
+}
+
+.pixel-ui-shell .game-page-heading > div:first-child > span,
+.pixel-ui-shell .future-panel > span {
+  color: #6d8d42;
+  font-size: 10px;
+}
+
+.pixel-ui-shell .game-page-heading h2,
+.pixel-ui-shell .future-panel h2 {
+  color: #4b2d1a;
+  font-size: 31px;
+  text-shadow: 0 1px 0 #fff0cb;
+}
+
+.pixel-ui-shell .game-page-heading p,
+.pixel-ui-shell .future-panel p {
+  color: #77583a;
+  font-size: 11px;
+}
+
+.pixel-ui-shell .game-action,
+.pixel-ui-shell .game-mini-action {
+  border: 0;
+  border-radius: 0;
+  color: #4b2c18;
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 3px 1px rgba(49,29,17,.20));
+  text-shadow: 0 1px 0 #fff0c9;
+}
+
+.pixel-ui-shell .game-action {
+  min-height: 47px;
+  padding: 8px 28px;
+  font-size: 11px;
+}
+
+.pixel-ui-shell .game-action.secondary {
+  color: #4b2c18;
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+  border: 0;
+}
+
+.pixel-ui-shell .game-action:hover:not(:disabled),
+.pixel-ui-shell .game-mini-action:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 5px 2px rgba(49,29,17,.22)) brightness(1.05);
+}
+
+.pixel-ui-shell .game-plot-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.pixel-ui-shell .game-plot-card,
+.pixel-ui-shell .game-inventory-card,
+.pixel-ui-shell .game-shop-card {
+  position: relative;
+  border: 0;
+  border-radius: 0;
+  background: url('/game-assets/panels/painel_card_item.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 7px 3px rgba(65,39,20,.19));
+}
+
+.pixel-ui-shell .game-plot-card {
+  min-height: 315px;
+  padding: 42px 38px 40px;
+}
+
+.pixel-ui-shell .game-plot-topline strong {
+  color: #4a2b18;
+  font-size: 12px;
+}
+
+.pixel-ui-shell .game-plot-topline span {
+  color: #fff1c9;
+  background: #7a4c27;
+  border: 2px solid #4d2d19;
+}
+
+.pixel-ui-shell .game-plot-art {
+  height: 135px;
+  margin: 8px 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(114,69,37,.10), transparent 70%),
+    repeating-linear-gradient(0deg, #8a5932 0 16px, #724522 16px 20px);
+  box-shadow:
+    inset 0 0 0 4px #6a3d20,
+    inset 0 0 0 7px #aa7140;
+}
+
+.pixel-ui-shell .game-plot-card.is-ready .game-plot-art,
+.pixel-ui-shell .game-plot-card.is-planted .game-plot-art {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(112,78,39,.10), transparent 70%),
+    repeating-linear-gradient(0deg, #8a5932 0 16px, #724522 16px 20px);
+}
+
+.pixel-ui-shell .game-plot-info strong {
+  color: #4a2b18;
+}
+
+.pixel-ui-shell .game-plot-info small {
+  color: #79583a;
+}
+
+.pixel-ui-shell .game-inventory-grid,
+.pixel-ui-shell .game-shop-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.pixel-ui-shell .game-inventory-card,
+.pixel-ui-shell .game-shop-card {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 9px;
+  padding: 40px 34px 36px;
+  text-align: center;
+}
+
+.pixel-ui-shell .game-item-art,
+.pixel-ui-shell .game-shop-art {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.pixel-ui-shell .pixel-item-art .fq-pixel-icon {
+  width: 82px;
+  height: 82px;
+}
+
+.pixel-ui-shell .game-item-copy {
+  align-items: center;
+}
+
+.pixel-ui-shell .game-item-copy strong {
+  color: #4a2b18;
+  font-size: 14px;
+}
+
+.pixel-ui-shell .game-item-copy span,
+.pixel-ui-shell .game-item-copy small {
+  color: #79583a;
+  font-size: 10px;
+}
+
+.pixel-ui-shell .game-item-actions {
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.pixel-ui-shell .game-mini-action {
+  min-width: 92px;
+  min-height: 39px;
+  padding: 7px 20px;
+}
+
+.pixel-ui-shell .game-mini-action.sell {
+  color: #355e28;
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+}
+
+.pixel-ui-shell .game-shop-buy {
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+}
+
+.pixel-ui-shell .game-shop-buy > strong {
+  color: #76501f;
+  font-size: 12px;
+}
+
+.pixel-ui-shell .game-empty-state {
+  min-height: 320px;
+  padding: 50px;
+  border: 0;
+  border-radius: 0;
+  background: url('/game-assets/panels/painel_medio.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+
+.pixel-ui-shell .future-panel {
+  min-height: calc(100% - 2px);
+  padding: 80px;
+}
+
+.pixel-ui-shell .future-icon.pixel-future-icon {
+  width: 120px !important;
+  height: 120px !important;
+  margin-bottom: 10px;
+}
+
+.pixel-ui-shell .future-icon.pixel-future-icon .fq-pixel-icon {
+  width: 108px;
+  height: 108px;
+}
+
+.pixel-ui-shell .future-panel p {
+  max-width: 600px;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.pixel-ui-shell .farm-game-dock {
+  gap: 8px;
+  padding: 8px 11px;
+  background:
+    repeating-linear-gradient(90deg, rgba(71,38,19,.08) 0 2px, transparent 2px 17px),
+    linear-gradient(180deg, #8f572e, #633b20);
+  border-top: 5px solid #4d2b17;
+  box-shadow: 0 -4px 0 rgba(49,28,16,.15);
+}
+
+.pixel-ui-shell .farm-game-dock button {
+  grid-template-columns: 42px 1fr;
+  min-height: 58px;
+  padding: 7px 25px 7px 18px;
+  border: 0;
+  border-radius: 0;
+  color: #4b2c19;
+  background: url('/game-assets/panels/painel_cabecalho.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  box-shadow: none;
+  filter: drop-shadow(0 3px 1px rgba(49,28,16,.20));
+}
+
+.pixel-ui-shell .farm-game-dock button > span {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.pixel-ui-shell .farm-game-dock button strong {
+  font-size: 11px;
+}
+
+.pixel-ui-shell .farm-game-dock button small {
+  color: #80603f;
+  font-size: 9px;
+}
+
+.pixel-ui-shell .farm-game-dock button:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 5px 2px rgba(49,28,16,.20)) brightness(1.05);
+}
+
+@media (max-width: 1180px) {
+  .pixel-ui-shell.farm-game-shell {
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+  .pixel-ui-shell .farm-game-sidebar button {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 7px 5px;
+  }
+  .pixel-ui-shell .farm-game-sidebar button strong {
+    display: none;
+  }
+  .pixel-ui-shell .game-inventory-grid,
+  .pixel-ui-shell .game-shop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .pixel-ui-shell .game-page-panel {
+    padding: 48px 34px 54px;
+  }
+  .pixel-ui-shell .game-inventory-grid,
+  .pixel-ui-shell .game-shop-grid,
+  .pixel-ui-shell .game-plot-grid {
+    grid-template-columns: 1fr;
+  }
+}
