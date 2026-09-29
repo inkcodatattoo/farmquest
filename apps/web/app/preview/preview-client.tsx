@@ -7,7 +7,7 @@ import {
   type FarmWorldInventoryItem,
   type FarmWorldPlot,
   type FarmWorldShopOffer
-} from "../../farm-world";
+} from "../farm-world";
 
 function createPlots(now: number): FarmWorldPlot[] {
   return [
