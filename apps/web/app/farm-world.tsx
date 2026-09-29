@@ -239,6 +239,7 @@ export function FarmWorld(props: Props) {
               alt="Casa da fazenda"
               className="scene-building-art farmhouse-art"
             />
+            <span className="fq-location-sign fq-house-sign">Fazenda</span>
           </button>
 
           <button
@@ -251,6 +252,7 @@ export function FarmWorld(props: Props) {
               alt="Celeiro"
               className="scene-building-art barn-art"
             />
+            <span className="fq-location-sign fq-barn-sign">Celeiro</span>
           </button>
 
           <button
@@ -263,6 +265,7 @@ export function FarmWorld(props: Props) {
               alt="Mercado rural"
               className="scene-building-art market-art"
             />
+            <span className="fq-location-sign fq-market-sign">Mercado</span>
           </button>
 
           <button
@@ -276,7 +279,22 @@ export function FarmWorld(props: Props) {
             <PixelIcon src={FARM_ICONS.animals.cow} alt="Vaca" className="fq-home-cow" />
             <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-home-chicken fq-home-chicken-a" />
             <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-home-chicken fq-home-chicken-b" />
+            <span className="fq-location-sign fq-animal-sign">Animais</span>
           </button>
+
+          <div className="fq-home-decor" aria-hidden="true">
+            <span className="fq-lantern-post fq-lantern-left"><i /></span>
+            <span className="fq-lantern-post fq-lantern-right"><i /></span>
+            <span className="fq-barrel fq-barrel-house" />
+            <span className="fq-barrel fq-barrel-barn" />
+            <span className="fq-hay-bale fq-hay-one" />
+            <span className="fq-hay-bale fq-hay-two" />
+            <span className="fq-hay-bale fq-hay-three" />
+            <span className="fq-flower-patch fq-flowers-a"><i /><i /><i /><i /></span>
+            <span className="fq-flower-patch fq-flowers-b"><i /><i /><i /></span>
+            <span className="fq-stone-group fq-stones-a"><i /><i /><i /></span>
+            <span className="fq-stone-group fq-stones-b"><i /><i /></span>
+          </div>
 
           <div className="fq-home-plots" aria-label="Canteiros da fazenda">
             {plots.map((plot) => {
