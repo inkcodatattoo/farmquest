@@ -143,6 +143,31 @@ export function FarmWorld(props: Props) {
     return (
       <section className="world-scene-shell">
         <div className="world-scene">
+          <div className="scene-nameplate">
+            <span>Fazenda de {userName}</span>
+            <strong>Nível {farm.level}</strong>
+          </div>
+
+          <div className="farm-boundary fence-top" />
+          <div className="farm-boundary fence-left" />
+          <div className="farm-boundary fence-right" />
+
+          <div className="decor-field wheat-field" aria-hidden="true">
+            <span /><span /><span /><span /><span /><span /><span /><span />
+          </div>
+          <div className="decor-field flower-field" aria-hidden="true">
+            <span /><span /><span /><span /><span /><span />
+          </div>
+
+          <div className="orchard" aria-hidden="true">
+            <span className="orchard-tree orchard-tree-a" />
+            <span className="orchard-tree orchard-tree-b" />
+            <span className="orchard-tree orchard-tree-c" />
+          </div>
+
+          <div className="hay-stack hay-a" aria-hidden="true" />
+          <div className="hay-stack hay-b" aria-hidden="true" />
+
           <div className="scene-tree tree-a" />
           <div className="scene-tree tree-b" />
           <div className="scene-tree tree-c" />
@@ -190,8 +215,22 @@ export function FarmWorld(props: Props) {
             title="Animais"
           >
             <span className="pen-fence" />
-            <span className="animal-dot animal-cow">●</span>
-            <span className="animal-dot animal-chicken">●</span>
+            <span className="cow-sprite cow-one">
+              <span className="cow-head" />
+              <span className="cow-body" />
+              <span className="cow-leg cow-leg-a" />
+              <span className="cow-leg cow-leg-b" />
+            </span>
+            <span className="chicken-sprite chicken-one">
+              <span className="chicken-body" />
+              <span className="chicken-head" />
+              <span className="chicken-comb" />
+            </span>
+            <span className="chicken-sprite chicken-two">
+              <span className="chicken-body" />
+              <span className="chicken-head" />
+              <span className="chicken-comb" />
+            </span>
             <span className="scene-caption">Animais</span>
           </button>
 
@@ -209,10 +248,20 @@ export function FarmWorld(props: Props) {
           <div className="pond" aria-hidden="true">
             <span className="pond-shine pond-shine-a" />
             <span className="pond-shine pond-shine-b" />
+            <span className="pond-lily lily-a" />
+            <span className="pond-lily lily-b" />
+            <span className="pond-duck" />
+          </div>
+          <div className="dock" aria-hidden="true">
+            <span /><span /><span /><span />
           </div>
 
           <div className="stone-path path-a" />
           <div className="stone-path path-b" />
+          <div className="stone-path path-c" />
+          <div className="scene-sign" aria-hidden="true">
+            <span>FarmQuest</span>
+          </div>
 
           <div className="scene-plots" aria-label="Canteiros da fazenda">
             {plots.map((plot) => {
