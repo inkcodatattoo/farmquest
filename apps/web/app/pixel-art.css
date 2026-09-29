@@ -2995,3 +2995,174 @@
     height: 228px !important;
   }
 }
+
+
+/* FarmQuest v1.14 — cenário mais orgânico após segunda prévia real */
+
+/* Rio mais estreito para devolver área útil ao cenário */
+.fq-river {
+  height: 16.5%;
+}
+
+.fq-river-bank {
+  bottom: -16px;
+  height: 44px;
+}
+
+.fq-pier {
+  left: 39.5%;
+  bottom: -6px;
+  width: 82px;
+  height: 62px;
+}
+
+.fq-boat {
+  left: 47%;
+  bottom: 18px;
+  width: 58px;
+  height: 22px;
+}
+
+/* Trilhas menos circulares e mais parecidas com caminhos */
+.fq-home-scene::before {
+  inset: 16% 0 8%;
+  background:
+    linear-gradient(13deg, transparent 0 43%, rgba(219,178,102,.68) 44% 50%, transparent 51%) 9% 38% / 440px 150px no-repeat,
+    linear-gradient(-10deg, transparent 0 43%, rgba(219,178,102,.66) 44% 50%, transparent 51%) 32% 46% / 510px 170px no-repeat,
+    linear-gradient(8deg, transparent 0 43%, rgba(219,178,102,.62) 44% 50%, transparent 51%) 58% 48% / 470px 160px no-repeat,
+    linear-gradient(-12deg, transparent 0 43%, rgba(219,178,102,.58) 44% 50%, transparent 51%) 73% 58% / 340px 145px no-repeat,
+    linear-gradient(90deg, transparent 0 42%, rgba(219,178,102,.52) 43% 50%, transparent 51%) 26% 68% / 260px 250px no-repeat,
+    linear-gradient(90deg, transparent 0 42%, rgba(219,178,102,.48) 43% 50%, transparent 51%) 61% 69% / 250px 240px no-repeat;
+  opacity: .78;
+}
+
+/* Mercado ganha presença visual */
+.fq-home-scene .fq-home-market {
+  left: 4.8% !important;
+  bottom: 12% !important;
+  width: 278px !important;
+  height: 278px !important;
+}
+
+/* Casa um pouco mais integrada à área central */
+.fq-home-scene .fq-home-house {
+  top: 20% !important;
+}
+
+/* Celeiro sobe levemente para abrir espaço aos canteiros */
+.fq-home-scene .fq-home-barn {
+  top: 19.2% !important;
+}
+
+/* Curral mais parecido com espaço físico do cenário */
+.fq-home-animal-pen {
+  right: 2.4%;
+  top: 28.8%;
+  width: 310px;
+  height: 248px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 22% 30%, rgba(255,255,255,.08) 0 2px, transparent 3px) 0 0/34px 34px,
+    radial-gradient(ellipse 44px 17px at 18% 78%, rgba(232,207,129,.36) 0 70%, transparent 72%),
+    radial-gradient(ellipse 36px 15px at 70% 26%, rgba(232,207,129,.30) 0 70%, transparent 72%),
+    linear-gradient(180deg, #caa45f, #b98c49);
+}
+
+.fq-pen-fence {
+  inset: -5px;
+  border-radius: 24px;
+}
+
+/* Plantações mais compactas e alinhadas */
+.fq-home-plots {
+  left: 36%;
+  top: 47.5%;
+  width: 37%;
+  height: 198px;
+  gap: 20px;
+}
+
+.fq-home-plot {
+  min-height: 180px;
+}
+
+.fq-home-plot::before {
+  transform: scale(1.16);
+}
+
+.fq-home-plot.is-planted .fq-home-plot-art {
+  width: 50%;
+  height: 50%;
+}
+
+.fq-home-plot.is-ready .fq-home-plot-art {
+  width: 67%;
+  height: 67%;
+}
+
+/* Decoração nas bordas para reduzir áreas vazias */
+.fq-home-scene::after {
+  background:
+    radial-gradient(circle at 3% 43%, rgba(40,100,41,.35) 0 74px, transparent 75px),
+    radial-gradient(circle at 96% 40%, rgba(34,89,37,.34) 0 78px, transparent 79px),
+    radial-gradient(circle at 7% 96%, rgba(30,78,36,.45) 0 108px, transparent 109px),
+    radial-gradient(circle at 80% 98%, rgba(29,78,35,.40) 0 96px, transparent 97px),
+    radial-gradient(circle at 22% 88%, rgba(42,93,40,.24) 0 55px, transparent 56px),
+    radial-gradient(circle at 72% 84%, rgba(42,93,40,.22) 0 60px, transparent 61px);
+}
+
+/* Ações principais mais próximas dos canteiros */
+.fq-home-actions {
+  left: 38.2%;
+  bottom: 106px;
+  width: 32.5%;
+}
+
+/* Painel lateral ganha um pouco mais de respiro */
+.fq-task-panel {
+  right: 13px;
+  bottom: 102px;
+  width: 292px;
+}
+
+/* Menu inferior mais uniforme */
+.fq-home-nav {
+  right: 318px;
+  gap: 10px;
+}
+
+.fq-home-nav button {
+  min-height: 68px;
+  padding-left: 18px;
+  padding-right: 24px;
+}
+
+/* Melhor contraste do texto nos painéis inferiores */
+.fq-home-nav button strong {
+  color: #4b2c18;
+  text-shadow: 0 1px 0 #fff1cf;
+}
+
+/* Pequena profundidade adicional para os objetos */
+.fq-home-house,
+.fq-home-barn,
+.fq-home-market,
+.fq-home-animal-pen,
+.fq-home-plot {
+  filter: drop-shadow(0 8px 3px rgba(50,35,20,.16));
+}
+
+/* Margem visual em telas grandes */
+@media (min-width: 1500px) {
+  .fq-home-scene .fq-home-market {
+    left: 5.1% !important;
+  }
+
+  .fq-home-scene .fq-home-house {
+    left: 5% !important;
+  }
+
+  .fq-home-scene .fq-home-barn {
+    left: 52% !important;
+  }
+}
