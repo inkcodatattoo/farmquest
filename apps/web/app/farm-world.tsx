@@ -578,6 +578,128 @@ export function FarmWorld(props: Props) {
     );
   }
 
+  function animalsPage() {
+    return (
+      <section className="game-page-panel fq-feature-page">
+        <div className="game-page-heading">
+          <div>
+            <span>ANIMAIS</span>
+            <h2>Área dos animais</h2>
+            <p>Prévia visual do sistema de produção animal que entra nas próximas fases.</p>
+          </div>
+        </div>
+
+        <div className="fq-feature-grid fq-animal-grid">
+          <article className="fq-feature-card">
+            <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-feature-main-icon" />
+            <h3>Galinhas</h3>
+            <div className="fq-feature-stat">
+              <PixelIcon src={FARM_ICONS.supplies.feed} alt="" />
+              <span>Ração: <strong>20 moedas</strong></span>
+            </div>
+            <div className="fq-feature-stat">
+              <PixelIcon src={FARM_ICONS.animalProducts.egg} alt="" />
+              <span>1 ovo a cada <strong>2 horas</strong></span>
+            </div>
+            <small>Acumula até 3 ovos antes da coleta.</small>
+            <span className="fq-coming-soon">Sistema ainda não conectado</span>
+          </article>
+
+          <article className="fq-feature-card">
+            <PixelIcon src={FARM_ICONS.animals.cow} alt="Vaca" className="fq-feature-main-icon" />
+            <h3>Vacas</h3>
+            <div className="fq-feature-stat">
+              <PixelIcon src={FARM_ICONS.supplies.hay} alt="" />
+              <span>Feno: <strong>20 moedas</strong></span>
+            </div>
+            <div className="fq-feature-stat">
+              <PixelIcon src={FARM_ICONS.animalProducts.milk} alt="" />
+              <span>1 leite a cada <strong>3 horas</strong></span>
+            </div>
+            <small>Armazena 1 produção por vez e não apodrece.</small>
+            <span className="fq-coming-soon">Sistema ainda não conectado</span>
+          </article>
+        </div>
+      </section>
+    );
+  }
+
+  function communityPage() {
+    return (
+      <section className="game-page-panel fq-feature-page">
+        <div className="game-page-heading">
+          <div>
+            <span>COMUNIDADE</span>
+            <h2>Fazenda Comunitária</h2>
+            <p>Prévia visual da meta compartilhada do canal.</p>
+          </div>
+        </div>
+
+        <div className="fq-community-layout">
+          <article className="fq-feature-card fq-community-goal-card">
+            <PixelIcon src={FARM_ICONS.community.goal} alt="Meta comunitária" className="fq-feature-main-icon" />
+            <h3>Meta da semana</h3>
+            <div className="fq-community-product">
+              <PixelIcon src={FARM_ICONS.crops.milho} alt="Milho" />
+              <div>
+                <strong>Milho</strong>
+                <span>Item rotativo semanal</span>
+              </div>
+            </div>
+            <div className="fq-community-progress" aria-label="Meta comunitária em desenvolvimento">
+              <span style={{ width: "5%" }} />
+            </div>
+            <small>Contribuição automática prevista: 5% das colheitas.</small>
+          </article>
+
+          <article className="fq-feature-card">
+            <PixelIcon src={FARM_ICONS.community.boost} alt="Boost comunitário" className="fq-feature-main-icon" />
+            <h3>Recompensa coletiva</h3>
+            <div className="fq-feature-stat">
+              <PixelIcon src={FARM_ICONS.actions.harvest} alt="" />
+              <span><strong>-5s</strong> no cooldown de colheita</span>
+            </div>
+            <div className="fq-feature-stat">
+              <PixelIcon src={FARM_ICONS.community.farmerBox} alt="" />
+              <span>Caixa de Fazendeiro para contribuintes</span>
+            </div>
+            <small>O boost permanece ativo por 2 dias após a meta.</small>
+            <span className="fq-coming-soon">Sistema ainda não conectado</span>
+          </article>
+        </div>
+      </section>
+    );
+  }
+
+  function rankingPage() {
+    return (
+      <section className="game-page-panel fq-feature-page">
+        <div className="game-page-heading">
+          <div>
+            <span>RANKING</span>
+            <h2>Classificação dos fazendeiros</h2>
+            <p>Estrutura visual pronta para receber os dados reais do ranking.</p>
+          </div>
+        </div>
+
+        <div className="fq-ranking-board">
+          <div className="fq-ranking-hero">
+            <PixelIcon src={FARM_ICONS.ui.ranking} alt="Ranking" />
+            <strong>Ranking FarmQuest</strong>
+            <span>Os dados entram no MVP 1.0.</span>
+          </div>
+          {[1, 2, 3, 4, 5].map((position) => (
+            <div className="fq-ranking-row" key={position}>
+              <strong>#{position}</strong>
+              <span>—</span>
+              <small>Aguardando classificação</small>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   function unavailable(title: string, text: string, icon: string) {
     return (
       <section className="game-page-panel future-panel pixel-future-panel">
@@ -606,11 +728,7 @@ export function FarmWorld(props: Props) {
       case "mercado":
         return market();
       case "animais":
-        return unavailable(
-          "Animais",
-          "O espaço já está reservado na nova interface. O sistema de animais será ligado ao backend na fase prevista da arquitetura.",
-          FARM_ICONS.animals.cow
-        );
+        return animalsPage();
       case "pedidos":
         return unavailable(
           "Pedidos",
@@ -618,11 +736,7 @@ export function FarmWorld(props: Props) {
           FARM_ICONS.community.harvestBox
         );
       case "comunidade":
-        return unavailable(
-          "Comunidade",
-          "A Fazenda Comunitária já tem espaço reservado na interface e será ativada quando entrarmos nessa fase do jogo.",
-          FARM_ICONS.community.goal
-        );
+        return communityPage();
       case "exploracao":
         return unavailable(
           "Exploração",
@@ -630,11 +744,7 @@ export function FarmWorld(props: Props) {
           FARM_ICONS.rare.leafFossil
         );
       case "ranking":
-        return unavailable(
-          "Ranking",
-          "O ranking está previsto para uma fase posterior e ainda não possui endpoint no protótipo.",
-          FARM_ICONS.ui.ranking
-        );
+        return rankingPage();
       case "conquistas":
         return unavailable(
           "Conquistas",
