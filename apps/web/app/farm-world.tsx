@@ -262,11 +262,6 @@ export function FarmWorld(props: Props) {
                           : `Canteiro ${index + 1}: apodrecido`
                   }
                 >
-                  <PixelIcon
-                    src={FARM_ICONS.plots.empty}
-                    alt=""
-                    className="fq-map-plot-base"
-                  />
                   {state !== "EMPTY" ? (
                     <PixelIcon
                       src={plotIcon(plot, nowMs)}
