@@ -2589,3 +2589,55 @@
     height: 92px;
   }
 }
+
+
+/* FarmQuest v1.9 — feedback de interação e acessibilidade */
+
+@keyframes fq-page-enter {
+  from { opacity: .25; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fq-home-shell button,
+.pixel-ui-shell button,
+.login-card button {
+  cursor: pointer;
+}
+
+.fq-home-shell button:disabled,
+.pixel-ui-shell button:disabled,
+.login-card button:disabled {
+  cursor: not-allowed;
+  opacity: .66;
+}
+
+.fq-home-shell button:focus-visible,
+.pixel-ui-shell button:focus-visible,
+.login-card button:focus-visible,
+.login-card .text-input:focus-visible {
+  outline: 4px solid #ffd65c;
+  outline-offset: 3px;
+}
+
+.pixel-ui-shell .game-page-panel {
+  animation: fq-page-enter 150ms ease-out;
+}
+
+.fq-home-scene {
+  animation: fq-page-enter 140ms ease-out;
+}
+
+.fq-home-nav button:active:not(:disabled),
+.fq-panel-button:active:not(:disabled),
+.pixel-ui-shell .game-action:active:not(:disabled),
+.pixel-ui-shell .game-mini-action:active:not(:disabled),
+.pixel-ui-shell .farm-game-dock button:active:not(:disabled) {
+  transform: translateY(1px) scale(.99);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-ui-shell .game-page-panel,
+  .fq-home-scene {
+    animation: none !important;
+  }
+}
