@@ -80,9 +80,15 @@ echo FarmQuest pronto.
 echo URL: http://localhost:3000
 echo Senha DEV local: %DEV_LOGIN_SECRET%
 echo.
+<nul set /p="%DEV_LOGIN_SECRET%" | clip
+echo A senha DEV foi copiada para a Area de Transferencia.
+echo Na tela de login, use Ctrl+V para colar a senha.
+echo.
 echo As janelas "FarmQuest API" e "FarmQuest Web" devem continuar abertas.
 start "" "http://localhost:3000"
-timeout /t 3 /nobreak >nul
+echo.
+echo Pode minimizar esta janela. Pressione qualquer tecla somente quando quiser fecha-la.
+pause >nul
 exit /b 0
 
 :fail
