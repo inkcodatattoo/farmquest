@@ -1,0 +1,12 @@
+{
+  "name": "FarmQuest Visual Preview",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "FarmQuest Preview",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "corepack enable && corepack prepare pnpm@12.7.0 --activate && pnpm install --frozen-lockfile"
+}
