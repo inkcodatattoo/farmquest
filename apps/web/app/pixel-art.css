@@ -1258,3 +1258,292 @@
   .fq-lantern-left { left: 27%; }
   .fq-lantern-right { right: 27%; }
 }
+
+
+/* FarmQuest Home v1.2 — composição refinada após teste real */
+
+/* O primeiro teste real mostrou o cenário muito espalhado. Este passe aproxima
+   construções, reduz a água e transforma os caminhos em áreas orgânicas. */
+.fq-home-scene {
+  background:
+    radial-gradient(circle at 14% 65%, rgba(255,255,255,.11) 0 2px, transparent 3px) 0 0/26px 26px,
+    radial-gradient(circle at 82% 64%, rgba(52,111,46,.20) 0 18px, transparent 19px) 0 0/88px 88px,
+    linear-gradient(180deg, #73b756 0%, #77b957 58%, #579941 100%);
+}
+
+.fq-home-scene::before {
+  inset: 20% 0 9%;
+  background:
+    radial-gradient(ellipse 190px 62px at 18% 38%, rgba(217,179,106,.68) 0 65%, transparent 68%),
+    radial-gradient(ellipse 190px 64px at 32% 41%, rgba(217,179,106,.68) 0 65%, transparent 68%),
+    radial-gradient(ellipse 220px 70px at 47% 38%, rgba(217,179,106,.66) 0 65%, transparent 68%),
+    radial-gradient(ellipse 190px 64px at 62% 42%, rgba(217,179,106,.62) 0 65%, transparent 68%),
+    radial-gradient(ellipse 180px 64px at 75% 47%, rgba(217,179,106,.58) 0 65%, transparent 68%),
+    radial-gradient(ellipse 220px 76px at 47% 58%, rgba(217,179,106,.60) 0 65%, transparent 68%),
+    radial-gradient(ellipse 210px 70px at 31% 66%, rgba(217,179,106,.52) 0 65%, transparent 68%),
+    radial-gradient(ellipse 220px 72px at 65% 69%, rgba(217,179,106,.50) 0 65%, transparent 68%);
+  opacity: .88;
+}
+
+.fq-river {
+  height: 23.5%;
+  background:
+    repeating-linear-gradient(172deg, rgba(210,244,255,.18) 0 4px, transparent 4px 34px),
+    linear-gradient(180deg, #45b8dd 0%, #2c98c9 58%, #237faf 100%);
+  box-shadow: inset 0 -10px 18px rgba(15,91,123,.12);
+}
+
+.fq-river-bank {
+  bottom: -28px;
+  height: 62px;
+}
+
+.fq-pier {
+  left: 39%;
+  bottom: -3px;
+  width: 94px;
+  height: 72px;
+}
+
+.fq-boat {
+  left: 47%;
+  bottom: 25px;
+  width: 68px;
+  height: 25px;
+}
+
+.fq-tree-left { left: 1.5% !important; top: 18.5% !important; transform: scale(1.12); }
+.fq-tree-center { left: 30% !important; top: 17% !important; transform: scale(.94); }
+.fq-tree-right { right: 1.7% !important; top: 18% !important; transform: scale(1.14); }
+.fq-apple-tree { right: 1.2%; top: 16%; transform: scale(.96); }
+
+.fq-home-scene .fq-home-house {
+  left: 3% !important;
+  top: 21% !important;
+  width: 310px !important;
+  height: 310px !important;
+}
+
+.fq-home-scene .fq-home-barn {
+  left: 49% !important;
+  top: 20% !important;
+  width: 302px !important;
+  height: 302px !important;
+}
+
+.fq-home-scene .fq-home-market {
+  left: 5% !important;
+  bottom: 12.5% !important;
+  width: 238px !important;
+  height: 238px !important;
+}
+
+.fq-location-sign {
+  min-width: 116px;
+  padding: 8px 17px 9px;
+  font-size: 15px;
+}
+
+.fq-house-sign { bottom: 9px; }
+.fq-barn-sign { bottom: 7px; }
+.fq-market-sign { bottom: 9px; }
+
+.fq-home-animal-pen {
+  right: 2.5%;
+  top: 31.5%;
+  width: 305px;
+  height: 245px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255,255,255,.07) 0 2px, transparent 3px) 0 0/34px 34px,
+    linear-gradient(180deg, #d2ad65, #c79b55);
+  box-shadow:
+    inset 0 0 0 4px rgba(104,64,31,.18),
+    0 8px 0 rgba(67,43,21,.12);
+}
+
+.fq-pen-fence {
+  inset: -3px;
+  border: 8px solid #70401f;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, transparent 0 30%, #92582d 31% 36%, transparent 37% 63%, #92582d 64% 69%, transparent 70%),
+    repeating-linear-gradient(90deg, transparent 0 42px, #764521 42px 51px, transparent 51px 84px);
+  box-shadow: inset 0 0 0 2px #b7773a;
+}
+
+.fq-home-cow { left: 31px; top: 70px; width: 132px; height: 132px; }
+.fq-home-chicken { width: 66px; height: 66px; }
+.fq-home-chicken-a { right: 27px; top: 70px; }
+.fq-home-chicken-b { right: 77px; bottom: 30px; }
+
+.fq-coop {
+  right: 16px;
+  top: 17px;
+  width: 88px;
+  height: 67px;
+}
+
+.fq-water-trough {
+  left: 21px;
+  bottom: 19px;
+  width: 62px;
+  height: 32px;
+}
+
+.fq-animal-sign {
+  right: 16px;
+  top: 13px;
+  min-width: 98px;
+}
+
+.fq-home-plots {
+  left: 33%;
+  top: 48.5%;
+  width: 43.5%;
+  height: 182px;
+  gap: 15px;
+}
+
+.fq-home-plot::before {
+  inset: -3px;
+  transform: scale(1.08);
+}
+
+.fq-home-plot.is-planted .fq-home-plot-art {
+  width: 39%;
+  height: 39%;
+  transform: translateY(8px);
+}
+
+.fq-home-plot.is-ready .fq-home-plot-art {
+  width: 56%;
+  height: 56%;
+  transform: translateY(3px);
+}
+
+.fq-home-plot.is-rotten .fq-home-plot-art {
+  width: 52%;
+  height: 52%;
+}
+
+.fq-home-actions {
+  left: 37%;
+  bottom: 105px;
+  width: 35%;
+  gap: 16px;
+}
+
+.fq-panel-button {
+  min-height: 82px;
+  padding: 15px 35px;
+}
+
+.fq-panel-button .fq-pixel-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.fq-panel-button strong {
+  font-size: 24px;
+}
+
+.fq-task-panel {
+  right: 13px;
+  bottom: 103px;
+  width: 300px;
+  min-height: 282px;
+  padding: 52px 36px 37px;
+}
+
+.fq-task-panel h2 {
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+
+.fq-task-row {
+  min-height: 58px;
+  grid-template-columns: 50px 1fr;
+  font-size: 15px;
+}
+
+.fq-task-row .fq-pixel-icon {
+  width: 47px;
+  height: 47px;
+}
+
+.fq-home-nav {
+  left: 16px;
+  right: 322px;
+  bottom: 9px;
+  height: 88px;
+  gap: 10px;
+}
+
+.fq-home-nav button {
+  grid-template-columns: 54px 1fr;
+  padding: 8px 24px 8px 18px;
+  filter: drop-shadow(0 5px 2px rgba(47,29,16,.27));
+}
+
+.fq-home-nav button .fq-pixel-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.fq-home-nav button strong {
+  font-size: 16px;
+}
+
+.fq-farm-name {
+  gap: 8px;
+  padding-left: 58px;
+}
+
+.fq-farm-name > .fq-pixel-icon {
+  position: absolute;
+  left: 13px;
+  width: 38px;
+  height: 38px;
+}
+
+.fq-farm-name > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fq-lantern-left { left: 28%; top: 43%; }
+.fq-lantern-right { right: 27%; top: 57%; }
+.fq-barrel-house { left: 25%; top: 41.5%; }
+.fq-barrel-barn { left: 66.5%; top: 39%; }
+.fq-hay-one { left: 65.5%; top: 35%; }
+.fq-hay-two { left: 69%; top: 38.7%; }
+.fq-hay-three { left: 63.3%; top: 40.7%; }
+.fq-flowers-a { left: 27%; top: 47%; }
+.fq-flowers-b { right: 21%; top: 31%; }
+.fq-stones-a { left: 31%; bottom: 17%; }
+.fq-stones-b { right: 31%; top: 40%; }
+
+@media (max-width: 1350px) {
+  .fq-home-scene .fq-home-house {
+    left: 1.5% !important;
+    width: 280px !important;
+    height: 280px !important;
+  }
+  .fq-home-scene .fq-home-barn {
+    left: 48% !important;
+    width: 276px !important;
+    height: 276px !important;
+  }
+  .fq-home-animal-pen {
+    right: 1.5%;
+    width: 275px;
+  }
+  .fq-task-panel {
+    width: 275px;
+  }
+  .fq-home-nav {
+    right: 294px;
+  }
+}
