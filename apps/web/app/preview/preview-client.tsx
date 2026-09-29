@@ -65,6 +65,30 @@ const INITIAL_INVENTORY: FarmWorldInventoryItem[] = [
     name: "Milho",
     quality: "GOOD",
     quantity: 2
+  },
+  {
+    id: "preview-wheat",
+    name: "Trigo",
+    quality: "COMMON",
+    quantity: 4
+  },
+  {
+    id: "preview-strawberry",
+    name: "Morango",
+    quality: "EXCELLENT",
+    quantity: 2
+  },
+  {
+    id: "preview-tomato",
+    name: "Tomate",
+    quality: "EXTRAORDINARY",
+    quantity: 1
+  },
+  {
+    id: "preview-potato",
+    name: "Batata",
+    quality: "GOOD",
+    quantity: 3
   }
 ];
 
@@ -73,6 +97,36 @@ const PREVIEW_SHOP: FarmWorldShopOffer[] = [
     id: "preview-shop-corn",
     itemName: "Semente de Milho",
     buyPrice: "5",
+    minLevel: 1
+  },
+  {
+    id: "preview-shop-wheat",
+    itemName: "Semente de Trigo",
+    buyPrice: "6",
+    minLevel: 1
+  },
+  {
+    id: "preview-shop-carrot",
+    itemName: "Semente de Cenoura",
+    buyPrice: "7",
+    minLevel: 1
+  },
+  {
+    id: "preview-shop-strawberry",
+    itemName: "Semente de Morango",
+    buyPrice: "9",
+    minLevel: 1
+  },
+  {
+    id: "preview-shop-tomato",
+    itemName: "Semente de Tomate",
+    buyPrice: "8",
+    minLevel: 1
+  },
+  {
+    id: "preview-shop-potato",
+    itemName: "Semente de Batata",
+    buyPrice: "7",
     minLevel: 1
   }
 ];
@@ -264,21 +318,31 @@ export default function FarmPreviewClient() {
     setError("");
   }
 
-  function buy() {
-    if (Number(farm.coins) < 5) {
+  function buy(offerId: string) {
+    const offer = PREVIEW_SHOP.find((entry) => entry.id === offerId);
+    if (!offer) return;
+
+    const price = Number(offer.buyPrice);
+    if (Number(farm.coins) < price) {
       setError("Moedas insuficientes.");
       return;
     }
 
     setFarm((current) => ({
       ...current,
-      coins: String(Number(current.coins) - 5)
+      coins: String(Number(current.coins) - price)
     }));
+
+    const inventoryId =
+      offer.id === "preview-shop-corn"
+        ? "preview-seeds"
+        : `preview-${offer.id.replace("preview-shop-", "")}-seeds`;
+
     setInventory((items) => {
-      const seeds = items.find((entry) => entry.id === "preview-seeds");
+      const seeds = items.find((entry) => entry.id === inventoryId);
       if (seeds) {
         return items.map((entry) =>
-          entry.id === "preview-seeds"
+          entry.id === inventoryId
             ? { ...entry, quantity: entry.quantity + 1 }
             : entry
         );
@@ -286,14 +350,15 @@ export default function FarmPreviewClient() {
       return [
         ...items,
         {
-          id: "preview-seeds",
-          name: "Semente de Milho",
+          id: inventoryId,
+          name: offer.itemName,
           quality: "NONE",
           quantity: 1
         }
       ];
     });
-    setNotice("Compra simulada: +1 semente por 5 moedas.");
+
+    setNotice(`Compra simulada: +1 ${offer.itemName.toLowerCase()} por ${price} moedas.`);
     setError("");
   }
 
