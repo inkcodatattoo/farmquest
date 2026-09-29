@@ -183,14 +183,60 @@ export function FarmWorld(props: Props) {
     return (
       <section className="fq-home-stage">
         <div className="fq-home-scene">
-          <header className="fq-home-hud">
-            <div className="fq-home-logo" aria-label="FarmQuest">
-              <span>Farm</span><strong>Quest</strong>
-            </div>
+          <aside className="fq-home-sidebar" aria-label="Navegação principal">
+            <button
+              className="fq-home-brand"
+              onClick={() => setSection("inicio")}
+              aria-label="Ir para o início da FarmQuest"
+            >
+              <img
+                src="/game-assets/brand/farmquest-logo.png"
+                alt="FarmQuest"
+                draggable={false}
+              />
+            </button>
 
+            <nav className="fq-home-nav">
+              <button className="active" onClick={() => setSection("inicio")} aria-current="page">
+                <PixelIcon src={FARM_ICONS.buildings.farmhouse} alt="" />
+                <strong>Início</strong>
+              </button>
+              <button onClick={() => setSection("plantacoes")}>
+                <PixelIcon src={FARM_ICONS.actions.plant} alt="" />
+                <strong>Plantações</strong>
+              </button>
+              <button onClick={() => setSection("animais")}>
+                <PixelIcon src={FARM_ICONS.animals.cow} alt="" />
+                <strong>Animais</strong>
+              </button>
+              <button onClick={() => setSection("celeiro")}>
+                <PixelIcon src={FARM_ICONS.ui.inventory} alt="" />
+                <strong>Celeiro</strong>
+              </button>
+              <button onClick={() => setSection("mercado")}>
+                <PixelIcon src={FARM_ICONS.buildings.market} alt="" />
+                <strong>Mercado</strong>
+              </button>
+              <button onClick={() => setSection("comunidade")}>
+                <PixelIcon src={FARM_ICONS.community.goal} alt="" />
+                <strong>Comunidade</strong>
+              </button>
+              <button onClick={() => setSection("ranking")}>
+                <PixelIcon src={FARM_ICONS.ui.ranking} alt="" />
+                <strong>Ranking</strong>
+              </button>
+            </nav>
+
+            <div className="fq-sidebar-summary" aria-label={`Nível ${farm.level}`}>
+              <PixelIcon src={FARM_ICONS.ui.level} alt="" />
+              <span><small>Nível</small><strong>{farm.level}</strong></span>
+            </div>
+          </aside>
+
+          <header className="fq-home-hud">
             <div className="fq-hud-panel fq-coins-panel">
               <PixelIcon src={FARM_ICONS.ui.coins} alt="Moedas" />
-              <strong>{farm.coins}</strong>
+              <span><small>Moedas</small><strong>{farm.coins}</strong></span>
             </div>
 
             <div className="fq-hud-panel fq-xp-panel">
@@ -207,7 +253,7 @@ export function FarmWorld(props: Props) {
             </div>
 
             <div className="fq-hud-panel fq-farm-name">
-              <span>Fazenda do {userName}</span>
+              <span><small>Minha fazenda</small><strong>Fazenda do {userName}</strong></span>
             </div>
 
             <div className="fq-home-system-actions">
@@ -222,6 +268,12 @@ export function FarmWorld(props: Props) {
             <span className="fq-river-bank" />
             <span className="fq-pier"><i /><i /><i /><i /></span>
             <span className="fq-boat" />
+          </div>
+
+          <div className="fq-road-network" aria-hidden="true">
+            <span className="fq-road fq-road-main" />
+            <span className="fq-road fq-road-market" />
+            <span className="fq-road fq-road-crops" />
           </div>
 
           <div className="scene-tree fq-tree-left" aria-hidden="true" />
@@ -277,6 +329,7 @@ export function FarmWorld(props: Props) {
             <span className="fq-coop" aria-hidden="true" />
             <span className="fq-water-trough" aria-hidden="true" />
             <PixelIcon src={FARM_ICONS.animals.cow} alt="Vaca" className="fq-home-cow" />
+            <PixelIcon src={FARM_ICONS.animals.pig} alt="Porco" className="fq-home-pig" />
             <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-home-chicken fq-home-chicken-a" />
             <PixelIcon src={FARM_ICONS.animals.chicken} alt="Galinha" className="fq-home-chicken fq-home-chicken-b" />
             <span className="fq-location-sign fq-animal-sign">Animais</span>
@@ -367,28 +420,6 @@ export function FarmWorld(props: Props) {
             </div>
           </aside>
 
-          <nav className="fq-home-nav" aria-label="Menu principal">
-            <button onClick={() => setSection("celeiro")}>
-              <PixelIcon src={FARM_ICONS.ui.inventory} alt="" />
-              <strong>Inventário</strong>
-            </button>
-            <button onClick={() => setSection("mercado")}>
-              <PixelIcon src={FARM_ICONS.buildings.market} alt="" />
-              <strong>Mercado</strong>
-            </button>
-            <button onClick={() => setSection("animais")}>
-              <PixelIcon src={FARM_ICONS.animals.cow} alt="" />
-              <strong>Animais</strong>
-            </button>
-            <button onClick={() => setSection("comunidade")}>
-              <PixelIcon src={FARM_ICONS.community.goal} alt="" />
-              <strong>Comunidade</strong>
-            </button>
-            <button onClick={() => setSection("ranking")}>
-              <PixelIcon src={FARM_ICONS.ui.ranking} alt="" />
-              <strong>Ranking</strong>
-            </button>
-          </nav>
         </div>
       </section>
     );
@@ -769,8 +800,12 @@ export function FarmWorld(props: Props) {
     <main className="farm-game-shell pixel-ui-shell">
       <header className="farm-game-topbar">
         <div className="farm-game-logo pixel-logo">
-          <PixelIcon src={FARM_ICONS.buildings.farmhouse} alt="" />
-          <span>FarmQuest</span>
+          <img
+            className="farm-game-brand-logo"
+            src="/game-assets/brand/farmquest-logo.png"
+            alt="FarmQuest"
+            draggable={false}
+          />
         </div>
 
         <div className="farm-identity">
@@ -818,6 +853,7 @@ export function FarmWorld(props: Props) {
               key={item.key}
               className={section === item.key ? "active" : ""}
               onClick={() => setSection(item.key)}
+              aria-label={item.label}
             >
               <span className="pixel-nav-icon"><PixelIcon src={item.icon} alt="" /></span>
               <strong>{item.label}</strong>

@@ -448,8 +448,13 @@ export function FarmQuestClient() {
     return (
       <main className="center-shell">
         <section className="login-card">
-          <div className="logo-mark">FQ</div>
-          <h1>FarmQuest</h1>
+          <img
+            className="login-brand-logo"
+            src="/game-assets/brand/farmquest-logo.png"
+            alt=""
+            draggable={false}
+          />
+          <h1 className="login-brand-heading">FarmQuest</h1>
           <p>Carregando o Protótipo 0.1...</p>
         </section>
       </main>
@@ -460,9 +465,14 @@ export function FarmQuestClient() {
     return (
       <main className="center-shell">
         <section className="login-card">
-          <div className="logo-mark">FQ</div>
+          <img
+            className="login-brand-logo"
+            src="/game-assets/brand/farmquest-logo.png"
+            alt=""
+            draggable={false}
+          />
+          <h1 className="login-brand-heading">FarmQuest</h1>
           <span className="eyebrow">PROTÓTIPO 0.1</span>
-          <h1>FarmQuest</h1>
           <p>
             Entre no ambiente de desenvolvimento para testar o primeiro ciclo
             real da fazenda.
@@ -506,7 +516,13 @@ export function FarmQuestClient() {
     return (
       <main className="center-shell">
         <section className="login-card">
-          <h1>FarmQuest</h1>
+          <img
+            className="login-brand-logo"
+            src="/game-assets/brand/farmquest-logo.png"
+            alt=""
+            draggable={false}
+          />
+          <h1 className="login-brand-heading">FarmQuest</h1>
           <p className="error-banner">{error || "Falha ao carregar a fazenda."}</p>
           <button className="primary-button" onClick={() => void loadGame()}>
             Tentar novamente
