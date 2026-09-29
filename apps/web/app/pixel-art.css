@@ -1077,3 +1077,184 @@
     height: 720px;
   }
 }
+
+
+/* FarmQuest Home v1.1 — placas e detalhes cozy */
+
+.fq-location-sign {
+  position: absolute;
+  left: 50%;
+  z-index: 20;
+  min-width: 104px;
+  transform: translateX(-50%);
+  padding: 7px 15px 8px;
+  border: 4px solid #4d2b18;
+  border-radius: 8px;
+  color: #fff0c9;
+  background:
+    repeating-linear-gradient(0deg, rgba(73,37,18,.12) 0 2px, transparent 2px 12px),
+    linear-gradient(180deg, #9b5d2e, #6f3e20);
+  box-shadow:
+    inset 0 0 0 2px #b97736,
+    0 4px 0 rgba(48,28,17,.25);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 950;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  text-shadow: 0 2px 0 #462817;
+  pointer-events: none;
+}
+
+.fq-house-sign { bottom: 7px; }
+.fq-barn-sign { bottom: 3px; }
+.fq-market-sign { bottom: 8px; min-width: 96px; }
+.fq-animal-sign {
+  left: auto;
+  right: 18px;
+  top: 13px;
+  transform: none;
+  min-width: 90px;
+}
+
+.fq-home-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.fq-lantern-post {
+  position: absolute;
+  width: 10px;
+  height: 76px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #6b3d20, #9a6131 50%, #62371c);
+  box-shadow: 0 4px 0 rgba(59,34,19,.2);
+}
+.fq-lantern-post::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 8px;
+  width: 34px;
+  height: 8px;
+  border-radius: 4px;
+  background: #754520;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.22);
+}
+.fq-lantern-post i {
+  position: absolute;
+  left: 20px;
+  top: 14px;
+  width: 24px;
+  height: 31px;
+  border: 4px solid #56321d;
+  border-radius: 5px 5px 8px 8px;
+  background:
+    radial-gradient(circle at 50% 48%, #fff5a5 0 5px, #ffc744 6px 10px, transparent 11px),
+    #c57626;
+  box-shadow:
+    0 0 12px rgba(255,203,73,.36),
+    inset 0 0 0 2px #e3a64b;
+}
+.fq-lantern-post i::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: -8px;
+  height: 7px;
+  border-radius: 4px 4px 0 0;
+  background: #51301c;
+}
+.fq-lantern-left { left: 29%; top: 46%; }
+.fq-lantern-right { right: 28%; top: 60%; }
+
+.fq-barrel {
+  position: absolute;
+  width: 38px;
+  height: 47px;
+  border: 4px solid #5d351e;
+  border-radius: 9px 9px 12px 12px;
+  background:
+    linear-gradient(180deg, transparent 0 8px, #4d2d1a 8px 12px, transparent 12px 30px, #4d2d1a 30px 34px, transparent 34px),
+    repeating-linear-gradient(90deg, #965929 0 7px, #b96f34 7px 13px);
+  box-shadow: 0 4px 0 rgba(54,31,18,.2);
+}
+.fq-barrel::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: -5px;
+  height: 9px;
+  border: 3px solid #5b341e;
+  border-radius: 50%;
+  background: #9d622f;
+}
+.fq-barrel-house { left: 24%; top: 45%; transform: scale(.9); }
+.fq-barrel-barn { left: 68%; top: 40%; transform: scale(.95); }
+
+.fq-hay-bale {
+  position: absolute;
+  width: 56px;
+  height: 44px;
+  background: url('/game-assets/icons/supplies/feno.png') center / contain no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 4px 2px rgba(78,52,19,.23));
+}
+.fq-hay-one { left: 66%; top: 36%; }
+.fq-hay-two { left: 69.5%; top: 39.8%; transform: scale(.82); }
+.fq-hay-three { left: 63.5%; top: 41.8%; transform: scale(.72); }
+
+.fq-flower-patch {
+  position: absolute;
+  width: 90px;
+  height: 44px;
+}
+.fq-flower-patch i {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #f6c64d 0 2px, #fff 3px 5px, transparent 6px);
+  filter: drop-shadow(0 2px 0 rgba(42,96,37,.15));
+}
+.fq-flower-patch i:nth-child(1){left:7px;top:20px}
+.fq-flower-patch i:nth-child(2){left:29px;top:6px}
+.fq-flower-patch i:nth-child(3){left:48px;top:25px}
+.fq-flower-patch i:nth-child(4){left:69px;top:12px}
+.fq-flowers-a { left: 27%; top: 51%; }
+.fq-flowers-b { right: 22%; top: 33%; transform: scale(.86); }
+
+.fq-stone-group {
+  position: absolute;
+  width: 80px;
+  height: 38px;
+}
+.fq-stone-group i {
+  position: absolute;
+  bottom: 0;
+  border: 3px solid #777568;
+  border-radius: 48% 52% 43% 57%;
+  background: linear-gradient(145deg, #c7c6b8, #939384);
+  box-shadow: inset -4px -4px 0 rgba(69,71,63,.12);
+}
+.fq-stone-group i:nth-child(1){left:4px;width:29px;height:23px}
+.fq-stone-group i:nth-child(2){left:27px;width:38px;height:28px}
+.fq-stone-group i:nth-child(3){left:58px;width:21px;height:18px}
+.fq-stones-a { left: 31%; bottom: 18%; }
+.fq-stones-b { right: 31%; top: 43%; transform: scale(.78); }
+
+@media (max-width: 1350px) {
+  .fq-location-sign {
+    min-width: 90px;
+    font-size: 12px;
+  }
+  .fq-lantern-left { left: 27%; }
+  .fq-lantern-right { right: 27%; }
+}
