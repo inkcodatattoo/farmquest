@@ -4063,3 +4063,451 @@
     display: none;
   }
 }
+
+
+/* FarmQuest Home v2 — composição oficial compacta */
+
+/* Layout-base da Home oficial */
+.fq-home-scene {
+  --fq-rail-width: 170px;
+  min-height: 720px;
+  background:
+    radial-gradient(circle at 83% 63%, rgba(50, 115, 48, .18) 0 16px, transparent 17px) 0 0 / 78px 78px,
+    radial-gradient(circle at 24% 72%, rgba(255,255,255,.08) 0 2px, transparent 3px) 0 0 / 26px 26px,
+    linear-gradient(180deg, #79ba58 0%, #6eaa50 58%, #55933f 100%);
+}
+
+/* Sidebar mais estreita e compacta */
+.fq-home-sidebar {
+  width: calc(var(--fq-rail-width) - 16px);
+  gap: 6px;
+  padding: 9px 8px 9px;
+}
+
+.fq-home-brand {
+  height: 78px;
+  flex-basis: 78px;
+}
+
+.fq-home-sidebar .fq-home-nav {
+  grid-auto-rows: 48px;
+  gap: 4px;
+}
+
+.fq-home-sidebar .fq-home-nav button {
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 5px;
+  padding: 4px 9px;
+}
+
+.fq-home-sidebar .fq-home-nav button .fq-pixel-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.fq-home-sidebar .fq-home-nav button strong {
+  font-size: 10px;
+}
+
+.fq-sidebar-summary {
+  min-height: 48px;
+}
+
+/* HUD mais baixo para liberar área de fazenda */
+.fq-home-hud {
+  left: calc(var(--fq-rail-width) + 10px);
+  right: 12px;
+  top: 10px;
+  height: 64px;
+  grid-template-columns: 160px 240px minmax(280px, 1fr) 84px;
+  gap: 8px;
+}
+
+.fq-hud-panel {
+  min-height: 58px;
+}
+
+.fq-coins-panel {
+  padding: 7px 21px 7px 47px;
+}
+
+.fq-xp-panel {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.fq-farm-name {
+  min-height: 58px;
+}
+
+/* Faixa azul reduzida: só pano de fundo superior */
+.fq-river {
+  left: var(--fq-rail-width);
+  height: 11.5%;
+  min-height: 78px;
+}
+
+.fq-river-bank {
+  bottom: -12px;
+  height: 32px;
+}
+
+.fq-pier,
+.fq-boat,
+.fq-river-shine {
+  display: none;
+}
+
+/* Malha curta de caminhos, semelhante à referência */
+.fq-road-network {
+  inset: 0 0 0 var(--fq-rail-width);
+}
+
+.fq-road {
+  height: 42px;
+  border-radius: 32px;
+  opacity: .78;
+  background:
+    radial-gradient(circle at 17px 15px, rgba(119, 83, 40, .16) 0 2px, transparent 3px) 0 0 / 36px 28px,
+    linear-gradient(180deg, rgba(232, 198, 126, .88), rgba(205, 159, 84, .84));
+  box-shadow:
+    inset 0 4px 0 rgba(255, 233, 175, .10),
+    inset 0 -4px 0 rgba(126, 86, 39, .08);
+}
+
+.fq-road::after {
+  display: none;
+}
+
+.fq-road-main {
+  left: 8%;
+  top: 37%;
+  width: 70%;
+  transform: rotate(0deg);
+}
+
+.fq-road-market {
+  left: 18%;
+  top: 44%;
+  width: 26%;
+  height: 40px;
+  transform: rotate(82deg);
+}
+
+.fq-road-crops {
+  left: 52%;
+  top: 38%;
+  width: 24%;
+  height: 40px;
+  transform: rotate(72deg);
+}
+
+/* Árvores ficam nas bordas em vez do meio da composição */
+.fq-tree-left {
+  left: calc(var(--fq-rail-width) + .6%) !important;
+  top: 9.5% !important;
+  transform: scale(.78);
+}
+
+.fq-tree-center {
+  left: 32% !important;
+  top: 9.2% !important;
+  transform: scale(.66);
+}
+
+.fq-tree-right {
+  right: .2% !important;
+  top: 9% !important;
+  transform: scale(.78);
+}
+
+.fq-apple-tree {
+  right: .3%;
+  top: 7%;
+  transform: scale(.58);
+}
+
+/* Construções: maiores e mais próximas */
+.fq-home-scene .fq-home-house {
+  left: calc(var(--fq-rail-width) + 4%) !important;
+  top: 15% !important;
+  width: 250px !important;
+  height: 250px !important;
+}
+
+.fq-home-scene .fq-home-barn {
+  left: 49% !important;
+  top: 15% !important;
+  width: 232px !important;
+  height: 232px !important;
+}
+
+.fq-home-scene .fq-home-market {
+  left: calc(var(--fq-rail-width) + 6%) !important;
+  bottom: 8% !important;
+  width: 165px !important;
+  height: 165px !important;
+}
+
+.fq-location-sign {
+  min-width: 90px;
+  font-size: 11px;
+}
+
+/* Curral colocado ao lado do celeiro, como na referência */
+.fq-home-animal-pen {
+  right: 7%;
+  top: 24%;
+  width: 280px;
+  height: 210px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 20px 18px, rgba(255,255,255,.06) 0 2px, transparent 3px) 0 0 / 34px 34px,
+    linear-gradient(180deg, rgba(199,158,89,.86), rgba(176,130,66,.84));
+}
+
+.fq-pen-fence {
+  inset: 13px 3px 7px;
+  border-radius: 18px;
+}
+
+.fq-home-cow {
+  left: 24px;
+  top: 50px;
+  width: 108px;
+  height: 108px;
+}
+
+.fq-home-pig {
+  left: 112px;
+  bottom: 18px;
+  width: 68px;
+  height: 68px;
+}
+
+.fq-home-chicken-a {
+  right: 28px;
+  top: 52px;
+}
+
+.fq-home-chicken-b {
+  right: 20px;
+  bottom: 25px;
+}
+
+/* Canteiros diretamente no terreno, agrupados em bloco 2x2 */
+.fq-home-plots {
+  position: absolute;
+  left: calc(var(--fq-rail-width) + 8%);
+  top: 50%;
+  z-index: 18;
+  width: 390px;
+  height: 275px;
+  display: grid;
+  grid-template-columns: repeat(2, 175px);
+  grid-template-rows: repeat(2, 128px);
+  gap: 14px 18px;
+  justify-content: start;
+  align-content: start;
+}
+
+.fq-home-plot {
+  width: 175px;
+  min-height: 128px;
+  height: 128px;
+}
+
+.fq-home-plot:nth-child(3) {
+  grid-column: 1 / 3;
+  width: 175px;
+  justify-self: center;
+}
+
+.fq-home-plot::before {
+  inset: 0;
+  transform: scale(1.08);
+}
+
+.fq-home-plot.is-planted .fq-home-plot-art {
+  width: 47%;
+  height: 47%;
+}
+
+.fq-home-plot.is-ready .fq-home-plot-art {
+  width: 62%;
+  height: 62%;
+}
+
+.fq-plot-timer {
+  bottom: 2px;
+  font-size: 10px;
+}
+
+/* Ações logo abaixo dos canteiros */
+.fq-home-actions {
+  left: calc(var(--fq-rail-width) + 8.5%);
+  bottom: 5%;
+  width: 370px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.fq-panel-button {
+  min-height: 58px;
+}
+
+.fq-panel-button .fq-pixel-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.fq-panel-button strong {
+  font-size: 18px;
+}
+
+/* Tarefas menor, no canto inferior direito */
+.fq-task-panel {
+  right: 1.5%;
+  bottom: 3%;
+  width: 235px;
+  min-height: 205px;
+  padding: 38px 28px 23px;
+}
+
+.fq-task-panel h2 {
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.fq-task-row {
+  min-height: 44px;
+  grid-template-columns: 40px 1fr;
+  font-size: 12px;
+}
+
+.fq-task-row .fq-pixel-icon {
+  width: 36px;
+  height: 36px;
+}
+
+/* Decoração aproximada à composição oficial */
+.fq-fence-a {
+  left: calc(var(--fq-rail-width) + 24%);
+  top: 41%;
+  width: 150px;
+}
+
+.fq-fence-b {
+  left: 69%;
+  top: 20%;
+  width: 138px;
+}
+
+.fq-fence-c {
+  left: calc(var(--fq-rail-width) + 1.5%);
+  bottom: 24%;
+  width: 145px;
+}
+
+.fq-lantern-left {
+  left: calc(var(--fq-rail-width) + 31%);
+  top: 40%;
+}
+
+.fq-lantern-right {
+  right: 24%;
+  top: 49%;
+}
+
+.fq-barrel-house {
+  left: calc(var(--fq-rail-width) + 17%);
+  top: 38%;
+}
+
+.fq-barrel-barn {
+  left: 61%;
+  top: 36%;
+}
+
+.fq-hay-one { left: 61%; top: 31%; }
+.fq-hay-two { left: 64%; top: 34%; }
+.fq-hay-three { left: 59%; top: 36%; }
+
+.fq-flowers-a {
+  left: calc(var(--fq-rail-width) + 18%);
+  top: 43%;
+}
+
+.fq-flowers-b {
+  right: 16%;
+  top: 18%;
+}
+
+.fq-stones-a {
+  left: calc(var(--fq-rail-width) + 26%);
+  bottom: 7%;
+}
+
+.fq-stones-b {
+  right: 27%;
+  top: 42%;
+}
+
+/* Neutraliza regras antigas do bloco "Cultivos" */
+.fq-crop-zone {
+  display: contents !important;
+}
+
+/* Ajustes para 1366px */
+@media (max-width: 1380px) {
+  .fq-home-scene {
+    --fq-rail-width: 154px;
+  }
+
+  .fq-home-sidebar {
+    width: 140px;
+  }
+
+  .fq-home-hud {
+    grid-template-columns: 145px 220px minmax(220px, 1fr) 80px;
+  }
+
+  .fq-home-scene .fq-home-house {
+    width: 220px !important;
+    height: 220px !important;
+  }
+
+  .fq-home-scene .fq-home-barn {
+    left: 48% !important;
+    width: 210px !important;
+    height: 210px !important;
+  }
+
+  .fq-home-animal-pen {
+    right: 3%;
+    width: 245px;
+    height: 195px;
+  }
+
+  .fq-home-plots {
+    left: calc(var(--fq-rail-width) + 6.5%);
+    width: 350px;
+    grid-template-columns: repeat(2, 156px);
+    grid-template-rows: repeat(2, 116px);
+  }
+
+  .fq-home-plot {
+    width: 156px;
+    height: 116px;
+    min-height: 116px;
+  }
+
+  .fq-home-plot:nth-child(3) {
+    width: 156px;
+  }
+
+  .fq-home-actions {
+    width: 330px;
+  }
+}
