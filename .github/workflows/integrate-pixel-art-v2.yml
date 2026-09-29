@@ -1,0 +1,49 @@
+name: Integrate FarmQuest Pixel Art v2
+
+on:
+  push:
+    branches:
+      - feat/pixel-art-icons-v2
+    paths:
+      - "integration/pixel-art-v2/READY"
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout integration branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pixel-art-icons-v2
+          fetch-depth: 0
+
+      - name: Rebuild and unpack Pixel Art bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat integration/pixel-art-v2/part-*.b64 > /tmp/farmquest-pixel-art-v2.b64
+          base64 --decode /tmp/farmquest-pixel-art-v2.b64 > /tmp/farmquest-pixel-art-v2.tar.gz
+          echo "8a878d87cab7c8473ea722824be26c2302f5eba88a5cc5c5171701458be049b2  /tmp/farmquest-pixel-art-v2.tar.gz" | sha256sum --check -
+          tar -xzf /tmp/farmquest-pixel-art-v2.tar.gz -C .
+          test "$(find apps/web/public/game-assets/icons -type f -name '*.png' | wc -l)" -eq 60
+
+      - name: Commit extracted integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/app/farm-icons.ts
+          git add apps/web/app/farm-world.tsx
+          git add apps/web/app/pixel-art.css
+          git add apps/web/app/layout.tsx
+          git add apps/web/public/game-assets/icons
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "feat: integrate FarmQuest pixel art v2"
+          git push origin HEAD:feat/pixel-art-icons-v2
