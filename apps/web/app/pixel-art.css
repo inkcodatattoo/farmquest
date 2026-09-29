@@ -5232,3 +5232,143 @@
   background: transparent !important;
   box-shadow: none !important;
 }
+
+
+/* FarmQuest official Home polish v3 — integrated live values */
+
+/* Os terrenos já fazem parte da arte oficial. Só a plantação fica dinâmica. */
+.fq-map-plot-base {
+  display: none !important;
+}
+
+.fq-map-plot-crop {
+  inset: 19%;
+  width: 62%;
+  height: 62%;
+  filter: drop-shadow(0 3px 1px rgba(55, 35, 12, .25));
+}
+
+.fq-map-plot.is-ready .fq-map-plot-crop {
+  inset: 13%;
+  width: 74%;
+  height: 74%;
+}
+
+.fq-map-plot.is-rotten .fq-map-plot-crop {
+  inset: 17%;
+  width: 66%;
+  height: 66%;
+}
+
+.fq-map-plot-timer {
+  bottom: -7%;
+  min-width: 38px;
+  padding: 2px 5px;
+  border-width: 1px;
+  background: rgba(84, 96, 48, .92);
+  font-size: clamp(7px, .58vw, 10px);
+}
+
+/* Valores vivos: texto direto na madeira da arte, sem blocos artificiais. */
+.fq-map-live-coins {
+  left: 15.55%;
+  top: 3.95%;
+  width: 4.10%;
+  height: 2.55%;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  color: #42200e;
+  font-size: clamp(11px, 1.10vw, 19px);
+  text-shadow:
+    0 1px 0 rgba(255, 207, 111, .58),
+    0 -1px 0 rgba(103, 48, 16, .16);
+}
+
+.fq-map-live-xp {
+  left: 27.05%;
+  top: 4.03%;
+  width: 10.40%;
+  height: 2.35%;
+  gap: 4px;
+  padding: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fq-map-live-xp-track {
+  height: 46%;
+  border: 1px solid rgba(74, 36, 17, .92);
+  background: rgba(74, 42, 25, .96);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+}
+
+.fq-map-live-xp-track i {
+  background: linear-gradient(180deg, #8be14a, #51aa2e);
+}
+
+.fq-map-live-xp strong {
+  min-width: 42px;
+  padding: 0;
+  background: transparent !important;
+  color: #3f210f;
+  font-size: clamp(7px, .61vw, 10px);
+  text-shadow: 0 1px 0 rgba(255, 214, 132, .48);
+}
+
+.fq-map-live-farm-name {
+  left: 51.1%;
+  top: 3.87%;
+  width: 25.1%;
+  height: 2.45%;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0;
+  color: #4b260f;
+  font-size: clamp(9px, .92vw, 15px);
+  text-shadow: 0 1px 0 rgba(255, 204, 112, .36);
+}
+
+/* Painel de tarefas: números discretos e integrados ao papel. */
+.fq-map-live-tasks {
+  left: 88.15%;
+  top: 79.15%;
+  width: 1.55%;
+  height: 13.75%;
+}
+
+.fq-map-live-tasks span {
+  background: rgba(246, 222, 170, .88);
+  border-radius: 2px;
+}
+
+.fq-map-live-tasks strong {
+  font-size: clamp(8px, .66vw, 11px);
+  color: #4c301b;
+}
+
+/* O toast da Home só aparece depois de uma ação e não cobre o cenário inteiro. */
+.fq-home-toast {
+  left: 50%;
+  top: 11.1%;
+  width: auto;
+  max-width: 48%;
+  min-width: 0;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: clamp(8px, .66vw, 11px);
+  line-height: 1.15;
+  z-index: 90;
+}
+
+/* Mantém as áreas clicáveis invisíveis mesmo durante interação por mouse. */
+.fq-map-hotspot,
+.fq-map-plot {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fq-map-hotspot:active,
+.fq-map-plot:active {
+  background: transparent !important;
+}
