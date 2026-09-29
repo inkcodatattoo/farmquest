@@ -54,30 +54,53 @@ echo Aplicando privilegios do banco...
 call "scripts\local\apply-grants.bat"
 if errorlevel 1 goto :fail
 
-echo Iniciando API...
-start "FarmQuest API" cmd /k call "%~dp0scripts\local\run-api.bat"
-
-echo Aguardando API...
+echo Verificando API existente...
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$ok=$false; 1..40 | ForEach-Object { try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3001/api/v1/health/ready' -TimeoutSec 2; if($r.StatusCode -eq 200){$ok=$true; break} } catch {}; Start-Sleep -Seconds 1 }; if(-not $ok){exit 1}"
+  "try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3001/api/v1/health/ready' -TimeoutSec 2; if($r.StatusCode -eq 200){exit 0} } catch {}; exit 1"
 if errorlevel 1 (
-  echo.
-  echo ERRO: a API nao respondeu em http://127.0.0.1:3001.
-  echo Veja a janela "FarmQuest API" para o erro.
-  goto :fail
+  echo Iniciando API...
+  start "FarmQuest API" cmd /k call "%~dp0scripts\local\run-api.bat"
+
+  echo Aguardando API...
+  powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+    "$ok=$false; 1..40 | ForEach-Object { try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3001/api/v1/health/ready' -TimeoutSec 2; if($r.StatusCode -eq 200){$ok=$true; break} } catch {}; Start-Sleep -Seconds 1 }; if(-not $ok){exit 1}"
+  if errorlevel 1 (
+    echo.
+    echo ERRO: a API nao respondeu em http://127.0.0.1:3001.
+    echo Veja a janela "FarmQuest API" para o erro.
+    goto :fail
+  )
+) else (
+  echo API do FarmQuest ja esta rodando. Reutilizando.
 )
 
-echo Iniciando interface...
-start "FarmQuest Web" cmd /k call "%~dp0scripts\local\run-web.bat"
-
-echo Aguardando interface...
+echo Verificando interface existente...
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$ok=$false; 1..60 | ForEach-Object { try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3000' -TimeoutSec 2; if($r.StatusCode -ge 200 -and $r.StatusCode -lt 500){$ok=$true; break} } catch {}; Start-Sleep -Seconds 1 }; if(-not $ok){exit 1}"
+  "try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3000' -TimeoutSec 2; if($r.StatusCode -ge 200 -and $r.StatusCode -lt 500 -and $r.Content -match 'FarmQuest'){exit 0} } catch {}; exit 1"
 if errorlevel 1 (
-  echo.
-  echo ERRO: a interface nao respondeu em http://127.0.0.1:3000.
-  echo Veja a janela "FarmQuest Web" para o erro.
-  goto :fail
+  powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+    "try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3000' -TimeoutSec 2; if($r.StatusCode -ge 200 -and $r.StatusCode -lt 500){exit 0} } catch {}; exit 1"
+  if not errorlevel 1 (
+    echo.
+    echo ERRO: a porta 3000 ja esta em uso por outro site.
+    echo Feche o programa que usa http://127.0.0.1:3000 e tente novamente.
+    goto :fail
+  )
+
+  echo Iniciando interface...
+  start "FarmQuest Web" cmd /k call "%~dp0scripts\local\run-web.bat"
+
+  echo Aguardando interface...
+  powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+    "$ok=$false; 1..60 | ForEach-Object { try { $r=Invoke-WebRequest -UseBasicParsing -Uri 'http://127.0.0.1:3000' -TimeoutSec 2; if($r.StatusCode -ge 200 -and $r.StatusCode -lt 500 -and $r.Content -match 'FarmQuest'){$ok=$true; break} } catch {}; Start-Sleep -Seconds 1 }; if(-not $ok){exit 1}"
+  if errorlevel 1 (
+    echo.
+    echo ERRO: a interface nao respondeu em http://127.0.0.1:3000.
+    echo Veja a janela "FarmQuest Web" para o erro.
+    goto :fail
+  )
+) else (
+  echo Interface do FarmQuest ja esta rodando. Reutilizando.
 )
 
 echo.
