@@ -310,7 +310,12 @@ export default function FarmPreviewClient() {
       notice={notice}
       error={error}
       onRefresh={() => {
-        setNotice("Prévia atualizada.");
+        const now = Date.now();
+        setFarm(INITIAL_FARM);
+        setPlots(createPlots(now));
+        setInventory(INITIAL_INVENTORY);
+        setNowMs(now);
+        setNotice("Prévia reiniciada.");
         setError("");
       }}
       onLogout={() => {
