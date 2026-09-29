@@ -11,3 +11,6 @@ coverage
 
 # Local one-click development secrets
 .farmquest-local.cmd
+
+# Prisma generated client
+packages/database/generated/
