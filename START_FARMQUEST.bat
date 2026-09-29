@@ -37,6 +37,11 @@ if not exist "node_modules" (
   if errorlevel 1 goto :fail
 )
 
+echo Limpando Prisma Client gerado anteriormente...
+if exist "packages\database\generated\prisma" (
+  rmdir /S /Q "packages\database\generated\prisma"
+)
+
 echo Gerando Prisma Client...
 call pnpm db:generate
 if errorlevel 1 goto :fail
