@@ -106,23 +106,112 @@ function formatDuration(milliseconds: number): string {
   return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
 }
 
+function friendlyApiMessage(
+  code: string,
+  details?: Record<string, unknown>
+): string {
+  const messages: Record<string, string> = {
+    FARM_NOT_FOUND: "Fazenda não encontrada.",
+    FARM_SOLD: "Esta fazenda não está mais ativa.",
+    USER_BANNED: "Esta conta não pode usar a fazenda.",
+    FARM_ACCESS_REMOVED: "Você não tem mais acesso a esta comunidade.",
+    FARM_STREAMER_SUSPENDED: "Esta comunidade está temporariamente suspensa.",
+    UNKNOWN_CROP: "Essa plantação não está disponível.",
+    CROP_LOCKED_BY_LEVEL: "Seu nível ainda não libera essa plantação.",
+    NOT_ENOUGH_SEEDS: "Você não tem sementes suficientes.",
+    NO_EMPTY_PLOTS: "Não há canteiros vazios disponíveis.",
+    HARVEST_COOLDOWN_ACTIVE: "A colheita ainda está em tempo de espera.",
+    NOTHING_TO_HARVEST: "Ainda não há nada pronto para colher.",
+    INVENTORY_FULL: "Seu inventário está cheio.",
+    PLOT_ALREADY_HARVESTED: "Esse canteiro já foi colhido.",
+    SHOP_OFFER_NOT_FOUND: "Essa oferta não está mais disponível.",
+    SHOP_OFFER_LOCKED_BY_LEVEL: "Seu nível ainda não libera essa compra.",
+    INSUFFICIENT_COINS: "Você não tem moedas suficientes.",
+    INVENTORY_INSUFFICIENT: "Você não tem quantidade suficiente desse item.",
+    ITEM_NOT_DISCARDABLE: "Esse item não pode ser descartado.",
+    ITEM_ROTTEN: "Itens apodrecidos não podem ser vendidos.",
+    ITEM_NOT_SELLABLE: "Esse item não pode ser vendido.",
+    IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD:
+      "A ação foi repetida com dados diferentes. Atualize a fazenda e tente novamente."
+  };
+
+  if (code === "HARVEST_COOLDOWN_ACTIVE") {
+    const remaining = details?.remainingSeconds;
+    if (typeof remaining === "number") {
+      return `Aguarde ${remaining}s para colher novamente.`;
+    }
+  }
+
+  return messages[code] ?? code;
+}
+
+function successMessage(data: Record<string, unknown>): string {
+  const code = typeof data.code === "string" ? data.code : "";
+
+  switch (code) {
+    case "PLANT_OK": {
+      const seeds = typeof data.seedsConsumed === "number" ? data.seedsConsumed : 0;
+      const xp = typeof data.xpGranted === "string" ? data.xpGranted : "0";
+      return `Plantio concluído: ${seeds} semente${seeds === 1 ? "" : "s"} usada${seeds === 1 ? "" : "s"} · +${xp} XP.`;
+    }
+
+    case "HARVEST_OK": {
+      const harvested = Array.isArray(data.harvested) ? data.harvested.length : 0;
+      const xp =
+        typeof data.totalXpGranted === "string" ? data.totalXpGranted : "0";
+      return `Colheita concluída: ${harvested} canteiro${harvested === 1 ? "" : "s"} · +${xp} XP.`;
+    }
+
+    case "QUICK_SELL_OK": {
+      const payout = typeof data.payout === "string" ? data.payout : "0";
+      const xp = typeof data.xpGranted === "string" ? data.xpGranted : "0";
+      return `Venda concluída: +${payout} moedas · +${xp} XP.`;
+    }
+
+    case "SHOP_BUY_OK": {
+      const items = typeof data.itemsAdded === "number" ? data.itemsAdded : 0;
+      const spent =
+        typeof data.coinsSpent === "string" ? data.coinsSpent : "0";
+      return `Compra concluída: ${items} item${items === 1 ? "" : "s"} · -${spent} moedas.`;
+    }
+
+    case "DISCARD_OK": {
+      const quantity =
+        typeof data.quantityDiscarded === "number"
+          ? data.quantityDiscarded
+          : 0;
+      return `${quantity} item${quantity === 1 ? "" : "s"} descartado${quantity === 1 ? "" : "s"}.`;
+    }
+
+    default:
+      return "Ação concluída com sucesso.";
+  }
+}
+
 async function readJson<T>(response: Response): Promise<T> {
   if (response.ok) {
     return response.json() as Promise<T>;
   }
 
   let code = `HTTP_${response.status}`;
+  let details: Record<string, unknown> | undefined;
+
   try {
     const body = await response.json() as {
-      error?: { code?: string; message?: string };
+      error?: {
+        code?: string;
+        message?: string;
+        details?: Record<string, unknown>;
+      };
       message?: string;
     };
     code = body.error?.code ?? body.message ?? code;
+    details = body.error?.details;
   } catch {
     // Keep the HTTP fallback.
   }
 
-  throw new Error(code);
+  throw new Error(friendlyApiMessage(code, details));
 }
 
 export function FarmQuestClient() {
@@ -282,12 +371,7 @@ export function FarmQuestClient() {
         response
       );
 
-      const code =
-        typeof payload.data.code === "string"
-          ? payload.data.code
-          : "Ação concluída.";
-
-      setNotice(code);
+      setNotice(successMessage(payload.data));
       await loadGame();
     } catch (cause) {
       setError(
@@ -450,8 +534,16 @@ export function FarmQuestClient() {
         </article>
       </section>
 
-      {notice ? <div className="notice-banner">{notice}</div> : null}
-      {error ? <div className="error-banner page-error">{error}</div> : null}
+      {notice ? (
+        <div className="notice-banner" role="status" aria-live="polite">
+          {notice}
+        </div>
+      ) : null}
+      {error ? (
+        <div className="error-banner page-error" role="alert" aria-live="assertive">
+          {error}
+        </div>
+      ) : null}
 
       <section className="farm-panel">
         <div className="section-heading">
@@ -469,7 +561,7 @@ export function FarmQuestClient() {
                 })
               }
             >
-              🌱 Plantar milho
+              {busy === "plant-all" ? "Plantando..." : "🌱 Plantar milho"}
             </button>
             <button
               className="primary-button"
@@ -481,7 +573,7 @@ export function FarmQuestClient() {
                 )
               }
             >
-              🧺 Colher tudo
+              {busy === "harvest-all" ? "Colhendo..." : "🧺 Colher tudo"}
             </button>
           </div>
         </div>
@@ -539,7 +631,7 @@ export function FarmQuestClient() {
                       )
                     }
                   >
-                    Plantar
+                    {busy === `plant-${plot.id}` ? "Plantando..." : "Plantar"}
                   </button>
                 ) : state === "READY" || state === "ROTTEN" ? (
                   <button
@@ -552,7 +644,7 @@ export function FarmQuestClient() {
                       )
                     }
                   >
-                    Colher
+                    {busy === `harvest-${plot.id}` ? "Colhendo..." : "Colher"}
                   </button>
                 ) : (
                   <div className="plot-button disabled">Crescendo...</div>
@@ -607,7 +699,7 @@ export function FarmQuestClient() {
                           )
                         }
                       >
-                        Vender 1
+                        {busy === `sell-${item.id}` ? "Vendendo..." : "Vender 1"}
                       </button>
                     ) : null}
                     <button
@@ -621,7 +713,9 @@ export function FarmQuestClient() {
                         )
                       }
                     >
-                      Descartar 1
+                      {busy === `discard-${item.id}`
+                        ? "Descartando..."
+                        : "Descartar 1"}
                     </button>
                   </div>
                 </article>
@@ -659,7 +753,7 @@ export function FarmQuestClient() {
                       )
                     }
                   >
-                    Comprar 1
+                    {busy === `buy-${offer.id}` ? "Comprando..." : "Comprar 1"}
                   </button>
                 </div>
               </article>
