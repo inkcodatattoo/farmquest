@@ -5830,3 +5830,363 @@
 .fq-home-toast {
   top: 10.0%;
 }
+
+
+/* FARMQUEST HOME V4 — official wood sky header */
+
+/* =========================================================
+   FARMQUEST HOME V4
+   Visual oficial: madeira + céu pixel art
+   ========================================================= */
+
+.fq-official-home-map {
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 3px #2e1a0b,
+    0 0 0 7px #7a431b,
+    0 0 0 10px #3d230f,
+    inset 0 0 0 2px rgba(255, 183, 75, .34);
+  overflow: hidden;
+}
+
+/* CÉU */
+.fq-map-top-sky {
+  position: absolute;
+  left: 10.25%;
+  top: .65%;
+  width: 87.7%;
+  height: 9.15%;
+  z-index: 8;
+  overflow: hidden;
+  pointer-events: none;
+  border: 5px solid #603313;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-image: url("/game-assets/home/farmquest-top-sky.webp");
+  background-repeat: repeat-x;
+  background-position: center center;
+  background-size: auto 100%;
+  image-rendering: pixelated;
+  box-shadow:
+    inset 0 0 0 2px #a65c25,
+    inset 0 -5px 0 rgba(66, 35, 14, .38),
+    0 2px 0 #2f190a;
+}
+
+.fq-map-top-sky::before {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: -5px;
+  right: -5px;
+  top: -5px;
+  height: 9px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #6a3815 0 18px,
+      #81471a 18px 35px,
+      #6c3915 35px 55px
+    );
+  border-bottom: 2px solid #3c210d;
+  box-shadow:
+    inset 0 2px 0 rgba(224, 139, 55, .32);
+}
+
+.fq-map-top-sky::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: -5px;
+  right: -5px;
+  bottom: -1px;
+  height: 8px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #5e3112 0 20px,
+      #82491c 20px 42px,
+      #633413 42px 65px
+    );
+  border-top: 2px solid #a55d26;
+  box-shadow:
+    0 -2px 0 rgba(44, 23, 8, .25);
+}
+
+.fq-map-top-sky img {
+  display: none !important;
+}
+
+/* PAINÉIS DE MADEIRA */
+.fq-map-live-coins,
+.fq-map-live-xp,
+.fq-map-live-farm-name,
+.fq-map-top-action {
+  box-sizing: border-box;
+  border: 3px solid #45250e !important;
+  border-radius: 5px !important;
+  background:
+    radial-gradient(
+      circle at 7px 7px,
+      #d8b16c 0 2px,
+      #533015 2px 3px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at calc(100% - 7px) 7px,
+      #d8b16c 0 2px,
+      #533015 2px 3px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 7px calc(100% - 7px),
+      #d8b16c 0 2px,
+      #533015 2px 3px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at calc(100% - 7px) calc(100% - 7px),
+      #d8b16c 0 2px,
+      #533015 2px 3px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.025) 0 3px,
+      rgba(61,25,7,.035) 3px 6px
+    ),
+    linear-gradient(
+      180deg,
+      #b86527 0%,
+      #9a4c1c 52%,
+      #864017 100%
+    ) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(224, 137, 54, .58),
+    inset 0 -3px 0 rgba(60, 27, 7, .34),
+    0 3px 0 rgba(47, 24, 8, .40) !important;
+  color: #fff1c8 !important;
+  text-shadow:
+    1px 1px 0 #4c250c,
+    0 0 2px rgba(0,0,0,.25) !important;
+  image-rendering: pixelated;
+}
+
+/* MOEDAS */
+.fq-map-live-coins {
+  left: 12.10%;
+  top: 2.02%;
+  width: 8.15%;
+  height: 5.0%;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45em;
+  padding: .25% .55%;
+}
+
+.fq-map-live-coins img {
+  width: 29%;
+  height: 78%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.fq-map-live-coins strong {
+  font-family: Georgia, serif;
+  font-size: clamp(12px, 1.22vw, 21px);
+  color: #fff5d4;
+}
+
+/* XP */
+.fq-map-live-xp {
+  left: 20.95%;
+  top: 2.02%;
+  width: 18.6%;
+  height: 5.0%;
+  z-index: 35;
+  display: grid;
+  grid-template-columns: 17% 1fr auto;
+  align-items: center;
+  gap: .35em;
+  padding: .28% .65%;
+}
+
+.fq-map-live-xp > img {
+  width: 100%;
+  height: 82%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.fq-map-live-xp-track {
+  position: relative;
+  width: 100%;
+  height: 38%;
+  overflow: hidden;
+  border: 2px solid #342013;
+  border-radius: 3px;
+  background: #28221b;
+  box-shadow:
+    inset 0 2px 2px rgba(0,0,0,.34);
+}
+
+.fq-map-live-xp-track i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: block;
+  background:
+    linear-gradient(180deg,#98ef4e,#52a92c);
+  border-right: 1px solid #34681d;
+}
+
+.fq-map-live-xp strong {
+  min-width: 52px;
+  color: #fff5d4;
+  font-family: Georgia, serif;
+  font-size: clamp(8px, .69vw, 12px);
+  white-space: nowrap;
+}
+
+/* PLACA NOME DA FAZENDA */
+.fq-map-live-farm-name {
+  left: 43.2%;
+  top: 1.50%;
+  width: 28%;
+  height: 5.65%;
+  z-index: 35;
+  display: grid;
+  place-items: center;
+  padding: 0 1.1%;
+}
+
+.fq-map-live-farm-name::before,
+.fq-map-live-farm-name::after {
+  content: "";
+  position: absolute;
+  top: -14px;
+  width: 5px;
+  height: 16px;
+  background: #5a3317;
+  border-left: 1px solid #2f1b0c;
+  border-right: 1px solid #8e5a29;
+  z-index: -1;
+}
+
+.fq-map-live-farm-name::before {
+  left: 18%;
+}
+
+.fq-map-live-farm-name::after {
+  right: 18%;
+}
+
+.fq-map-live-farm-name strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.38vw, 24px);
+  letter-spacing: .01em;
+  color: #fff4cf;
+  text-shadow: 2px 2px 0 #4a240c;
+}
+
+/* BOTÕES */
+.fq-map-refresh,
+.fq-map-logout {
+  top: 1.82%;
+  width: 3.55%;
+  height: 5.45%;
+  z-index: 38;
+}
+
+.fq-map-refresh {
+  left: 90.65%;
+}
+
+.fq-map-logout {
+  left: 94.75%;
+}
+
+.fq-map-top-action {
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-weight: 900;
+  font-size: clamp(16px, 1.55vw, 27px);
+}
+
+.fq-map-top-action:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.fq-map-top-action:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 0 0 2px rgba(224,137,54,.5) !important;
+}
+
+/* VIGA DECORATIVA ENTRE HUD E FAZENDA */
+.fq-official-home-map::after {
+  content: "";
+  position: absolute;
+  left: 10.3%;
+  right: 1.95%;
+  top: 9.1%;
+  height: 1.15%;
+  z-index: 9;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #573014 0 24px,
+      #7f461c 24px 50px,
+      #633715 50px 74px
+    );
+  border-top: 2px solid #b16a2c;
+  border-bottom: 2px solid #34200f;
+  box-shadow: 0 2px 0 rgba(0,0,0,.16);
+}
+
+/* TOAST */
+.fq-home-toast {
+  top: 10.65%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 46%;
+  padding: 5px 14px;
+  border: 2px solid #4c2a11;
+  border-radius: 4px;
+  background:
+    linear-gradient(#b96628,#91451a);
+  color: #fff0c4;
+  box-shadow:
+    inset 0 0 0 1px #d7893b,
+    0 2px 0 rgba(0,0,0,.25);
+  text-shadow: 1px 1px #4a250e;
+  font-family: Georgia, serif;
+}
+
+.fq-map-nav {
+  filter:
+    drop-shadow(2px 2px 0 rgba(44,22,8,.24));
+}
+
+@media (max-width: 1100px) {
+  .fq-map-live-coins,
+  .fq-map-live-xp {
+    height: 4.7%;
+  }
+
+  .fq-map-live-farm-name {
+    height: 5.2%;
+  }
+
+  .fq-map-live-farm-name strong {
+    font-size: clamp(10px, 1.35vw, 18px);
+  }
+}
