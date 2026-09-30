@@ -201,6 +201,14 @@ export function FarmWorld(props: Props) {
             draggable={false}
           />
 
+          <div className="fq-map-top-sky" aria-hidden="true">
+            <img
+              src="/game-assets/home/farmquest-top-sky.jpg"
+              alt=""
+              draggable={false}
+            />
+          </div>
+
           <nav className="fq-map-nav" aria-label="Navegação da Home">
             {sidebarItems.map((item) => (
               <button
@@ -305,25 +313,31 @@ export function FarmWorld(props: Props) {
           />
 
           <button
-            className="fq-map-hotspot fq-map-refresh"
+            className="fq-map-hotspot fq-map-refresh fq-map-top-action"
             onClick={props.onRefresh}
             disabled={Boolean(busy)}
             aria-label="Atualizar fazenda"
             title="Atualizar"
-          />
+          >
+            <span aria-hidden="true">↻</span>
+          </button>
           <button
-            className="fq-map-hotspot fq-map-logout"
+            className="fq-map-hotspot fq-map-logout fq-map-top-action"
             onClick={props.onLogout}
             disabled={Boolean(busy)}
             aria-label="Sair"
             title="Sair"
-          />
+          >
+            <span aria-hidden="true">×</span>
+          </button>
 
           <div className="fq-map-live-coins" aria-label={`${farm.coins} moedas`}>
+            <PixelIcon src={FARM_ICONS.ui.coins} alt="" />
             <strong>{farm.coins}</strong>
           </div>
 
           <div className="fq-map-live-xp" aria-label={`${xpValue} de ${xpGoal} de experiência`}>
+            <PixelIcon src={FARM_ICONS.ui.xp} alt="" />
             <span className="fq-map-live-xp-track">
               <i style={{ width: `${xpProgress}%` }} />
             </span>
