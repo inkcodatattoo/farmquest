@@ -7328,3 +7328,88 @@
 .fq-map-live-tasks em {
   letter-spacing: .005em;
 }
+
+
+
+/* =========================================================
+   FARMQUEST HOME V14
+   Background v2 oficial
+   ========================================================= */
+
+/*
+   A nova arte já possui contraste, vegetação e props
+   tratados diretamente na imagem.
+*/
+.fq-official-home-art {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+
+  filter: none !important;
+
+  pointer-events: none;
+  user-select: none;
+
+  z-index: 0;
+}
+
+
+/*
+   Os antigos barris criados em CSS deixam de ser necessários.
+*/
+.fq-polish-barrel {
+  display: none !important;
+}
+
+
+/*
+   Mantém a Home exatamente na proporção oficial da arte.
+   O arquivo v2 possui 1672 × 941.
+*/
+.fq-official-home-stage {
+  aspect-ratio: 1672 / 941 !important;
+}
+
+
+/*
+   Evita qualquer deformação da imagem.
+*/
+.fq-official-home-map {
+  overflow: hidden;
+}
+
+
+/*
+   Sombras de contato continuam sutis sobre a nova arte.
+*/
+.fq-contact-shadow-house {
+  opacity: .42 !important;
+}
+
+.fq-contact-shadow-barn {
+  opacity: .40 !important;
+}
+
+.fq-contact-shadow-cow {
+  opacity: .36 !important;
+}
+
+.fq-contact-shadow-coop {
+  opacity: .28 !important;
+}/* FARMQUEST HOME V2.1 */
+.fq-official-home-art {
+  filter: none !important;
+  image-rendering: pixelated;
+}
+
+.fq-polish-barrel {
+  display: none !important;
+}

@@ -194,21 +194,19 @@ export function FarmWorld(props: Props) {
     return (
       <section className="fq-official-home-stage">
         <div className="fq-official-home-map">
-          <img
-            className="fq-official-home-art"
-            src="/game-assets/home/farmquest-home-official.webp"
-            alt="Fazenda principal FarmQuest"
-            draggable={false}
-          />
+        <img
+  className="fq-official-home-art"
+  src="/game-assets/home/farmquest-home-v2.webp"
+  alt="Fazenda principal FarmQuest"
+  draggable={false}
+/>
 
           <div className="fq-scene-polish" aria-hidden="true">
-            <span className="fq-polish-barrel fq-polish-barrel-house" />
-            <span className="fq-polish-barrel fq-polish-barrel-garden" />
-            <span className="fq-contact-shadow fq-contact-shadow-house" />
-            <span className="fq-contact-shadow fq-contact-shadow-barn" />
-            <span className="fq-contact-shadow fq-contact-shadow-cow" />
-            <span className="fq-contact-shadow fq-contact-shadow-coop" />
-          </div>
+  <span className="fq-contact-shadow fq-contact-shadow-house" />
+  <span className="fq-contact-shadow fq-contact-shadow-barn" />
+  <span className="fq-contact-shadow fq-contact-shadow-cow" />
+  <span className="fq-contact-shadow fq-contact-shadow-coop" />
+</div>
 
           <div className="fq-map-top-sky" aria-hidden="true">
             <img
