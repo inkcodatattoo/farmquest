@@ -201,6 +201,12 @@ export function FarmWorld(props: Props) {
             draggable={false}
           />
 
+          <div className="fq-scene-polish" aria-hidden="true">
+            <span className="fq-polish-barrel fq-polish-barrel-house" />
+            <span className="fq-polish-barrel fq-polish-barrel-garden" />
+            <span className="fq-polish-barrel fq-polish-barrel-dock" />
+          </div>
+
           <div className="fq-map-top-sky" aria-hidden="true">
             <img
               src="/game-assets/home/farmquest-top-sky.webp"
