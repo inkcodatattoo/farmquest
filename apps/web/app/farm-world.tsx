@@ -222,9 +222,10 @@ export function FarmWorld(props: Props) {
             {sidebarItems.map((item) => (
               <button
                 key={item.section}
-                className={`fq-map-hotspot fq-map-nav-button ${item.className}`}
+                className={`fq-map-hotspot fq-map-nav-button ${item.className} ${section === item.section ? "is-active" : ""}`}
                 onClick={() => setSection(item.section)}
                 aria-label={item.label}
+                aria-current={section === item.section ? "page" : undefined}
                 title={item.label}
               />
             ))}
