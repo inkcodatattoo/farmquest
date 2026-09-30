@@ -203,7 +203,7 @@ export function FarmWorld(props: Props) {
 
           <div className="fq-map-top-sky" aria-hidden="true">
             <img
-              src="/game-assets/home/farmquest-top-sky.jpg"
+              src="/game-assets/home/farmquest-top-sky.webp"
               alt=""
               draggable={false}
             />
