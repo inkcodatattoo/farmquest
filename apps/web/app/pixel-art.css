@@ -6190,3 +6190,220 @@
     font-size: clamp(10px, 1.35vw, 18px);
   }
 }
+
+
+/* FARMQUEST HOME V5 — reference match polish */
+
+/* =========================================================
+   Aproxima o topo da referência oficial aprovada
+   ========================================================= */
+
+/* Moldura de madeira fechando toda a Home */
+.fq-official-home-map {
+  border: 5px solid #5a2f12 !important;
+  border-radius: 7px !important;
+  box-shadow:
+    inset 0 0 0 2px #a95d25,
+    inset 0 0 0 5px rgba(55, 25, 8, .26),
+    0 0 0 2px #2c190b !important;
+}
+
+/* O céu fica como uma janela dentro da madeira */
+.fq-map-top-sky {
+  left: 10.35%;
+  top: .78%;
+  width: 87.35%;
+  height: 9.0%;
+  border-width: 4px !important;
+  border-color: #4a260e !important;
+  border-radius: 2px !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(172, 95, 37, .68),
+    inset 0 -5px 0 rgba(50, 23, 6, .24),
+    0 2px 0 #2f190a !important;
+}
+
+/* Viga principal superior mais robusta */
+.fq-map-top-sky::before {
+  top: -4px;
+  height: 10px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #6f3b16 0 30px,
+      #7f4519 30px 64px,
+      #623313 64px 96px
+    );
+  border-bottom: 2px solid #3b1e0b;
+  box-shadow:
+    inset 0 2px 0 rgba(230, 145, 59, .28);
+}
+
+/* Viga inferior mais próxima da referência */
+.fq-map-top-sky::after {
+  bottom: -1px;
+  height: 9px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #613313 0 28px,
+      #7a4219 28px 62px,
+      #572d11 62px 88px
+    );
+  border-top: 2px solid #a76027;
+  border-bottom: 1px solid #311909;
+}
+
+/* Moedas */
+.fq-map-live-coins {
+  left: 11.95%;
+  top: 1.82%;
+  width: 8.35%;
+  height: 5.35%;
+  padding: .20% .60%;
+}
+
+.fq-map-live-coins img {
+  width: 34% !important;
+  height: 90% !important;
+  transform: scale(1.08);
+  transform-origin: center;
+}
+
+.fq-map-live-coins strong {
+  font-size: clamp(13px, 1.30vw, 22px) !important;
+}
+
+/* XP */
+.fq-map-live-xp {
+  left: 20.70%;
+  top: 1.82%;
+  width: 19.40%;
+  height: 5.35%;
+  grid-template-columns: 18% 1fr auto;
+  padding: .22% .72%;
+}
+
+.fq-map-live-xp > img {
+  width: 100% !important;
+  height: 92% !important;
+  transform: scale(1.08);
+}
+
+.fq-map-live-xp-track {
+  height: 40% !important;
+  border-radius: 2px !important;
+}
+
+.fq-map-live-xp strong {
+  min-width: 56px !important;
+  font-size: clamp(8px, .72vw, 12px) !important;
+}
+
+/* Placa principal do nome */
+.fq-map-live-farm-name {
+  left: 43.60%;
+  top: 1.22%;
+  width: 28.50%;
+  height: 6.10%;
+  border-width: 3px !important;
+  border-radius: 4px !important;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.028) 0 3px,
+      rgba(69,30,8,.035) 3px 6px
+    ),
+    linear-gradient(
+      180deg,
+      #ba672a 0%,
+      #9f511f 55%,
+      #874018 100%
+    ) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(226, 139, 56, .62),
+    inset 0 -4px 0 rgba(61, 26, 7, .30),
+    0 3px 0 rgba(46, 23, 7, .42) !important;
+}
+
+.fq-map-live-farm-name strong {
+  font-size: clamp(14px, 1.52vw, 26px) !important;
+  color: #fff2c7 !important;
+  text-shadow:
+    2px 2px 0 #4a240c,
+    0 0 2px rgba(0,0,0,.18) !important;
+}
+
+/* Penduradores da placa */
+.fq-map-live-farm-name::before,
+.fq-map-live-farm-name::after {
+  top: -17px;
+  width: 6px;
+  height: 20px;
+  background:
+    linear-gradient(90deg,#3f210d 0 1px,#75431e 1px 5px,#a06a34 5px 6px);
+}
+
+.fq-map-live-farm-name::before { left: 17%; }
+.fq-map-live-farm-name::after { right: 17%; }
+
+/* Botões do canto direito mais parecidos com placas de madeira */
+.fq-map-refresh,
+.fq-map-logout {
+  top: 1.55%;
+  width: 3.72%;
+  height: 5.85%;
+}
+
+.fq-map-refresh { left: 90.25%; }
+.fq-map-logout { left: 94.55%; }
+
+.fq-map-top-action {
+  font-size: clamp(17px, 1.65vw, 29px) !important;
+}
+
+/* A viga que separa o HUD do mapa fica mais espessa */
+.fq-official-home-map::after {
+  left: 10.20%;
+  right: 1.80%;
+  top: 9.15%;
+  height: 1.34%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #593014 0 34px,
+      #81471b 34px 70px,
+      #603313 70px 104px
+    );
+  border-top: 2px solid #b4692a;
+  border-bottom: 2px solid #2f1809;
+  box-shadow:
+    inset 0 2px 0 rgba(218, 132, 50, .16),
+    0 2px 0 rgba(0,0,0,.16);
+}
+
+/* Integra o bloco do logo com a moldura superior */
+.fq-map-nav {
+  border-color: #4d290f !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(173, 98, 38, .35),
+    2px 2px 0 rgba(44,22,8,.24) !important;
+}
+
+/* Dá mais presença ao logo sem alterar o asset */
+.fq-map-logo img,
+.fq-map-nav img[alt*="FarmQuest"] {
+  transform: scale(1.06);
+  transform-origin: center;
+}
+
+/* Responsivo */
+@media (max-width: 1100px) {
+  .fq-map-live-farm-name {
+    height: 5.55%;
+  }
+
+  .fq-map-live-farm-name strong {
+    font-size: clamp(11px, 1.38vw, 20px) !important;
+  }
+}
