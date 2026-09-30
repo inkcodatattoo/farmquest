@@ -203,7 +203,12 @@ export function FarmWorld(props: Props) {
 
           <div className="fq-scene-polish" aria-hidden="true">
             <span className="fq-polish-barrel fq-polish-barrel-house" />
-            <span className="fq-polish-barrel fq-polish-barrel-garden" />          </div>
+            <span className="fq-polish-barrel fq-polish-barrel-garden" />
+            <span className="fq-contact-shadow fq-contact-shadow-house" />
+            <span className="fq-contact-shadow fq-contact-shadow-barn" />
+            <span className="fq-contact-shadow fq-contact-shadow-cow" />
+            <span className="fq-contact-shadow fq-contact-shadow-coop" />
+          </div>
 
           <div className="fq-map-top-sky" aria-hidden="true">
             <img
@@ -360,9 +365,21 @@ export function FarmWorld(props: Props) {
             className="fq-map-live-tasks"
             aria-label={`3 canteiros, ${seedCount} sementes, ${readyCount} ${readyCount === 1 ? "colheita pronta" : "colheitas prontas"}`}
           >
-            <span><strong>3</strong></span>
-            <span><strong>{seedCount}</strong></span>
-            <span><strong>{readyCount}</strong></span>
+            <span>
+              <PixelIcon src={FARM_ICONS.plots.empty} alt="" />
+              <strong>3</strong>
+              <em>canteiros</em>
+            </span>
+            <span>
+              <PixelIcon src={FARM_ICONS.seeds.milho} alt="" />
+              <strong>{seedCount}</strong>
+              <em>sementes</em>
+            </span>
+            <span>
+              <PixelIcon src={FARM_ICONS.actions.harvest} alt="" />
+              <strong>{readyCount}</strong>
+              <em>{readyCount === 1 ? "colheita pronta" : "colheitas prontas"}</em>
+            </span>
           </div>
         </div>
       </section>
