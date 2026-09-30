@@ -5550,3 +5550,151 @@
 .fq-home-toast {
   top: 10.15%;
 }
+
+
+/* FarmQuest top sky redesign v2 — pixel HUD integration */
+
+/* Cobre completamente a faixa antiga sem invadir o cenário abaixo. */
+.fq-map-top-sky {
+  left: 10.35%;
+  top: .62%;
+  width: 87.65%;
+  height: 9.20%;
+  border-radius: 3px 3px 0 0;
+  box-shadow:
+    inset 0 -2px 0 rgba(44, 129, 181, .85),
+    inset 0 -4px 0 rgba(146, 217, 244, .26),
+    inset 0 0 0 1px rgba(30, 101, 147, .18);
+}
+
+.fq-map-top-sky img {
+  object-fit: cover;
+  object-position: center 47%;
+  image-rendering: pixelated;
+}
+
+/* HUD com linguagem visual mais próxima de pixel art, sem cartões creme. */
+.fq-map-live-coins {
+  left: 12.10%;
+  top: 2.18%;
+  width: 6.55%;
+  height: 4.05%;
+  gap: .38em;
+  padding: 0 .45em;
+  border: 2px solid rgba(23, 83, 122, .90);
+  border-radius: 4px;
+  background: rgba(24, 105, 158, .68) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(151, 221, 250, .14),
+    0 2px 0 rgba(14, 63, 96, .28) !important;
+  color: #fff6d4;
+  text-shadow:
+    1px 1px 0 rgba(25, 70, 103, .95),
+    0 0 3px rgba(255,255,255,.24);
+}
+
+.fq-map-live-coins img {
+  width: 24%;
+  height: 70%;
+}
+
+.fq-map-live-coins strong {
+  font-family: Georgia, serif;
+  font-size: clamp(11px, 1.02vw, 18px);
+}
+
+.fq-map-live-xp {
+  left: 19.35%;
+  top: 2.18%;
+  width: 16.40%;
+  height: 4.05%;
+  grid-template-columns: 17% 1fr auto;
+  gap: 5px;
+  padding: 0 .55em;
+  border: 2px solid rgba(23, 83, 122, .90);
+  border-radius: 4px;
+  background: rgba(24, 105, 158, .68) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(151, 221, 250, .14),
+    0 2px 0 rgba(14, 63, 96, .28) !important;
+}
+
+.fq-map-live-xp > img {
+  width: 100%;
+  height: 72%;
+}
+
+.fq-map-live-xp-track {
+  height: 34%;
+  border: 2px solid rgba(20, 66, 94, .96);
+  background: rgba(35, 65, 77, .92);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.25);
+}
+
+.fq-map-live-xp-track i {
+  border-radius: 1px;
+  background: linear-gradient(180deg, #9cf05c 0%, #5fbd38 100%);
+}
+
+.fq-map-live-xp strong {
+  min-width: 49px;
+  color: #fff6d4;
+  font-family: Georgia, serif;
+  font-size: clamp(7px, .64vw, 11px);
+  text-shadow: 1px 1px 0 rgba(25, 70, 103, .95);
+}
+
+/* O nome vira uma pequena placa de vidro pixelada, não uma cápsula moderna. */
+.fq-map-live-farm-name {
+  left: 43.65%;
+  top: 2.18%;
+  width: 25.10%;
+  height: 4.05%;
+  padding: 0 1.2%;
+  border: 2px solid rgba(163, 226, 251, .68);
+  border-radius: 4px;
+  background: rgba(36, 126, 181, .36) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.08),
+    0 2px 0 rgba(20, 83, 121, .18) !important;
+  color: #ffffff;
+  text-shadow:
+    1px 1px 0 #2b6589,
+    0 0 3px rgba(255,255,255,.36);
+}
+
+.fq-map-live-farm-name strong {
+  font-family: Georgia, serif;
+  font-size: clamp(10px, 1.00vw, 17px);
+  letter-spacing: .01em;
+}
+
+/* Ações do topo seguem a mesma paleta azul. */
+.fq-map-refresh,
+.fq-map-logout {
+  top: 2.10%;
+  width: 2.55%;
+  height: 4.18%;
+}
+
+.fq-map-top-action {
+  border: 2px solid rgba(23, 83, 122, .90) !important;
+  border-radius: 4px;
+  background: rgba(24, 105, 158, .76) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(151, 221, 250, .16),
+    0 2px 0 rgba(14, 63, 96, .28) !important;
+  color: #fff8dc;
+  text-shadow: 1px 1px 0 rgba(22, 69, 101, .95);
+}
+
+.fq-map-top-action:hover {
+  background: rgba(34, 124, 182, .88) !important;
+  filter: none;
+}
+
+/* Toast passa a começar depois da nova faixa de céu. */
+.fq-home-toast {
+  top: 10.35%;
+}
