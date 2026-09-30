@@ -6519,3 +6519,45 @@
   border-radius: 4px 4px 0 0;
   box-shadow: inset 0 1px 0 rgba(229,144,58,.22);
 }
+
+
+/* FARMQUEST HOME V7 — task numbers precision fix */
+
+/* Atualiza somente o algarismo impresso do painel sem cobrir os rótulos. */
+.fq-map-live-tasks {
+  left: 89.10% !important;
+  top: 79.08% !important;
+  width: .82% !important;
+  height: 13.84% !important;
+  grid-template-rows: repeat(3, 1fr);
+  pointer-events: none;
+}
+
+.fq-map-live-tasks span {
+  width: 100% !important;
+  height: 40% !important;
+  min-height: 13px !important;
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #f2dcae !important;
+  border: 0 !important;
+  border-radius: 1px !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+.fq-map-live-tasks strong {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(8px, .64vw, 11px) !important;
+  font-weight: 700;
+  line-height: 1 !important;
+  color: #4a2e19 !important;
+  text-shadow: none !important;
+}
