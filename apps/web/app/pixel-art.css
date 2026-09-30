@@ -6407,3 +6407,115 @@
     font-size: clamp(11px, 1.38vw, 20px) !important;
   }
 }
+
+
+/* FARMQUEST HOME V6 — final alignment polish */
+
+/* Corrige os números dinâmicos sobre os números impressos do painel. */
+.fq-map-live-tasks {
+  left: 89.02% !important;
+  top: 79.10% !important;
+  width: 1.62% !important;
+  height: 13.82% !important;
+  grid-template-rows: repeat(3, 1fr);
+  pointer-events: none;
+}
+
+.fq-map-live-tasks span {
+  width: 100% !important;
+  height: 45% !important;
+  min-height: 15px;
+  align-self: center;
+  background: #f2dcae !important;
+  border-radius: 2px !important;
+  box-shadow:
+    2px 0 0 #f2dcae,
+    -2px 0 0 #f2dcae !important;
+}
+
+.fq-map-live-tasks strong {
+  font-family: Georgia, serif;
+  font-size: clamp(8px, .67vw, 11px) !important;
+  color: #4a2e19 !important;
+  line-height: 1;
+}
+
+/* O cabeçalho e a sidebar passam a parecer uma única moldura. */
+.fq-map-nav {
+  border-right: 4px solid #4b270e !important;
+  border-top: 4px solid #4b270e !important;
+  border-left: 4px solid #4b270e !important;
+  border-bottom: 4px solid #4b270e !important;
+  box-shadow:
+    inset -2px 0 0 rgba(184,105,43,.30),
+    inset 0 0 0 2px rgba(173,98,38,.30),
+    2px 2px 0 rgba(44,22,8,.22) !important;
+}
+
+/* Pequena junção de madeira entre sidebar e cabeçalho. */
+.fq-map-nav::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  right: -7px;
+  width: 9px;
+  height: 11.2%;
+  z-index: 45;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #6c3814 0 16px,
+      #7e4519 16px 30px,
+      #5d3011 30px 46px
+    );
+  border-left: 1px solid #a76128;
+  border-right: 2px solid #331a09;
+}
+
+/* Ícones maiores dentro das mesmas placas. */
+.fq-map-live-coins img {
+  width: 38% !important;
+  height: 94% !important;
+  transform: scale(1.10) !important;
+}
+
+.fq-map-live-xp > img {
+  width: 105% !important;
+  height: 96% !important;
+  transform: scale(1.10) !important;
+}
+
+/* Um pouco mais de relevo nas três placas principais. */
+.fq-map-live-coins,
+.fq-map-live-xp,
+.fq-map-live-farm-name {
+  box-shadow:
+    inset 0 0 0 2px rgba(231,147,65,.60),
+    inset 0 -4px 0 rgba(56,24,6,.30),
+    0 3px 0 rgba(42,21,7,.42),
+    0 4px 5px rgba(0,0,0,.10) !important;
+}
+
+/* A moldura superior fecha melhor nas extremidades. */
+.fq-official-home-map::before {
+  content: "";
+  position: absolute;
+  left: .15%;
+  right: .15%;
+  top: .12%;
+  height: .78%;
+  z-index: 48;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #633313 0 38px,
+      #7d4419 38px 76px,
+      #592e10 76px 112px
+    );
+  border-top: 1px solid #b66d2c;
+  border-bottom: 2px solid #351b0a;
+  border-radius: 4px 4px 0 0;
+  box-shadow: inset 0 1px 0 rgba(229,144,58,.22);
+}
