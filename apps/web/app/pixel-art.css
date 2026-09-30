@@ -6718,3 +6718,110 @@
 .fq-map-plot-crop {
   image-rendering: pixelated;
 }
+
+
+/* FARMQUEST HOME V9 — prop scale and crop polish */
+
+/* Barris menores e mais cilíndricos, adequados à escala dos props do cenário. */
+.fq-polish-barrel {
+  width: 1.28% !important;
+  aspect-ratio: .80 !important;
+  border-width: 2px !important;
+  clip-path: polygon(
+    18% 0, 82% 0,
+    94% 7%, 100% 19%,
+    100% 81%, 94% 93%,
+    82% 100%, 18% 100%,
+    6% 93%, 0 81%,
+    0 19%, 6% 7%
+  ) !important;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #6f3815 0 12%,
+      #925020 12% 27%,
+      #ad652b 27% 42%,
+      #86451a 42% 58%,
+      #a75e27 58% 73%,
+      #7c3e17 73% 87%,
+      #603010 87% 100%
+    ) !important;
+  box-shadow:
+    inset 2px 0 0 rgba(236,157,73,.24),
+    inset -2px 0 0 rgba(47,20,6,.28),
+    0 2px 0 rgba(46,25,10,.23) !important;
+}
+
+.fq-polish-barrel::before {
+  left: 8% !important;
+  right: 8% !important;
+  top: -1% !important;
+  height: 18% !important;
+  border-width: 2px !important;
+  background:
+    radial-gradient(
+      ellipse at 50% 46%,
+      #b87030 0 43%,
+      #754019 45% 68%,
+      #3f210d 70%
+    ) !important;
+}
+
+.fq-polish-barrel::after {
+  left: -2% !important;
+  right: -2% !important;
+  top: 27% !important;
+  height: 45% !important;
+  border-top: 2px solid #49301d !important;
+  border-bottom: 2px solid #49301d !important;
+}
+
+/* Reposicionamento fino dos dois barris úteis. */
+.fq-polish-barrel-house {
+  left: 20.55% !important;
+  top: 31.70% !important;
+  transform: none !important;
+}
+
+.fq-polish-barrel-garden {
+  left: 42.08% !important;
+  top: 29.55% !important;
+  transform: scale(.94) !important;
+}
+
+/* Segurança caso uma versão antiga ainda tenha o terceiro barril no DOM. */
+.fq-polish-barrel-dock {
+  display: none !important;
+}
+
+/* Timer discreto, preso à borda do canteiro e sem cobrir a cultura. */
+.fq-map-plot-timer {
+  bottom: -11% !important;
+  min-width: 33px !important;
+  padding: 2px 5px !important;
+  font-size: clamp(7px,.60vw,10px) !important;
+  border-width: 1px !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(211,139,62,.34),
+    0 1px 0 rgba(43,26,12,.24) !important;
+}
+
+/* Plantação ativa com contorno um pouco menos agressivo para casar com o fundo. */
+.fq-map-plot-crop {
+  filter:
+    saturate(.98)
+    drop-shadow(0 2px 0 rgba(54,35,14,.22))
+    drop-shadow(1px 1px 0 rgba(42,28,10,.10)) !important;
+}
+
+.fq-map-plot.is-ready .fq-map-plot-crop {
+  filter:
+    saturate(1.01)
+    drop-shadow(0 3px 0 rgba(54,35,14,.25))
+    drop-shadow(1px 1px 0 rgba(42,28,10,.12)) !important;
+}
+
+/* Definição geral um pouco mais firme, sem estourar as cores. */
+.fq-official-home-art {
+  filter: contrast(1.045) saturate(1.018) brightness(1.003) !important;
+}
