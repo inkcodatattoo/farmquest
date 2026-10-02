@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./pixel-art.css";
 
+
 export const metadata: Metadata = {
   title: "FarmQuest — Protótipo 0.1",
   description: "Primeiro protótipo jogável do FarmQuest"

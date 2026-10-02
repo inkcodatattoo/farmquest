@@ -7412,4 +7412,1040 @@
 
 .fq-polish-barrel {
   display: none !important;
+}/* =========================================================
+   FARMQUEST HOME — POLIMENTO DOS CANTEIROS
+   Objetivo:
+   - destacar canteiros interativos
+   - manter visual cozy/pixel art
+   - diferenciar bloqueados sem poluir a Home
+   ========================================================= */
+
+.fq-crop-zone .fq-home-plot {
+  position: relative;
+  transform-origin: center;
+  image-rendering: pixelated;
+
+  transition:
+    transform 120ms ease,
+    filter 120ms ease,
+    opacity 120ms ease;
+}
+
+
+/* ---------------------------------------------------------
+   CANTEIRO DISPONÍVEL
+   --------------------------------------------------------- */
+
+.fq-crop-zone .fq-home-plot:not(.is-locked) {
+  cursor: pointer;
+}
+
+
+/* Hover bem leve */
+
+.fq-crop-zone .fq-home-plot:not(.is-locked):hover {
+  transform: translateY(-2px) scale(1.015);
+  filter:
+    brightness(1.06)
+    saturate(1.04);
+
+  z-index: 5;
+}
+
+
+/* Moldura sutil ao passar o mouse */
+
+.fq-crop-zone .fq-home-plot:not(.is-locked):hover::after {
+  content: "";
+
+  position: absolute;
+  inset: -4px;
+
+  border: 2px solid rgba(255, 220, 120, 0.78);
+  border-radius: 8px;
+
+  box-shadow:
+    0 0 0 2px rgba(74, 42, 19, 0.35),
+    0 3px 8px rgba(0, 0, 0, 0.16);
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   CANTEIRO BLOQUEADO
+   --------------------------------------------------------- */
+
+.fq-crop-zone .fq-home-plot.is-locked {
+  cursor: not-allowed;
+
+  filter:
+    saturate(0.72)
+    brightness(0.9);
+
+  opacity: 0.94;
+}
+
+
+/* Não permitir animação de hover nos bloqueados */
+
+.fq-crop-zone .fq-home-plot.is-locked:hover {
+  transform: none;
+}
+
+
+/* ---------------------------------------------------------
+   PLANTAÇÃO ATIVA
+   Mantemos o desenho/ícone dinâmico totalmente visível.
+   --------------------------------------------------------- */
+
+.fq-crop-zone .fq-home-plot.is-planted,
+.fq-crop-zone .fq-home-plot.is-ready,
+.fq-crop-zone .fq-home-plot.is-rotten {
+  filter: none;
+}
+
+
+/* Plantação pronta ganha destaque discreto */
+
+.fq-crop-zone .fq-home-plot.is-ready {
+  animation: fq-ready-plot-pulse 1.8s ease-in-out infinite;
+}
+
+
+@keyframes fq-ready-plot-pulse {
+
+  0%,
+  100% {
+    filter:
+      brightness(1)
+      saturate(1);
+  }
+
+  50% {
+    filter:
+      brightness(1.10)
+      saturate(1.08);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   ACESSIBILIDADE / TECLADO
+   --------------------------------------------------------- */
+
+.fq-crop-zone .fq-home-plot:focus-visible {
+  outline: 3px solid rgba(255, 225, 130, 0.95);
+  outline-offset: 4px;
+}/* =========================================================
+   FARMQUEST HOME V3 — ENCAIXE DA NOVA CENA
+   ========================================================= */
+
+.farm-scene-shell {
+  width: 100%;
+  min-width: 0;
+}
+
+.farm-scene {
+  width: 100%;
+  margin: 0;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.farm-scene__map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+}
+
+.farm-scene__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: pixelated;
+}/* =========================================================
+   FARMQUEST HOME V3 — CASA E CELEIRO
+   ========================================================= */
+
+.farm-scene__building {
+  position: absolute;
+  z-index: 25;
+
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  cursor: pointer;
+}
+
+
+/* TERRENO SUPERIOR ESQUERDO */
+
+.farm-scene__building--house {
+  left: 10.5%;
+  top: 4.5%;
+  width: 31%;
+  height: 50%;
+}
+
+
+/* TERRENO SUPERIOR DIREITO */
+
+.farm-scene__building--barn {
+  left: 66.5%;
+  top: 5.5%;
+  width: 28.5%;
+  height: 48%;
+}
+
+
+.farm-scene__building-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  image-rendering: pixelated;
+  transform-origin: center bottom;
+}
+
+
+/* BRILHO DE ELEMENTO CLICÁVEL */
+
+.farm-scene__building--house:hover .farm-scene__building-art,
+.farm-scene__building--house:focus-visible .farm-scene__building-art {
+  transform: scaleX(-1) translateY(-2px) scale(1.02);
+}
+
+.farm-scene__building--barn:hover .farm-scene__building-art,
+.farm-scene__building--barn:focus-visible .farm-scene__building-art {
+  transform: translateY(-2px) scale(1.02);
+}
+
+
+.farm-scene__building:active .farm-scene__building-art {
+  transform: scale(0.98);
+}
+
+
+.farm-scene__building:focus {
+  outline: none;
+}/* =========================================================
+   FARMQUEST HOME V3 — CANTEIROS CLICÁVEIS
+   ========================================================= */
+
+.farm-scene__plot {
+  background: transparent !important;
+  border: 0 !important;
+  cursor: pointer;
+
+  transition:
+    filter 120ms ease,
+    box-shadow 120ms ease;
+}
+
+
+/* Apenas um brilho suave sobre o terreno */
+
+.farm-scene__plot:hover {
+  filter: brightness(1.10);
+
+  box-shadow:
+    0 0 4px rgba(255, 230, 145, 0.85),
+    0 0 9px rgba(255, 190, 70, 0.45);
+
+  z-index: 20;
+}/* =========================================================
+   FARMQUEST HOME V3 — PRÉDIOS
+   ========================================================= */
+
+.farm-scene__building {
+  position: absolute;
+  z-index: 30;
+
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  cursor: pointer;
+}
+
+
+/* CASA — terreno superior esquerdo */
+
+.farm-scene__building--house {
+  left: 15.2%;
+  top: 19.2%;
+  width: 19%;
+  height: 25%;
+}
+
+
+/* CELEIRO — terreno superior direito */
+
+.farm-scene__building--barn {
+  left: 68.4%;
+  top: 20.5%;
+  width: 19%;
+  height: 24%;
+}
+
+
+.farm-scene__building-art {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center bottom;
+
+  image-rendering: pixelated;
+
+  transform-origin: center bottom;
+
+  transition:
+    transform 140ms ease,
+    filter 140ms ease;
+}
+
+
+/* Destaque do elemento interativo */
+
+.farm-scene__building:hover .farm-scene__building-art,
+.farm-scene__building:focus-visible .farm-scene__building-art {
+  transform: translateY(-3px) scale(1.025);
+
+  filter:
+    brightness(1.08)
+    drop-shadow(0 0 4px rgba(255, 238, 160, 0.90))
+    drop-shadow(0 0 10px rgba(255, 190, 65, 0.55));
+}
+
+
+.farm-scene__building:active .farm-scene__building-art {
+  transform: scale(0.98);
+}/* =========================================================
+   FARMQUEST HOME V4 — CENÁRIO PRINCIPAL
+   ========================================================= */
+
+.farm-scene-shell {
+  width: 100%;
+  min-width: 0;
+}
+
+.farm-scene {
+  width: 100%;
+  margin: 0;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.farm-scene__map {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+}
+
+.farm-scene__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: pixelated;
+}/* =========================================================
+   FARMQUEST HOME V4 — 10 CANTEIROS CLICÁVEIS
+   O desenho do canteiro já pertence ao cenário.
+   Aqui criamos somente a área de interação.
+   ========================================================= */
+
+.farm-scene__plots {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.farm-scene__plot {
+  position: absolute;
+
+  left: var(--hotspot-left);
+  top: var(--hotspot-top);
+  width: var(--hotspot-width);
+  height: var(--hotspot-height);
+
+  padding: 0;
+  margin: 0;
+
+  background: transparent !important;
+  background-image: none !important;
+
+  border: 0 !important;
+  outline: 0;
+  box-shadow: none !important;
+
+  border-radius: 14%;
+
+  pointer-events: auto;
+  cursor: pointer;
+
+  appearance: none;
+
+  transition:
+    filter 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+
+
+/* LEVE DESTAQUE QUANDO PASSAR O MOUSE */
+.farm-scene__plot:hover {
+  background: rgba(255, 225, 120, 0.08) !important;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 230, 145, 0.85),
+    0 0 9px rgba(255, 190, 70, 0.45) !important;
+
+  filter: brightness(1.08);
+}
+
+/* CLIQUE */
+.farm-scene__plot:active {
+  background: rgba(255, 218, 95, 0.15) !important;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 239, 170, 0.9),
+    0 0 6px rgba(255, 185, 55, 0.55) !important;
+
+  transform: scale(0.985);
+}
+
+/* ACESSIBILIDADE / TECLADO */
+.farm-scene__plot:focus-visible {
+  outline: 2px solid rgba(255, 235, 145, 0.95);
+  outline-offset: 2px;
+}/* =========================================================
+   HOME V4 — USA O CANTEIRO QUE JÁ EXISTE NA IMAGEM
+   ========================================================= */
+
+/* esconde o PNG antigo de terra/cadeado */
+.farm-scene__plot-base {
+  display: none !important;
+}
+
+/* mantém a plantação visível sobre o canteiro */
+.farm-scene__plot-crop {
+  display: block !important;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+    pointer-events: none;
+  image-rendering: pixelated;
+  z-index: 2;
+
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+/* timer fica sobre o canteiro */
+.farm-scene__plot-timer {
+  position: absolute;
+  left: 50%;
+  bottom: 3%;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* HOME V4 — PLANTAÇÃO SOBRE O CANTEIRO */
+.farm-scene__plot-crop {
+  display: block !important;
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 72%;
+  height: 72%;
+
+  transform: translate(-50%, -50%);
+
+  object-fit: contain;
+  pointer-events: none;
+  image-rendering: pixelated;
+
+  z-index: 2;
+}/* =========================================================
+   DEBUG TEMPORÁRIO — MOSTRAR OS 10 HOTSPOTS
+   APAGAR DEPOIS DO ALINHAMENTO
+   ========================================================= */
+
+.farm-scene__plot {
+  background: rgba(0, 255, 255, 0.18) !important;
+
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 255, 255, 1) !important;
+
+  opacity: 1 !important;
+}
+
+.farm-scene__plot:hover {
+  background: rgba(255, 255, 0, 0.28) !important;
+
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 0, 1) !important;
+}/* =========================================================
+   DEBUG FORÇADO — LOCALIZAÇÃO DOS 10 CANTEIROS
+   REMOVER DEPOIS
+   ========================================================= */
+
+.farm-scene__map .farm-scene__plots {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 999 !important;
+  pointer-events: none !important;
+}
+
+.farm-scene__map .farm-scene__plots .farm-scene__plot {
+  position: absolute !important;
+
+  left: var(--plot-left) !important;
+top: var(--plot-top) !important;
+width: var(--plot-width) !important;
+height: var(--plot-height) !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  background: transparent !important;
+  border: 3px solid cyan !important;
+  box-shadow: none !important;
+
+  pointer-events: auto !important;
+  z-index: 999 !important;
+}
+
+.farm-scene__map .farm-scene__plots .farm-scene__plot:hover {
+  background: rgba(255, 255, 0, 0.38) !important;
+  border-color: yellow !important;
+}
+
+/* Continua escondendo apenas a imagem antiga de terra/cadeado */
+.farm-scene__plot-base {
+  display: none !important;
+}/* =========================================================
+   FARMQUEST HOME V4 — CORREÇÃO REAL DOS HOTSPOTS
+   DEBUG TEMPORÁRIO PARA ALINHAMENTO
+   ========================================================= */
+
+.farm-scene__plots {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 40 !important;
+  pointer-events: none !important;
+}
+
+.farm-scene__plot {
+  position: absolute !important;
+
+  left: var(--plot-left) !important;
+  top: var(--plot-top) !important;
+  width: var(--plot-width) !important;
+  height: var(--plot-height) !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  background: rgba(0, 255, 255, 0.25) !important;
+  border: 3px solid cyan !important;
+  box-shadow: none !important;
+
+  border-radius: 10%;
+
+  pointer-events: auto !important;
+  cursor: pointer;
+
+  z-index: 50 !important;
+}
+
+.farm-scene__plot:hover {
+  background: rgba(255, 255, 0, 0.32) !important;
+  border-color: yellow !important;
+}
+
+/* não desenha terra/cadeado antigo */
+.farm-scene__plot-base {
+  display: none !important;
+}
+
+/* mantém somente a plantação sobre o terreno */
+.farm-scene__plot-crop {
+  display: block !important;
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  width: 72% !important;
+  height: 72% !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  object-fit: contain;
+  pointer-events: none;
+  image-rendering: pixelated;
+
+  z-index: 2;
+}/* =========================================================
+   DEBUG FINAL — POSIÇÃO REAL DOS 10 CANTEIROS
+   ========================================================= */
+
+.farm-scene__plots {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 500 !important;
+  pointer-events: none !important;
+}
+
+.farm-scene__plots .farm-scene__plot {
+  position: absolute !important;
+
+  left: var(--plot-left) !important;
+  top: var(--plot-top) !important;
+  width: var(--plot-width) !important;
+  height: var(--plot-height) !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  background: rgba(0, 255, 255, 0.30) !important;
+  border: 3px solid #00ffff !important;
+  box-shadow: none !important;
+
+  pointer-events: auto !important;
+  cursor: pointer !important;
+
+  z-index: 501 !important;
+}
+
+.farm-scene__plots .farm-scene__plot:hover {
+  background: rgba(255, 255, 0, 0.40) !important;
+  border-color: #ffff00 !important;
+}
+
+/* continua sem desenhar terra e cadeado antigos */
+.farm-scene__plot-base {
+  display: none !important;
+}/* =========================================================
+   FARMQUEST HOME V4
+   CORREÇÃO DO CONTAINER DOS 10 CANTEIROS
+   ========================================================= */
+
+.farm-scene__map {
+  position: relative !important;
+}
+
+.farm-scene__plots {
+  position: absolute !important;
+
+  left: 0 !important;
+  top: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  inset: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  z-index: 500 !important;
+
+  pointer-events: none !important;
+}
+
+/* DEBUG — mostra a posição real dos canteiros */
+.farm-scene__plots .farm-scene__plot {
+  position: absolute !important;
+
+  left: var(--plot-left) !important;
+  top: var(--plot-top) !important;
+  width: var(--plot-width) !important;
+  height: var(--plot-height) !important;
+
+  box-sizing: border-box !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  background: rgba(0, 255, 255, 0.30) !important;
+  border: 3px solid cyan !important;
+
+  pointer-events: auto !important;
+
+  z-index: 501 !important;
+}
+
+.farm-scene__plots .farm-scene__plot:hover {
+  background: rgba(255, 255, 0, 0.38) !important;
+  border-color: yellow !important;
+}
+
+/* O terreno já existe na imagem */
+.farm-scene__plot-base {
+  display: none !important;
+}/* =========================================================
+   FARMQUEST HOME V4 — HOTSPOTS DEFINITIVOS DOS 10 CANTEIROS
+   ========================================================= */
+
+.farm-scene__plots .farm-scene__plot {
+  position: absolute !important;
+
+  left: var(--plot-left) !important;
+  top: var(--plot-top) !important;
+  width: var(--plot-width) !important;
+  height: var(--plot-height) !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  background: transparent !important;
+  border: 0 !important;
+
+  cursor: pointer !important;
+  pointer-events: auto !important;
+
+  z-index: 40 !important;
+
+  transition:
+    filter 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+/* Destaque suave quando passar o mouse */
+.farm-scene__plots .farm-scene__plot:hover {
+  background: rgba(255, 232, 130, 0.08) !important;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 235, 150, 0.80),
+    0 0 10px rgba(255, 205, 70, 0.45) !important;
+
+  filter: brightness(1.08);
+}
+
+/* Clique */
+.farm-scene__plots .farm-scene__plot:active {
+  background: rgba(255, 220, 100, 0.12) !important;
+  transform: scale(0.985);
+}
+
+/* O canteiro de terra já faz parte da imagem principal */
+.farm-scene__plot-base {
+  display: none !important;
+}
+
+/* Plantação permanece sobre o canteiro */
+.farm-scene__plot-crop {
+  display: block !important;
+  position: absolute !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  width: 72% !important;
+  height: 72% !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  object-fit: contain;
+  pointer-events: none;
+  image-rendering: pixelated;
+
+  z-index: 2;
+}/* =========================================================
+   FARMQUEST HOME V4 — VISUAL FINAL DOS CANTEIROS
+   ========================================================= */
+
+/* estado normal: hotspot completamente invisível */
+.farm-scene__plots .farm-scene__plot {
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* somente um brilho discreto ao passar o mouse */
+.farm-scene__plots .farm-scene__plot:hover {
+  background: rgba(255, 225, 120, 0.07) !important;
+  border: 0 !important;
+  outline: 0 !important;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 235, 155, 0.65),
+    0 0 8px rgba(255, 200, 70, 0.30) !important;
+
+  filter: brightness(1.06);
+}
+
+/* sem borda azul ao clicar */
+.farm-scene__plots .farm-scene__plot:active,
+.farm-scene__plots .farm-scene__plot:focus {
+  border: 0 !important;
+  outline: 0 !important;
+}
+
+/* acessibilidade pelo teclado */
+.farm-scene__plots .farm-scene__plot:focus-visible {
+  outline: 2px solid rgba(255, 235, 155, 0.8) !important;
+  outline-offset: 1px;
+}/* =========================================================
+   FARMQUEST — CONTORNO CIANO SOMENTE NO CANTEIRO CLICADO
+   ========================================================= */
+
+/* Estado normal */
+.farm-scene__plots .farm-scene__plot {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Passar o mouse NÃO mostra contorno */
+.farm-scene__plots .farm-scene__plot:hover {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Depois que o canteiro for clicado */
+.farm-scene__plots .farm-scene__plot:focus {
+  border: 0 !important;
+  outline: 0 !important;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(40, 235, 255, 0.95),
+    0 0 8px rgba(20, 220, 255, 0.65) !important;
+
+  background: rgba(40, 235, 255, 0.06) !important;
+}
+
+/* Pequeno reforço enquanto estiver pressionando */
+.farm-scene__plots .farm-scene__plot:active {
+  box-shadow:
+    inset 0 0 0 3px rgba(70, 245, 255, 1),
+    0 0 11px rgba(25, 225, 255, 0.8) !important;
+}/* =========================================================
+   FARMQUEST — SELEÇÃO DO CANTEIRO SOMENTE APÓS CLIQUE
+   ========================================================= */
+
+/* ESTADO NORMAL */
+.farm-scene__map .farm-scene__plots .farm-scene__plot {
+  background: transparent !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* PASSAR O MOUSE NÃO ACENDE */
+.farm-scene__map .farm-scene__plots .farm-scene__plot:hover {
+  background: transparent !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* SOMENTE O CANTEIRO CLICADO */
+.farm-scene__map .farm-scene__plots .farm-scene__plot:focus {
+  background: rgba(30, 230, 255, 0.06) !important;
+  border: 0 !important;
+  outline: 0 !important;
+
+  box-shadow:
+    inset 0 0 0 2px rgba(45, 235, 255, 0.95),
+    0 0 8px rgba(30, 220, 255, 0.60) !important;
+
+  filter: brightness(1.04) !important;
+}
+
+/* EFEITO NO EXATO MOMENTO DO CLIQUE */
+.farm-scene__map .farm-scene__plots .farm-scene__plot:active {
+  background: rgba(30, 230, 255, 0.10) !important;
+
+  box-shadow:
+    inset 0 0 0 3px rgba(70, 245, 255, 1),
+    0 0 11px rgba(30, 225, 255, 0.80) !important;
+}
+
+/* =========================================================
+   FARMQUEST — CONTORNO CIANO NO TAMANHO EXATO DO CANTEIRO
+   ========================================================= */
+
+/* botão/hotspot do canteiro */
+.farm-scene__map .farm-scene__plots .farm-scene__plot {
+  position: absolute !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+/* sem acender no hover */
+.farm-scene__map .farm-scene__plots .farm-scene__plot:hover {
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* camada do contorno */
+.farm-scene__map .farm-scene__plots .farm-scene__plot::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+
+  /* AJUSTE FINO DO CONTORNO SOBRE O QUADRADO MARROM */
+ left: 13%;
+top: 12%;
+width: 80%;
+height: 80%;
+
+  border: 2px solid rgba(55, 235, 255, 0.98);
+  border-radius: 11px;
+  box-shadow:
+    0 0 8px rgba(30, 220, 255, 0.55),
+    inset 0 0 0 1px rgba(180, 250, 255, 0.35);
+
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+/* somente quando clicar/selecionar */
+.farm-scene__map .farm-scene__plots .farm-scene__plot:focus::after,
+.farm-scene__map .farm-scene__plots .farm-scene__plot:active::after {
+  opacity: 1;
+}
+
+/* remove brilho antigo do botão inteiro */
+.farm-scene__map .farm-scene__plots .farm-scene__plot:focus,
+.farm-scene__map .farm-scene__plots .farm-scene__plot:active {
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* === ANIMAÇÃO SUAVE DE VENTO NAS PLANTAÇÕES === */
+
+@keyframes farmCropWind {
+  0% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-1px) rotate(-1deg);
+  }
+  50% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  75% {
+    transform: translateX(1px) rotate(1deg);
+  }
+  100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+}
+
+/* =========================================================
+   FARMQUEST — MOVIMENTO SUAVE DE VENTO NAS PLANTAÇÕES
+   ========================================================= */
+
+@keyframes farmCropWind {
+  0% {
+    transform: translate(-50%, -50%) translateX(0px) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-50%, -50%) translateX(-1px) rotate(-1deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateX(0px) rotate(0deg);
+  }
+
+  75% {
+    transform: translate(-50%, -50%) translateX(1px) rotate(1deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) translateX(0px) rotate(0deg);
+  }
+}
+
+.farm-scene__plot-crop {
+  transform-origin: center bottom !important;
+  animation: farmCropWind 2.8s ease-in-out infinite;
+  will-change: transform;
+  image-rendering: pixelated;
+}
+
+/* Cada plantação balança em um ritmo levemente diferente */
+.farm-scene__plot:nth-child(2n) .farm-scene__plot-crop {
+  animation-duration: 3.1s;
+  animation-delay: -0.4s;
+}
+
+.farm-scene__plot:nth-child(3n) .farm-scene__plot-crop {
+  animation-duration: 2.6s;
+  animation-delay: -0.8s;
+}
+
+.farm-scene__plot:nth-child(4n) .farm-scene__plot-crop {
+  animation-duration: 3.4s;
+  animation-delay: -1s;
 }

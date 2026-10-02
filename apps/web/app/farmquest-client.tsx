@@ -2,57 +2,30 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FarmWorld } from "./farm-world";
+import type {
+  FarmWorldFarm,
+  FarmWorldInventoryItem,
+  FarmWorldPlot,
+  FarmWorldShopOffer
+} from "./farm-world-model";
 
 const DEV_CORN_CROP_ID = "00000000-0000-4000-8000-000000000022";
 
-type Farm = {
-  id: string;
-  level: number;
-  xp: string;
-  coins: string;
-  inventorySlots: number;
+type Farm = FarmWorldFarm & {
   stackLimit: number;
   nextHarvestAt: string | null;
   status: "ACTIVE";
 };
 
-type Plot = {
-  id: string;
-  slotNumber: number;
-  unlocked: boolean;
-  seedsCapacity: number;
-  state: "EMPTY" | "PLANTED" | "READY" | "ROTTEN";
-  planted: null | {
-    cropDefinitionId: string;
-    cropName: string;
-    seedCount: number;
-    plantedAt: string;
-    growsAt: string;
-    rotsAt: string;
-  };
-};
+type Plot = FarmWorldPlot;
 
-type InventoryItem = {
-  id: string;
+type InventoryItem = FarmWorldInventoryItem & {
   itemDefinitionId: string;
-  name: string;
-  quality:
-    | "NONE"
-    | "COMMON"
-    | "GOOD"
-    | "EXCELLENT"
-    | "EXTRAORDINARY"
-    | "ROTTEN";
-  quantity: number;
   reservedQuantity: number;
 };
 
-type ShopOffer = {
-  id: string;
+type ShopOffer = FarmWorldShopOffer & {
   itemDefinitionId: string;
-  itemName: string;
-  buyPrice: string;
-  minLevel: number;
   enabled: boolean;
 };
 
@@ -72,65 +45,11 @@ type User = {
   authProvider: string;
 };
 
-function qualityLabel(quality: InventoryItem["quality"]): string {
-  switch (quality) {
-    case "NONE":
-      return "Sem qualidade";
-    case "COMMON":
-      return "Comum";
-    case "GOOD":
-      return "Boa";
-    case "EXCELLENT":
-      return "Excelente";
-    case "EXTRAORDINARY":
-      return "Extraordinário";
-    case "ROTTEN":
-      return "Apodrecido";
-  }
-}
-
-function effectivePlotState(
-  plot: Plot,
-  nowMs: number
-): Plot["state"] {
-  if (!plot.planted) return "EMPTY";
-
-  if (nowMs >= Date.parse(plot.planted.rotsAt)) return "ROTTEN";
-  if (nowMs >= Date.parse(plot.planted.growsAt)) return "READY";
-  return "PLANTED";
-}
-
 function formatDuration(milliseconds: number): string {
   const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
   const minutes = Math.floor(seconds / 60);
   const rest = seconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
-}
-
-function plotStateLabel(state: Plot["state"]): string {
-  switch (state) {
-    case "EMPTY":
-      return "Vazio";
-    case "PLANTED":
-      return "Crescendo";
-    case "READY":
-      return "Pronto";
-    case "ROTTEN":
-      return "Apodrecido";
-  }
-}
-
-function growthProgress(plot: Plot, nowMs: number): number {
-  if (!plot.planted) return 0;
-
-  const plantedAt = Date.parse(plot.planted.plantedAt);
-  const growsAt = Date.parse(plot.planted.growsAt);
-  const duration = growsAt - plantedAt;
-
-  if (duration <= 0) return 100;
-
-  const elapsed = nowMs - plantedAt;
-  return Math.max(0, Math.min(100, Math.round((elapsed / duration) * 100)));
 }
 
 function friendlyApiMessage(
@@ -438,10 +357,15 @@ export function FarmQuestClient() {
     }
   }
 
-  const cooldownText = useMemo(() => {
-    if (!farm?.nextHarvestAt) return "Livre";
+  const harvestCooldown = useMemo(() => {
+    if (!farm?.nextHarvestAt) {
+      return { text: "Livre", available: true };
+    }
+
     const remaining = Date.parse(farm.nextHarvestAt) - nowMs;
-    return remaining <= 0 ? "Livre" : formatDuration(remaining);
+    return remaining <= 0
+      ? { text: "Livre", available: true }
+      : { text: formatDuration(remaining), available: false };
   }, [farm?.nextHarvestAt, nowMs]);
 
   if (status === "checking") {
@@ -539,7 +463,8 @@ export function FarmQuestClient() {
       plots={plots}
       inventory={inventory}
       shop={shop}
-      cooldownText={cooldownText}
+      cooldownText={harvestCooldown.text}
+      canHarvest={harvestCooldown.available}
       nowMs={nowMs}
       busy={busy}
       notice={notice}
@@ -589,4 +514,5 @@ export function FarmQuestClient() {
         )
       }
     />
-  );}
+  );
+}

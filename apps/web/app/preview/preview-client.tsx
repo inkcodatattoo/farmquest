@@ -14,6 +14,7 @@ function createPlots(now: number): FarmWorldPlot[] {
     {
       id: "preview-plot-1",
       slotNumber: 1,
+      unlocked: true,
       seedsCapacity: 1,
       state: "EMPTY",
       planted: null
@@ -21,11 +22,14 @@ function createPlots(now: number): FarmWorldPlot[] {
     {
       id: "preview-plot-2",
       slotNumber: 2,
+      unlocked: true,
       seedsCapacity: 1,
       state: "PLANTED",
       planted: {
+        cropDefinitionId: "preview-corn",
         cropName: "Milho",
         seedCount: 1,
+        plantedAt: new Date(now - 5_000).toISOString(),
         growsAt: new Date(now + 25_000).toISOString(),
         rotsAt: new Date(now + 120_000).toISOString()
       }
@@ -33,11 +37,14 @@ function createPlots(now: number): FarmWorldPlot[] {
     {
       id: "preview-plot-3",
       slotNumber: 3,
+      unlocked: true,
       seedsCapacity: 1,
       state: "READY",
       planted: {
+        cropDefinitionId: "preview-corn",
         cropName: "Milho",
         seedCount: 1,
+        plantedAt: new Date(now - 30_000).toISOString(),
         growsAt: new Date(now - 5_000).toISOString(),
         rotsAt: new Date(now + 90_000).toISOString()
       }
@@ -186,8 +193,10 @@ export default function FarmPreviewClient() {
               ...plot,
               state: "PLANTED",
               planted: {
+                cropDefinitionId: "preview-corn",
                 cropName: "Milho",
                 seedCount: 1,
+                plantedAt: new Date(now).toISOString(),
                 growsAt: new Date(now + 25_000).toISOString(),
                 rotsAt: new Date(now + 120_000).toISOString()
               }
@@ -261,8 +270,10 @@ export default function FarmPreviewClient() {
           ...plot,
           state: "PLANTED",
           planted: {
+            cropDefinitionId: "preview-corn",
             cropName: "Milho",
             seedCount: 1,
+            plantedAt: new Date(now).toISOString(),
             growsAt: new Date(now + 25_000).toISOString(),
             rotsAt: new Date(now + 120_000).toISOString()
           }
@@ -376,6 +387,7 @@ export default function FarmPreviewClient() {
       inventory={inventory}
       shop={PREVIEW_SHOP}
       cooldownText="Livre"
+      canHarvest
       nowMs={nowMs}
       busy=""
       notice={notice}
