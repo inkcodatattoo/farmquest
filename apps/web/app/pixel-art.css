@@ -9592,3 +9592,1218 @@ height: 420px;;
 .farm-home-topbar .farm-top-resource--xp {
   top: -4px !important;
 }
+
+/* =========================================================
+   FARMQUEST — ESTRUTURA FINAL DAS LATERAIS DA HOME
+   ========================================================= */
+
+.pixel-ui-shell.farm-game-shell {
+  /*
+   * No monitor atual ~1648px:
+   * 16vw ≈ 264px.
+   *
+   * Dá ao painel esquerdo a presença da referência
+   * sem deformar a arte.
+   */
+  grid-template-columns:
+    clamp(255px, 16vw, 285px)
+    minmax(0, 1fr) !important;
+
+  position: relative !important;
+}
+
+
+/* =========================================================
+   LATERAL ESQUERDA
+   ========================================================= */
+
+.pixel-ui-shell .farm-home-leftbar {
+  width: 100% !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  overflow: visible !important;
+}
+
+
+/* =========================================================
+   MENU PRINCIPAL — GRANDE
+   ========================================================= */
+
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel {
+  position: relative !important;
+
+  /*
+   * O PNG possui transparência nas bordas.
+   * Ele fica um pouco maior que a coluna para que
+   * a madeira ocupe visualmente toda a lateral.
+   */
+  width: calc(100% + 110px) !important;
+
+  height: auto !important;
+
+  aspect-ratio: 966 / 1498 !important;
+
+  flex: 0 0 auto !important;
+
+  margin:
+    -6px
+    -15px
+    0
+    -15px !important;
+
+  transform: none !important;
+  transform-origin: top center !important;
+
+  z-index: 5;
+}
+
+
+/* imagem do menu */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__art {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+
+  transform: none !important;
+
+  image-rendering: pixelated;
+
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   QUADRO DE AVISOS
+   ========================================================= */
+
+.farm-home-notice-board {
+  position: relative;
+
+  width: 86%;
+
+  flex: 0 0 auto;
+
+  margin-top: -14px;
+
+  transform: translate(10px, 10px);
+
+  z-index: 4;
+
+  filter:
+    drop-shadow(0 5px 2px rgba(49, 27, 12, .25));
+}
+
+
+.farm-home-notice-board__art {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+.farm-home-notice-board__content {
+  position: absolute;
+
+  left: 14%;
+  right: 14%;
+
+  top: 18%;
+  bottom: 15%;
+
+  overflow: hidden;
+
+  color: #4b2a16;
+
+  text-align: center;
+
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    sans-serif;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   BARRA DE ÍCONES DA DIREITA
+   ========================================================= */
+
+.farm-home-rightbar {
+  position: absolute !important;
+
+  top: 92px;
+  right: clamp(8px, 1vw, 16px);
+
+  width: clamp(82px, 6.3vw, 108px);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 10px;
+
+  z-index: 45;
+
+  pointer-events: auto;
+}
+
+
+/* botão invisível — a própria arte é o botão */
+.farm-home-tool {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  appearance: none;
+
+  transition:
+    transform 100ms ease,
+    filter 100ms ease;
+}
+
+
+.farm-home-tool img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+
+/* pequeno feedback sem destruir pixel-art */
+.farm-home-tool:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+
+.farm-home-tool:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+
+/* PRESENTE — separado dos outros como na referência */
+.farm-home-tool--gift {
+  width: 96%;
+
+  margin-bottom: 44px;
+}
+
+
+/* Mercado Global */
+.farm-home-tool--global-market {
+  width: 91%;
+}
+
+
+/* Ovo */
+.farm-home-tool--egg {
+  width: 91%;
+}
+
+
+/* Mercado Local */
+.farm-home-tool--local-market {
+  width: 91%;
+}
+
+
+/* Trator */
+.farm-home-tool--tractor {
+  width: 88%;
+
+  margin-top: 18px;
+}
+
+
+/* recurso futuro */
+.farm-home-tool.is-disabled {
+  cursor: not-allowed;
+
+  opacity: .62;
+
+  filter: grayscale(.45);
+}
+
+/* =========================================================
+   FARMQUEST — LATERAL ESQUERDA MAIOR E SOBRESSAINDO
+   ========================================================= */
+
+.farm-home-sidebar {
+  position: relative;
+  width: 255px !important;
+  min-width: 255px !important;
+  padding-top: 14px;
+  padding-left: 6px;
+  padding-right: 0;
+  overflow: visible !important;
+  z-index: 30;
+}
+
+.farm-home-navigation {
+  position: relative;
+  width: 240px !important;
+  margin-left: translateX(16px);
+
+  /* faz o painel avançar um pouco por cima do cenário */
+  transform: translateX(14px);
+
+  z-index: 40;
+}
+
+.farm-home-navigation_art {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+.farm-home-navigation_buttons {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 88px;
+  bottom: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.farm-home-navigation_buttons button {
+  height: 31px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.farm-home-notice-board {
+  position: relative;
+  width: 300px !important;
+  margin-top: -60px !important;
+  margin-left: 22px !important;
+
+  /* acompanha o avanço do painel principal */
+  transform: translate(10px 0px);
+
+  z-index: 35;
+}
+
+.farm-home-notice-board_art {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+.farm-home-notice-board_content {
+  position: absolute;
+  inset: 14px;
+}
+
+.farm-game-stage {
+  position: relative;
+  z-index: 10;
+}
+
+.pixel-ui-shell,
+.farm-home-shell,
+.farm-home-layout {
+  overflow: visible !important;
+}
+/* FARMQUEST - painel esquerdo em primeiro plano */
+.pixel-ui-shell .farm-home-leftbar { position: relative !important; z-index: 900 !important; overflow: visible !important; }
+.pixel-ui-shell .farm-home-leftbar .farm-menu-panel { position: relative !important; z-index: 950 !important; }
+
+/* FARMQUEST - painel esquerdo definitivamente acima do Home */
+.pixel-ui-shell.farm-game-shell { position: relative !important; overflow: visible !important; }
+.pixel-ui-shell .farm-game-stage { position: relative !important; z-index: 1 !important; }
+.pixel-ui-shell .farm-game-sidebar.farm-home-leftbar { position: relative !important; z-index: 1000 !important; overflow: visible !important; }
+.pixel-ui-shell .farm-home-leftbar .farm-menu-panel { position: relative !important; z-index: 1100 !important; overflow: visible !important; }
+.pixel-ui-shell .farm-home-leftbar .farm-menu-panel__art { position: absolute !important; z-index: 1101 !important; }
+.pixel-ui-shell .farm-home-leftbar .farm-menu-panel__hotspot { position: absolute !important; z-index: 1102 !important; }
+
+
+/* =========================================================
+   FARMQUEST — CENTRALIZAÇÃO DOS HOTSPOTS DO MENU ESQUERDO
+   ========================================================= */
+
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot {
+  left: 50% !important;
+  width: 55% !important;
+  height: 7.2% !important;
+
+  transform: translateX(-50%) !important;
+
+  border-radius: 6px !important;
+}
+
+/* =========================================================
+   FARMQUEST — AJUSTE FINO INDIVIDUAL DOS BOTÕES DO MENU
+   ========================================================= */
+
+/* mantém todas centralizadas horizontalmente */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot {
+  left: 50% !important;
+  width: 63% !important;
+  height: 6.8% !important;
+
+  transform: translateX(-50%) !important;
+}
+
+
+/* INÍCIO */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--inicio {
+  top: 26.6% !important;
+}
+
+
+/* CELEIRO */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--celeiro {
+  top: 34.5% !important;
+}
+
+
+/* ANIMAIS */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--animais {
+  top: 43.4% !important;
+}
+
+
+/* PEDIDOS */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--pedidos {
+  top: 52.4% !important;
+}
+
+
+/* COMUNIDADE */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--comunidade {
+  top: 60.4% !important;
+}
+
+
+/* EXPLORAÇÃO */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--exploracao {
+  top: 69.4% !important;
+}
+
+
+/* RANKING */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--ranking {
+  top: 78.4% !important;
+}
+
+
+/* CONQUISTAS */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot--conquistas {
+  top: 86.4% !important;
+}
+
+/* FARMQUEST — remove destaque permanente do botão ativo */
+.pixel-ui-shell
+.farm-home-leftbar
+.farm-menu-panel__hotspot.is-active {
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  filter: none !important;
+}
+
+/* =========================================================
+   FARMQUEST — TIPOGRAFIA DO CABEÇALHO
+   ========================================================= */
+
+/* Base da fonte dos recursos */
+.farm-home-topbar .farm-top-resource__text {
+  color: #ffffff !important;
+
+  font-family:
+    "Trebuchet MS",
+    "Arial Rounded MT Bold",
+    Arial,
+    sans-serif !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.02em !important;
+
+  text-shadow:
+    -1px -1px 0 #4b2413,
+     1px -1px 0 #4b2413,
+    -1px  1px 0 #4b2413,
+     1px  1px 0 #4b2413,
+     0px  2px 0 #2a1309 !important;
+}
+
+
+/* Nome da Fazenda */
+.farm-home-topbar
+.farm-top-resource__text--farm strong {
+  color: #ffffff !important;
+
+  font-size: clamp(12px, 0.92vw, 16px) !important;
+
+  font-weight: 900 !important;
+}
+
+
+/* Quantidade de moedas */
+.farm-home-topbar
+.farm-top-resource__text--coins strong {
+  color: #ffffff !important;
+
+  font-size: clamp(13px, 1vw, 17px) !important;
+
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   FARMQUEST — BARRA DE EXPERIÊNCIA
+   Referência: moldura marrom + preenchimento laranja
+   ========================================================= */
+
+.farm-top-resource--xp {
+  overflow: visible !important;
+}
+
+
+/* área da barra sobre o painel de XP */
+.farm-xp-progress {
+  position: absolute;
+
+  left: 24%;
+  right: 4%;
+
+  top: 50%;
+
+  height: 34%;
+
+  transform: translateY(-50%);
+
+  z-index: 5;
+}
+
+
+/* fundo / trilho */
+.farm-xp-progress__track {
+  position: absolute;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  border: 2px solid #7c3218;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #54200e 0%,
+      #6c2a12 50%,
+      #42180a 100%
+    );
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 168, 73, .30),
+    inset 0 -2px 0 rgba(43, 16, 5, .65),
+    0 1px 0 #3c1608;
+}
+
+
+/* preenchimento laranja */
+.farm-xp-progress__fill {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  min-width: 0;
+
+  border-radius: 999px 0 0 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffab25 0%,
+      #ff8515 52%,
+      #e85c0b 100%
+    );
+
+  box-shadow:
+    inset 0 2px 0 rgba(255, 218, 130, .55),
+    inset 0 -2px 0 rgba(177, 59, 5, .45);
+
+  transition:
+    width 350ms ease-out;
+}
+
+
+/* brilho sutil da barra */
+.farm-xp-progress__shine {
+  position: absolute;
+
+  left: 6%;
+  right: 10%;
+
+  top: 13%;
+
+  height: 25%;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 223, 163, .16);
+
+  pointer-events: none;
+}
+
+
+/* número de XP sobre a barra */
+.farm-xp-progress__value {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-family:
+    "Trebuchet MS",
+    "Arial Rounded MT Bold",
+    Arial,
+    sans-serif;
+
+  font-size: clamp(8px, .64vw, 11px);
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  text-shadow:
+    -1px -1px 0 #4a1e0c,
+     1px -1px 0 #4a1e0c,
+    -1px  1px 0 #4a1e0c,
+     1px  1px 0 #4a1e0c,
+     0px  1px 0 #261006;
+
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   FARMQUEST — AJUSTE VISUAL FINAL DA BARRA DE XP
+   ========================================================= */
+
+.farm-home-topbar
+.farm-top-resource--xp
+.farm-xp-progress {
+  left: 21% !important;
+  right: 13% !important;
+
+  top: 47% !important;
+
+  height: 36% !important;
+
+  transform: translateY(-50%) !important;
+}
+
+
+/* deixa a barra um pouco mais robusta */
+.farm-home-topbar
+.farm-xp-progress__track {
+  border-width: 1px !important;
+}
+
+
+/* texto central mais legível */
+.farm-home-topbar
+.farm-xp-progress__value {
+  font-size: clamp(7px, .80vw, 16px) !important;
+
+  font-weight: 800 !important;
+
+  color: #fff !important;
+}
+/* FARMQUEST - cabecalho com paineis separados por 20px */
+.pixel-ui-shell .farm-game-topbar.farm-home-topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 20px !important;
+  grid-template-columns: none !important;
+}
+
+.farm-home-topbar .farm-top-resource {
+  flex: 0 0 auto !important;
+  justify-self: auto !important;
+}
+
+.farm-home-topbar .farm-system-actions {
+  margin-left: auto !important;
+  flex: 0 0 auto !important;
+}
+
+/* FARMQUEST - VACA DO CURRAL */
+.farm-scene__shadows {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+}
+
+.farm-scene__shadow--cow {
+  position: absolute !important;
+  left: 76% !important;
+  top: 40.5% !important;
+  width: 6.5% !important;
+  height: 12% !important;
+  display: block !important;
+  background-image: url("/game-assets/animals/vaca_curral.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: contain !important;
+  opacity: 1 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* =========================================================
+   FARMQUEST - VACA ANIMADA: RESPIRACAO + MASTIGACAO
+   ========================================================= */
+
+.farm-scene__shadow--cow {
+  overflow: visible !important;
+  transform-origin: center bottom !important;
+  animation: farmCowBreath 2.7s ease-in-out infinite !important;
+}
+
+  .farm-scene__shadow--cow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("/game-assets/animals/vaca_curral.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+
+  /* recorte menor, focado só na parte de baixo da boca */
+  clip-path: inset(59% 72% 20% 7%);
+
+  /* ponto de articulação da mandíbula */
+  transform-origin: 22% 63%;
+
+  animation: farmCowChew 0.78s ease-in-out infinite;
+
+  pointer-events: none;
+
+
+@keyframes farmCowChew {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+
+  50% {
+    transform: translateY(1px) scaleY(0.90);
+  }
+}
+
+@keyframes farmCowChew {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+  25% {
+    transform: translateY(1px) scaleY(0.98);
+  }
+  50% {
+    transform: translateY(2px) scaleY(0.94);
+  }
+  75% {
+    transform: translateY(1px) scaleY(0.98);
+  }
+}
+
+/* =========================================================
+   FARMQUEST — VACA MASTIGANDO POR FRAMES
+   sem respiração
+   ========================================================= */
+
+/* desliga a animação anterior e usa os frames */
+.farm-scene__shadow--cow {
+  background-image: url("/game-assets/animals/vaca_mastigando/vaca_mastiga_01.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: contain !important;
+
+  animation: farmCowChewFrames 0.9s steps(1) infinite !important;
+
+  transform: none !important;
+  overflow: visible !important;
+}
+
+/* desliga a pseudo-boca antiga */
+.farm-scene__shadow--cow::after {
+  content: none !important;
+  animation: none !important;
+}
+
+/* mastigação por troca de frames */
+@keyframes farmCowChewFrames {
+  0%,
+  24.99% {
+    background-image: url("/game-assets/animals/vaca_mastigando/vaca_mastiga_01.png");
+  }
+
+  25%,
+  49.99% {
+    background-image: url("/game-assets/animals/vaca_mastigando/vaca_mastiga_02.png");
+  }
+
+  50%,
+  74.99% {
+    background-image: url("/game-assets/animals/vaca_mastigando/vaca_mastiga_03.png");
+  }
+
+  75%,
+  100% {
+    background-image: url("/game-assets/animals/vaca_mastigando/vaca_mastiga_04.png");
+  }
+}
+
+/* =========================================================
+   FARMQUEST — VACA POR FRAMES REAIS
+   ========================================================= */
+
+.farm-scene__shadow--cow {
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: auto !important;
+
+  display: block !important;
+
+  object-fit: contain !important;
+
+  background: none !important;
+  background-image: none !important;
+
+  animation: none !important;
+  transform: none !important;
+
+  opacity: 1 !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  image-rendering: pixelated;
+
+  z-index: 20 !important;
+}
+
+/* mata definitivamente a boca artificial antiga */
+.farm-scene__shadow--cow::before,
+.farm-scene__shadow--cow::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+}
+
+/* VACA - SOMENTE IMAGEM POR FRAMES */
+
+.farm-scene__shadow--cow {
+  background: transparent !important;
+  background-image: none !important;
+
+  animation: none !important;
+  transform: none !important;
+
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: auto !important;
+
+  object-fit: contain !important;
+
+  opacity: 1 !important;
+  z-index: 20 !important;
+
+  pointer-events: none !important;
+}
+
+.farm-scene__shadow--cow::before,
+.farm-scene__shadow--cow::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
+}
+
+/* =========================================================
+   FARMQUEST — VACA ANIMADA DEFINITIVA
+   ========================================================= */
+
+.farm-scene__cow-animated {
+  position: absolute !important;
+
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: auto !important;
+
+  display: block !important;
+
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  animation: none !important;
+  transform: none !important;
+
+  object-fit: contain !important;
+
+  opacity: 1 !important;
+  z-index: 20 !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  image-rendering: pixelated;
+}
+
+/* =========================================================
+   FARMQUEST — VACA ANIMADA
+   ========================================================= */
+
+.farm-scene__map {
+  position: relative !important;
+}
+
+.farm-scene__cow-animated {
+  position: absolute !important;
+
+  /* posição que já havíamos acertado */
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: auto !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  object-fit: contain !important;
+
+  z-index: 25 !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  image-rendering: pixelated;
+}
+/* =========================================================
+   FARMQUEST — VACA ANIMADA NO CURRAL
+   ========================================================= */
+
+.farm-scene__map {
+  position: relative !important;
+}
+
+.farm-scene__cow-animated {
+  position: absolute !important;
+
+  /* posição original que estava perfeita */
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: auto !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  object-fit: contain !important;
+
+  z-index: 50 !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  image-rendering: pixelated;
+}
+/* =========================================================
+   FARMQUEST — VACA ANIMADA POR FRAMES
+   ========================================================= */
+
+.farm-scene__cow-animated {
+  position: absolute !important;
+
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: auto !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  object-fit: contain !important;
+
+  z-index: 50 !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  image-rendering: pixelated;
+}
+/* =========================================================
+   FARMQUEST — VACA MASTIGANDO POR FRAMES
+   versão final — sem respiração
+   ========================================================= */
+
+.farm-scene__shadow--cow {
+  position: absolute !important;
+
+  /* posição original aprovada */
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: 12% !important;
+
+  display: block !important;
+
+  background-image: var(--cow-frame) !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: contain !important;
+
+  opacity: 1 !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  border: 0 !important;
+  box-shadow: none !important;
+
+  pointer-events: none !important;
+
+  z-index: 25 !important;
+}
+
+/* remove definitivamente a boca artificial e a respiração antigas */
+.farm-scene__shadow--cow::before,
+.farm-scene__shadow--cow::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  animation: none !important;
+}
+/* =========================================================
+   FARMQUEST — VACA POR FRAMES REAIS
+   ========================================================= */
+
+.farm-scene__shadow--cow {
+  position: absolute !important;
+
+  left: 76% !important;
+  top: 40.5% !important;
+
+  width: 6.5% !important;
+  height: 12% !important;
+
+  display: block !important;
+
+  background: none !important;
+  background-image: none !important;
+
+  opacity: 1 !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  border: 0 !important;
+  box-shadow: none !important;
+
+  overflow: visible !important;
+
+  pointer-events: none !important;
+
+  z-index: 25 !important;
+}
+
+.farm-scene__cow-frame {
+  position: absolute !important;
+
+  left: 0 !important;
+  bottom: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  display: block !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  pointer-events: none !important;
+
+  image-rendering: pixelated;
+}
+
+.farm-scene__shadow--cow::before,
+.farm-scene__shadow--cow::after {
+  content: none !important;
+  display: none !important;
+}
+/* =========================================================
+   FARMQUEST — FENO DO CURRAL
+   ========================================================= */
+
+.farm-scene__hay-bale {
+  position: absolute !important;
+
+  /* posição baseada na referência */
+  left: 71.5% !important;
+  top: 46.2% !important;
+
+  width: 5.3% !important;
+  height: auto !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  object-fit: contain !important;
+
+  transform: none !important;
+  animation: none !important;
+
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  z-index: 24 !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  image-rendering: pixelated;
+}

@@ -6,8 +6,14 @@ import {
 export type FarmWorldFarm = {
   id: string;
   level: number;
+
   xp: string;
+
+  xpLevelStart: string;
+  xpNextLevel: string | null;
+
   coins: string;
+
   inventorySlots: number;
 };
 

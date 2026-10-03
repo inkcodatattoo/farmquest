@@ -33,17 +33,38 @@ export class FarmsController {
       },
       orderBy: { createdAt: "asc" }
     });
+    const levelDefinitions =
+  await this.db.client.levelDefinition.findMany({
+    orderBy: { level: "asc" }
+  });
 
-    return farms.map((farm) => ({
-      id: farm.id,
-      level: farm.level,
-      xp: farm.xp.toString(),
-      coins: farm.coins.toString(),
-      inventorySlots: farm.inventorySlots,
-      stackLimit: farm.stackLimit,
-      nextHarvestAt: farm.nextHarvestAt?.toISOString() ?? null,
-      status: farm.status
-    }));
+    return farms.map((farm) => {
+  const currentLevel = levelDefinitions.find(
+    (definition) => definition.level === farm.level
+  );
+
+  const nextLevel = levelDefinitions.find(
+    (definition) => definition.level === farm.level + 1
+  );
+
+  return {
+    id: farm.id,
+    level: farm.level,
+    xp: farm.xp.toString(),
+
+    xpLevelStart:
+      currentLevel?.xpRequiredTotal.toString() ?? "0",
+
+    xpNextLevel:
+      nextLevel?.xpRequiredTotal.toString() ?? null,
+
+    coins: farm.coins.toString(),
+    inventorySlots: farm.inventorySlots,
+    stackLimit: farm.stackLimit,
+    nextHarvestAt: farm.nextHarvestAt?.toISOString() ?? null,
+    status: farm.status
+  };
+});
   }
 
   @Get(":farmId")

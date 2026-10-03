@@ -31,9 +31,40 @@ const FARM_PANEL_NAVIGATION: readonly Section[] = [
 export function FarmWorld(props: FarmWorldProps) {
   const [section, setSection] = useState<Section>("inicio");
   const inventoryCount = useMemo(
+    
     () => props.inventory.reduce((sum, item) => sum + item.quantity, 0),
     [props.inventory]
   );
+  const totalXp = BigInt(props.farm.xp);
+const levelStartXp = BigInt(props.farm.xpLevelStart);
+
+const nextLevelXp =
+  props.farm.xpNextLevel !== null
+    ? BigInt(props.farm.xpNextLevel)
+    : null;
+
+const xpInsideLevel =
+  totalXp > levelStartXp
+    ? totalXp - levelStartXp
+    : 0n;
+
+const xpNeededForLevel =
+  nextLevelXp !== null && nextLevelXp > levelStartXp
+    ? nextLevelXp - levelStartXp
+    : 0n;
+
+const rawXpProgress =
+  xpNeededForLevel > 0n
+    ? Number(
+        (xpInsideLevel * 10000n) /
+        xpNeededForLevel
+      ) / 100
+    : 100;
+
+const xpProgress = Math.max(
+  0,
+  Math.min(100, rawXpProgress)
+);
   return (
     
     <main
@@ -74,18 +105,38 @@ export function FarmWorld(props: FarmWorldProps) {
 
 
   {/* XP */}
-  <div className="farm-top-resource farm-top-resource--xp">
-    <img
-      className="farm-top-resource__panel"
-      src={FARM_ICONS.home.panels.xp}
-      alt=""
-      draggable={false}
-    />
+  {/* XP */}
+<div className="farm-top-resource farm-top-resource--xp">
+  <img
+    className="farm-top-resource__panel"
+    src={FARM_ICONS.home.panels.xp}
+    alt=""
+    draggable={false}
+  />
 
-    <div className="farm-top-resource__text farm-top-resource__text--xp">
-      <strong>{props.farm.xp}</strong>
+  <div className="farm-xp-progress">
+
+    <div className="farm-xp-progress__track">
+
+      <div
+        className="farm-xp-progress__fill"
+        style={{
+          width: `${xpProgress}%`
+        }}
+      />
+
+      <div className="farm-xp-progress__shine" />
+
     </div>
+
+    <span className="farm-xp-progress__value">
+      {xpNeededForLevel > 0n
+        ? `${xpInsideLevel.toString()} / ${xpNeededForLevel.toString()} XP`
+        : `${props.farm.xp} XP`}
+    </span>
+
   </div>
+</div>
 
 
   {/* AMPULHETA */}
@@ -128,7 +179,8 @@ export function FarmWorld(props: FarmWorldProps) {
 
 </header>
 
-      <aside className="farm-game-sidebar farm-game-sidebar--panel">
+      <aside className="farm-game-sidebar farm-game-sidebar--panel farm-home-leftbar">
+
   <nav className="farm-menu-panel" aria-label="Navegação principal">
     <img
       className="farm-menu-panel__art"
@@ -159,9 +211,27 @@ export function FarmWorld(props: FarmWorldProps) {
       );
     })}
   </nav>
+
+  <section
+    className="farm-home-notice-board"
+    aria-label="Quadro de avisos"
+  >
+    <img
+      className="farm-home-notice-board__art"
+      src={FARM_ICONS.home.panels.notices}
+      alt=""
+      draggable={false}
+    />
+
+    <div className="farm-home-notice-board__content">
+      {/* Conteúdo do quadro será implementado depois */}
+    </div>
+  </section>
+
 </aside>
 
       <section className="farm-game-stage">
+        
   {props.notice ? (
   <div
     className="farm-notice-popup farm-notice-popup--success"
@@ -212,7 +282,14 @@ export function FarmWorld(props: FarmWorldProps) {
       onSectionChange={setSection}
     />
   )}
-</section>
+</section>{section === "inicio" ? (
+  <aside
+    className="farm-home-rightbar"
+    aria-label="Atalhos da fazenda"
+  >
+    ...
+  </aside>
+) : null}
 
       <footer
   className="farm-game-dock"

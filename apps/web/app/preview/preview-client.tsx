@@ -56,6 +56,8 @@ const INITIAL_FARM: FarmWorldFarm = {
   id: "preview-farm",
   level: 1,
   xp: "20",
+  xpLevelStart: "0",
+  xpNextLevel: "100",
   coins: "100",
   inventorySlots: 20
 };

@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { FARM_ICONS } from "./farm-icons";
 import { FarmPlot, PixelIcon, type FarmPlotPlacement } from "./farm-plot";
 import {
@@ -11,6 +11,22 @@ import {
   type FarmWorldProps,
   type Section
 } from "./farm-world-model";
+const COW_CHEW_FRAMES = [
+  "/game-assets/animals/vaca_mastigando/vaca_mastiga_01.png",
+  "/game-assets/animals/vaca_mastigando/vaca_mastiga_02.png",
+  "/game-assets/animals/vaca_mastigando/vaca_mastiga_03.png",
+  "/game-assets/animals/vaca_mastigando/vaca_mastiga_04.png",
+  "/game-assets/animals/vaca_mastigando/vaca_mastiga_05.png",
+  "/game-assets/animals/vaca_mastigando/vaca_mastiga_06.png"
+] as const;
+
+/*
+  Vai e volta para não pular do último frame
+  diretamente para o primeiro.
+*/
+const COW_CHEW_SEQUENCE = [
+  1,3,1,4,3,1,4,3,1,4,3,1,4,3,1,4,3,1,4 
+] as const;
 
 type ScenePlacement = {
   left: string;
@@ -176,6 +192,20 @@ export function FarmScene({
   ...props
 }: FarmSceneProps) {
   const slots = buildFarmPlotSlots(props.plots, props.nowMs);
+  const [cowChewStep, setCowChewStep] = useState(0);
+
+useEffect(() => {
+  const timer = window.setInterval(() => {
+    setCowChewStep((current) =>
+      (current + 1) % COW_CHEW_SEQUENCE.length
+    );
+  }, 600);
+
+  return () => window.clearInterval(timer);
+}, []);
+
+const cowFrame =
+  COW_CHEW_FRAMES[COW_CHEW_SEQUENCE[cowChewStep] ?? 0];
   const homeNavigation = FARM_WORLD_NAVIGATION.filter((item) => item.home);
 
   function interactPlot(plotId: string) {
@@ -220,22 +250,98 @@ export function FarmScene({
   aria-label="Celeiro"
   title="Abrir celeiro"
 >
-  <img
-  src={FARM_ICONS.buildings.barn}
-  alt=""
-  className="farm-scene__building-art"
-  draggable={false}
-/>
+  
 </button>
 
           <div className="farm-scene__sky" aria-hidden="true" />
 
           <div className="farm-scene__shadows" aria-hidden="true">
-            <span className="farm-scene__shadow farm-scene__shadow--house" />
-            <span className="farm-scene__shadow farm-scene__shadow--barn" />
-            <span className="farm-scene__shadow farm-scene__shadow--cow" />
-            <span className="farm-scene__shadow farm-scene__shadow--coop" />
-          </div>
+  <span className="farm-scene__shadow farm-scene__shadow--house" />
+  <span className="farm-scene__shadow farm-scene__shadow--barn" />
+
+  
+  <span
+  style={{
+    position: "absolute",
+    left: "76%",
+    top: "40.5%",
+    width: "6.5%",
+    height: "12%",
+    display: "block",
+    zIndex: 25,
+    pointerEvents: "none"
+  }}
+>
+  <img
+    src={cowFrame}
+    alt=""
+    draggable={false}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      objectPosition: "center bottom",
+      display: "block",
+      imageRendering: "pixelated"
+    }}
+  />
+</span>
+<span
+  style={{
+    position: "absolute",
+    left: "76%",
+    top: "40.5%",
+    width: "6.5%",
+    height: "12%",
+    display: "block",
+    zIndex: 25,
+    pointerEvents: "none"
+  }}
+>
+  <img
+    src={cowFrame}
+    alt=""
+    draggable={false}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      objectPosition: "center bottom",
+      display: "block",
+      imageRendering: "pixelated"
+    }}
+  />
+</span>
+
+{/* FENO DO CURRAL */}
+<img
+  src="/game-assets/props/curral/feno_curral.png"
+  alt=""
+  draggable={false}
+  style={{
+    position: "absolute",
+    left: "72.9%",
+    top: "46.5%",
+    width: "6.2%",
+    height: "auto",
+    display: "block",
+    zIndex: 24,
+    pointerEvents: "none",
+    userSelect: "none",
+    objectFit: "contain",
+    imageRendering: "pixelated"
+  }}
+/>
+
+</div>
+            
+          
+          <img
+  className="farm-scene__cow-animated"
+  src="/game-assets/animals/vaca_mastigando/vaca_mastiga_01.png"
+  alt=""
+  draggable={false}
+/>
 
           <nav className="farm-scene__nav" aria-label="NavegaÃ§Ã£o da Home">
             {homeNavigation.map((item) => {
