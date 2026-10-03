@@ -1,0 +1,8 @@
+FarmQuest - GIFs de crescimento FINAL
+
+24 GIFs com fundo transparente e sem os fundos pretos residuais.
+Substitua os arquivos em:
+apps/web/public/game-assets/crops/growth/
+
+Mantenha os mesmos nomes.
+O movimento de vento será controlado pelo CSS do jogo.

@@ -7,7 +7,11 @@ import {
   Req
 } from "@nestjs/common";
 import type { Request } from "express";
-import { getPlotTemporalState } from "@farmquest/game-rules";
+import {
+  CryptoRandomSource,
+  drawWeighted,
+  getPlotTemporalState
+} from "@farmquest/game-rules";
 import { AuthService } from "../auth/auth.service.js";
 import { DatabaseService } from "../database.service.js";
 
@@ -85,19 +89,82 @@ export class FarmsController {
 
     if (!farm) throw new NotFoundException("FARM_NOT_FOUND");
 
-    const plots = await this.db.client.plot.findMany({
-      where: { farmId },
-      include: {
-        plantings: {
-          where: { harvestedAt: null },
-          include: { crop: true },
-          take: 1
-        }
-      },
-      orderBy: { slotNumber: "asc" }
-    });
+    const loadPlots = () =>
+  this.db.client.plot.findMany({
+    where: { farmId },
+    include: {
+      plantings: {
+        where: { harvestedAt: null },
+        include: {
+          crop: true,
+          quality: true
+        },
+        take: 1
+      }
+    },
+    orderBy: { slotNumber: "asc" }
+  });
 
-    const now = new Date();
+let plots = await loadPlots();
+
+const now = new Date();
+const random = new CryptoRandomSource();
+
+const drawableQualities =
+  await this.db.client.itemQualityDefinition.findMany({
+    where: {
+      drawable: true,
+      enabled: true
+    }
+  });
+
+let qualityAssigned = false;
+
+if (drawableQualities.length > 0) {
+  for (const plot of plots) {
+    const active = plot.plantings[0] ?? null;
+
+    if (!active) continue;
+
+    const state = getPlotTemporalState(
+      now,
+      active.growsAt,
+      active.rotsAt
+    );
+
+    if (state !== "READY" || active.resultQualityId) {
+      continue;
+    }
+
+    const quality = drawWeighted(
+      drawableQualities.map((item) => ({
+        value: item,
+        weight: item.weight
+      })),
+      random
+    );
+
+    const updated =
+      await this.db.client.plantedCrop.updateMany({
+        where: {
+          id: active.id,
+          harvestedAt: null,
+          resultQualityId: null
+        },
+        data: {
+          resultQualityId: quality.id
+        }
+      });
+
+    if (updated.count === 1) {
+      qualityAssigned = true;
+    }
+  }
+}
+
+if (qualityAssigned) {
+  plots = await loadPlots();
+}
 
     return {
       serverTime: now.toISOString(),
@@ -122,13 +189,14 @@ export class FarmsController {
           seedsCapacity: plot.seedsCapacity,
           state: getPlotTemporalState(now, active.growsAt, active.rotsAt),
           planted: {
-            cropDefinitionId: active.cropDefinitionId,
-            cropName: active.crop.name,
-            seedCount: active.seedCount,
-            plantedAt: active.plantedAt.toISOString(),
-            growsAt: active.growsAt.toISOString(),
-            rotsAt: active.rotsAt.toISOString()
-          }
+  cropDefinitionId: active.cropDefinitionId,
+  cropName: active.crop.name,
+  seedCount: active.seedCount,
+  plantedAt: active.plantedAt.toISOString(),
+  growsAt: active.growsAt.toISOString(),
+  rotsAt: active.rotsAt.toISOString(),
+  quality: active.quality?.code ?? null
+}
         };
       })
     };

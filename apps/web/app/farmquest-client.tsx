@@ -236,6 +236,10 @@ export function FarmQuestClient() {
     setUser(me);
     setFarm(activeFarm);
     setPlots(plotPayload.plots);
+    console.log(
+  "FARMQUEST PLOTS JSON:",
+  JSON.stringify(plotPayload.plots, null, 2)
+);
     setInventory(inventoryPayload.data);
     setShop(shopPayload.data);
     setCsrfToken(csrfPayload.csrfToken);

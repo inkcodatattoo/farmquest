@@ -172,16 +172,24 @@ export async function harvest(
     }> = [];
 
     for (const planting of accepted) {
-      const quality =
-        now >= planting.rotsAt
-          ? rotten
-          : drawWeighted(
-              drawable.map((item) => ({
-                value: item,
-                weight: item.weight
-              })),
-              random
-            );
+  const savedQuality =
+    planting.resultQualityId
+      ? drawable.find(
+          (item) => item.id === planting.resultQualityId
+        ) ?? null
+      : null;
+
+  const quality =
+    now >= planting.rotsAt
+      ? rotten
+      : savedQuality ??
+        drawWeighted(
+          drawable.map((item) => ({
+            value: item,
+            weight: item.weight
+          })),
+          random
+        );
 
       const quantity = BigInt(
         planting.seedCount * planting.crop.yieldPerSeed

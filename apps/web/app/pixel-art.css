@@ -7587,23 +7587,20 @@
 }
 
 
-/* TERRENO SUPERIOR ESQUERDO */
-
+/* CASA — terreno superior esquerdo */
 .farm-scene__building--house {
-  left: 10.5%;
-  top: 4.5%;
-  width: 31%;
-  height: 50%;
+  left: 15.2%;
+  top: 13%;
+  width: 19%;
+  height: 25%;
 }
 
-
-/* TERRENO SUPERIOR DIREITO */
-
+/* CELEIRO — terreno superior direito */
 .farm-scene__building--barn {
-  left: 66.5%;
-  top: 5.5%;
-  width: 28.5%;
-  height: 48%;
+  left: 68.4%;
+  top: 14%;
+  width: 19%;
+  height: 24%;
 }
 
 
@@ -8381,25 +8378,6 @@ height: 80%;
   filter: none !important;
 }
 
-/* === ANIMAÇÃO SUAVE DE VENTO NAS PLANTAÇÕES === */
-
-@keyframes farmCropWind {
-  0% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateX(-1px) rotate(-1deg);
-  }
-  50% {
-    transform: translateX(0px) rotate(0deg);
-  }
-  75% {
-    transform: translateX(1px) rotate(1deg);
-  }
-  100% {
-    transform: translateX(0px) rotate(0deg);
-  }
-}
 
 /* =========================================================
    FARMQUEST — MOVIMENTO SUAVE DE VENTO NAS PLANTAÇÕES
@@ -8427,11 +8405,47 @@ height: 80%;
   }
 }
 
+/* =========================================================
+   FARMQUEST - TAMANHO DAS PLANTAÇÕES NO HOME
+   Proporção baseada na referência aprovada
+   ========================================================= */
+
+.farm-scene__plot {
+  overflow: visible !important;
+}
+
 .farm-scene__plot-crop {
-  transform-origin: center bottom !important;
-  animation: farmCropWind 2.8s ease-in-out infinite;
-  will-change: transform;
-  image-rendering: pixelated;
+  position: absolute !important;
+
+  /* Centraliza horizontalmente no canteiro */
+  left: 50% !important;
+
+  /* A planta nasce da base do canteiro e cresce para cima */
+  top: auto !important;
+  bottom: 0% !important;
+
+  /* PROPORÇÃO APROVADA */
+  width: 128% !important;
+  height: 210% !important;
+
+  transform: translateX(-50%) !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+
+  /* Pixel art nítida */
+  image-rendering: pixelated !important;
+
+  pointer-events: none;
+  z-index: 10;
+
+  /* Remove limites que poderiam encolher o GIF */
+  max-width: none !important;
+  max-height: none !important;
+
+  /* IMPORTANTE:
+     o vento já está animado DENTRO do GIF */
+  animation: none !important;
 }
 
 /* Cada plantação balança em um ritmo levemente diferente */
@@ -8448,4 +8462,204 @@ height: 80%;
 .farm-scene__plot:nth-child(4n) .farm-scene__plot-crop {
   animation-duration: 3.4s;
   animation-delay: -1s;
+}
+
+/* =========================================================
+   FARMQUEST - PLANTA PRONTA PARA COLHEITA
+   CONTORNO DE QUALIDADE
+   ========================================================= */
+
+/*
+  O PNG/GIF pronto fica normal.
+  O brilho aparece somente no hover.
+*/
+.farm-scene__plot.is-ready .farm-scene__plot-crop {
+  transition:
+    filter 120ms ease,
+    transform 120ms ease;
+
+  cursor: pointer;
+}
+
+/* Pequeno aumento no hover para reforçar a interação */
+.farm-scene__plot.is-ready:hover .farm-scene__plot-crop {
+  transform: translateX(-50%) scale(1.04) !important;
+}
+
+
+/* =========================================================
+   COMUM — BRANCO
+   ========================================================= */
+
+.farm-scene__plot.is-ready.quality-common:hover
+.farm-scene__plot-crop {
+  filter:
+    drop-shadow( 2px  0px 0 #ffffff)
+    drop-shadow(-2px  0px 0 #ffffff)
+    drop-shadow( 0px  2px 0 #ffffff)
+    drop-shadow( 0px -2px 0 #ffffff)
+
+    drop-shadow( 3px  0px 2px rgba(255,255,255,.95))
+    drop-shadow(-3px  0px 2px rgba(255,255,255,.95))
+    drop-shadow( 0px  3px 2px rgba(255,255,255,.95))
+    drop-shadow( 0px -3px 2px rgba(255,255,255,.95))
+
+    drop-shadow(0 0 7px rgba(255,255,255,.95))
+    drop-shadow(0 0 12px rgba(255,255,255,.65));
+}
+
+
+/* =========================================================
+   BOA — VERDE
+   ========================================================= */
+
+.farm-scene__plot.is-ready.quality-good:hover
+.farm-scene__plot-crop {
+  filter:
+    drop-shadow( 2px  0px 0 #55ff72)
+    drop-shadow(-2px  0px 0 #55ff72)
+    drop-shadow( 0px  2px 0 #55ff72)
+    drop-shadow( 0px -2px 0 #55ff72)
+
+    drop-shadow( 3px  0px 2px rgba(85,255,114,.95))
+    drop-shadow(-3px  0px 2px rgba(85,255,114,.95))
+    drop-shadow( 0px  3px 2px rgba(85,255,114,.95))
+    drop-shadow( 0px -3px 2px rgba(85,255,114,.95))
+
+    drop-shadow(0 0 7px rgba(85,255,114,.95))
+    drop-shadow(0 0 12px rgba(85,255,114,.65));
+}
+
+
+/* =========================================================
+   EXCELENTE — AZUL
+   ========================================================= */
+
+.farm-scene__plot.is-ready.quality-excellent:hover
+.farm-scene__plot-crop {
+  filter:
+    drop-shadow( 2px  0px 0 #35b9ff)
+    drop-shadow(-2px  0px 0 #35b9ff)
+    drop-shadow( 0px  2px 0 #35b9ff)
+    drop-shadow( 0px -2px 0 #35b9ff)
+
+    drop-shadow( 3px  0px 2px rgba(53,185,255,.95))
+    drop-shadow(-3px  0px 2px rgba(53,185,255,.95))
+    drop-shadow( 0px  3px 2px rgba(53,185,255,.95))
+    drop-shadow( 0px -3px 2px rgba(53,185,255,.95))
+
+    drop-shadow(0 0 8px rgba(53,185,255,1))
+    drop-shadow(0 0 14px rgba(53,185,255,.70));
+}
+
+
+/* =========================================================
+   EXTRAORDINÁRIA — ROXO
+   ========================================================= */
+
+.farm-scene__plot.is-ready.quality-extraordinary:hover
+.farm-scene__plot-crop {
+  filter:
+    drop-shadow( 2px  0px 0 #c05cff)
+    drop-shadow(-2px  0px 0 #c05cff)
+    drop-shadow( 0px  2px 0 #c05cff)
+    drop-shadow( 0px -2px 0 #c05cff)
+
+    drop-shadow( 3px  0px 2px rgba(192,92,255,.98))
+    drop-shadow(-3px  0px 2px rgba(192,92,255,.98))
+    drop-shadow( 0px  3px 2px rgba(192,92,255,.98))
+    drop-shadow( 0px -3px 2px rgba(192,92,255,.98))
+
+    drop-shadow(0 0 9px rgba(192,92,255,1))
+    drop-shadow(0 0 16px rgba(192,92,255,.75));
+}
+
+/* =========================================================
+   FARMQUEST — CASA E CELEIRO CENTRALIZADOS NOS TERRENOS
+   Referência visual aprovada
+   ========================================================= */
+
+/* CASA */
+.farm-scene__building--house {
+  left: 15.5% !important;
+  top: 11% !important;
+  width: 19% !important;
+  height: 25% !important;
+}
+
+/* CELEIRO */
+.farm-scene__building--barn {
+  left: 68.5% !important;
+  top: 13% !important;
+  width: 19% !important;
+  height: 24% !important;
+}
+
+/* =========================================================
+   FARMQUEST — HOVER DE QUALIDADE SOMENTE NA PLANTA READY
+   ========================================================= */
+
+.farm-scene__plot.is-ready .farm-scene__plot-crop {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+
+/* COMUM — BRANCO */
+.farm-scene__plot.is-ready.quality-common .farm-scene__plot-crop:hover {
+  filter:
+    drop-shadow(3px 0 0 #ffffff)
+    drop-shadow(-3px 0 0 #ffffff)
+    drop-shadow(0 3px 0 #ffffff)
+    drop-shadow(0 -3px 0 #ffffff)
+    drop-shadow(2px 2px 0 #ffffff)
+    drop-shadow(-2px 2px 0 #ffffff)
+    drop-shadow(2px -2px 0 #ffffff)
+    drop-shadow(-2px -2px 0 #ffffff)
+    drop-shadow(0 0 8px #ffffff)
+    drop-shadow(0 0 16px rgba(255, 255, 255, 0.95)) !important;
+}
+
+/* BOA — VERDE */
+.farm-scene__plot.is-ready.quality-good .farm-scene__plot-crop:hover {
+  filter:
+    drop-shadow(3px 0 0 #55ff72)
+    drop-shadow(-3px 0 0 #55ff72)
+    drop-shadow(0 3px 0 #55ff72)
+    drop-shadow(0 -3px 0 #55ff72)
+    drop-shadow(2px 2px 0 #55ff72)
+    drop-shadow(-2px 2px 0 #55ff72)
+    drop-shadow(2px -2px 0 #55ff72)
+    drop-shadow(-2px -2px 0 #55ff72)
+    drop-shadow(0 0 9px #55ff72)
+    drop-shadow(0 0 18px rgba(85, 255, 114, 0.95)) !important;
+}
+
+/* EXCELENTE — AZUL */
+.farm-scene__plot.is-ready.quality-excellent .farm-scene__plot-crop:hover {
+  filter:
+    drop-shadow(3px 0 0 #35b9ff)
+    drop-shadow(-3px 0 0 #35b9ff)
+    drop-shadow(0 3px 0 #35b9ff)
+    drop-shadow(0 -3px 0 #35b9ff)
+    drop-shadow(2px 2px 0 #35b9ff)
+    drop-shadow(-2px 2px 0 #35b9ff)
+    drop-shadow(2px -2px 0 #35b9ff)
+    drop-shadow(-2px -2px 0 #35b9ff)
+    drop-shadow(0 0 10px #35b9ff)
+    drop-shadow(0 0 20px rgba(53, 185, 255, 0.95)) !important;
+}
+
+/* EXTRAORDINÁRIA — ROXO */
+.farm-scene__plot.is-ready.quality-extraordinary .farm-scene__plot-crop:hover {
+  filter:
+    drop-shadow(3px 0 0 #c05cff)
+    drop-shadow(-3px 0 0 #c05cff)
+    drop-shadow(0 3px 0 #c05cff)
+    drop-shadow(0 -3px 0 #c05cff)
+    drop-shadow(2px 2px 0 #c05cff)
+    drop-shadow(-2px 2px 0 #c05cff)
+    drop-shadow(2px -2px 0 #c05cff)
+    drop-shadow(-2px -2px 0 #c05cff)
+    drop-shadow(0 0 11px #c05cff)
+    drop-shadow(0 0 22px rgba(192, 92, 255, 0.98)) !important;
 }

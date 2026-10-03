@@ -20,13 +20,21 @@ export type FarmWorldPlot = {
   seedsCapacity: number;
   state: FarmWorldPlotState;
   planted: null | {
-    cropDefinitionId: string;
-    cropName: string;
-    seedCount: number;
-    plantedAt: string;
-    growsAt: string;
-    rotsAt: string;
-  };
+  cropDefinitionId: string;
+  cropName: string;
+  seedCount: number;
+  plantedAt: string;
+  growsAt: string;
+  rotsAt: string;
+
+  quality?:
+    | "COMMON"
+    | "GOOD"
+    | "EXCELLENT"
+    | "EXTRAORDINARY"
+    | "ROTTEN"
+    | null;
+};
 };
 
 export type FarmWorldInventoryItem = {
