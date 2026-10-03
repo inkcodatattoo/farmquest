@@ -56,6 +56,28 @@ export const FARM_ICONS = {
     coins: "/game-assets/icons/ui/moedas.png",
     collector: "/game-assets/icons/ui/colecionador.png"
   },
+
+  home: {
+  panels: {
+    farmName: "/game-assets/home-ui/painel_nome_fazenda.png",
+    coins: "/game-assets/home-ui/painel_moedas.png",
+    xp: "/game-assets/home-ui/painel_xp.png",
+    hourglass: "/game-assets/home-ui/painel_ampulheta.png",
+    notices: "/game-assets/home-ui/painel_avisos.png"
+  },
+
+  icons: {
+    farm: "/game-assets/home-ui/icone_fazenda.png",
+    coins: "/game-assets/home-ui/icone_moedas.png",
+    xp: "/game-assets/home-ui/icone_xp.png",
+    hourglass: "/game-assets/home-ui/icone_ampulheta.png",
+
+    gift: "/game-assets/home-ui/icone_presente.png",
+    globalMarket: "/game-assets/home-ui/icone_mercado_global.png",
+    egg: "/game-assets/home-ui/icone_ovo.png",
+    localMarket: "/game-assets/home-ui/icone_mercado_local.png"
+  }
+},
   market: {
     p2p: "/game-assets/icons/market/anuncio_p2p.png"
   },

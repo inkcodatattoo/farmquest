@@ -41,69 +41,92 @@ export function FarmWorld(props: FarmWorldProps) {
     section === "inicio" ? "is-home" : ""
   }`}
 >
-      <header
-  className="farm-game-topbar"
+      <header className="farm-game-topbar farm-home-topbar">
 
->
-        <div className="farm-game-logo pixel-logo">
-          <img
-            className="farm-game-brand-logo"
-            src="/game-assets/brand/farmquest-logo.png"
-            alt="FarmQuest"
-            draggable={false}
-          />
-        </div>
+  {/* NOME DA FAZENDA */}
+  <div className="farm-top-resource farm-top-resource--farm">
+    <img
+      className="farm-top-resource__panel"
+      src={FARM_ICONS.home.panels.farmName}
+      alt=""
+      draggable={false}
+    />
 
-        <div className="farm-identity">
-          <strong>Fazenda de {props.userName}</strong>
-          <span>Nível {props.farm.level} · {props.farm.xp} XP</span>
-        </div>
+    <div className="farm-top-resource__text farm-top-resource__text--farm">
+      <strong>Fazenda de {props.userName}</strong>
+    </div>
+  </div>
 
-        <div className="farm-resources">
-          <div className="resource-chip coin-chip">
-            <span className="resource-symbol pixel-resource-symbol">
-              <PixelIcon src={FARM_ICONS.ui.coins} alt="Moedas" />
-            </span>
-            <strong>{props.farm.coins}</strong>
-            <small>moedas</small>
-          </div>
-          <div className="resource-chip">
-            <span className="resource-symbol pixel-resource-symbol">
-              <PixelIcon src={FARM_ICONS.ui.xp} alt="Experiência" />
-            </span>
-            <strong>{props.farm.xp}</strong>
-            <small>experiência</small>
-          </div>
-          <div className="resource-chip">
-            <span className="resource-symbol pixel-resource-symbol">
-              <PixelIcon src={FARM_ICONS.actions.harvest} alt="Colheita" />
-            </span>
-            <strong>{props.cooldownText}</strong>
-            <small>colheita</small>
-          </div>
-        </div>
 
-        <div className="farm-system-actions">
-          <button
-            type="button"
-            onClick={props.onRefresh}
-            disabled={Boolean(props.busy)}
-            title="Atualizar"
-            aria-label="Atualizar fazenda"
-          >
-            ↻
-          </button>
-          <button
-            type="button"
-            onClick={props.onLogout}
-            disabled={Boolean(props.busy)}
-            title="Sair"
-            aria-label="Sair"
-          >
-            ×
-          </button>
-        </div>
-      </header>
+  {/* MOEDAS */}
+  <div className="farm-top-resource farm-top-resource--coins">
+    <img
+      className="farm-top-resource__panel"
+      src={FARM_ICONS.home.panels.coins}
+      alt=""
+      draggable={false}
+    />
+
+    <div className="farm-top-resource__text farm-top-resource__text--coins">
+      <strong>{props.farm.coins}</strong>
+    </div>
+  </div>
+
+
+  {/* XP */}
+  <div className="farm-top-resource farm-top-resource--xp">
+    <img
+      className="farm-top-resource__panel"
+      src={FARM_ICONS.home.panels.xp}
+      alt=""
+      draggable={false}
+    />
+
+    <div className="farm-top-resource__text farm-top-resource__text--xp">
+      <strong>{props.farm.xp}</strong>
+    </div>
+  </div>
+
+
+  {/* AMPULHETA */}
+  <div className="farm-top-resource farm-top-resource--timer">
+    <img
+      className="farm-top-resource__panel"
+      src={FARM_ICONS.home.panels.hourglass}
+      alt=""
+      draggable={false}
+    />
+
+    <div className="farm-top-resource__text farm-top-resource__text--timer">
+      <strong>--:--:--</strong>
+    </div>
+  </div>
+
+
+  {/* ATUALIZAR / SAIR */}
+  <div className="farm-system-actions">
+    <button
+      type="button"
+      onClick={props.onRefresh}
+      disabled={Boolean(props.busy)}
+      title="Atualizar"
+      aria-label="Atualizar fazenda"
+    >
+      ↻
+    </button>
+
+    <button
+      type="button"
+      onClick={props.onLogout}
+      disabled={Boolean(props.busy)}
+      title="Sair"
+      aria-label="Sair"
+    >
+      ×
+    </button>
+  </div>
+
+</header>
 
       <aside className="farm-game-sidebar farm-game-sidebar--panel">
   <nav className="farm-menu-panel" aria-label="Navegação principal">
