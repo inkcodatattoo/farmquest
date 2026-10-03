@@ -17,6 +17,16 @@ export type {
   FarmWorldPlot,
   FarmWorldShopOffer
 } from "./farm-world-model";
+const FARM_PANEL_NAVIGATION: readonly Section[] = [
+  "inicio",
+  "celeiro",
+  "animais",
+  "pedidos",
+  "comunidade",
+  "exploracao",
+  "ranking",
+  "conquistas"
+];
 
 export function FarmWorld(props: FarmWorldProps) {
   const [section, setSection] = useState<Section>("inicio");
@@ -26,7 +36,11 @@ export function FarmWorld(props: FarmWorldProps) {
   );
   return (
     
-    <main className="farm-game-shell pixel-ui-shell">
+    <main
+  className={`farm-game-shell pixel-ui-shell ${
+    section === "inicio" ? "is-home" : ""
+  }`}
+>
       <header
   className="farm-game-topbar"
 
@@ -91,40 +105,76 @@ export function FarmWorld(props: FarmWorldProps) {
         </div>
       </header>
 
-      <aside
-  className="farm-game-sidebar"
-  
->
-        <div className="sidebar-brand-mini pixel-sidebar-brand">
-          <PixelIcon src={FARM_ICONS.ui.level} alt="FarmQuest" />
-        </div>
-        <nav aria-label="Navegação principal">
-          {FARM_WORLD_NAVIGATION.map((item) => (
-            <button
-              key={item.key}
-              className={section === item.key ? "active" : ""}
-              type="button"
-              onClick={() => setSection(item.key)}
-              aria-label={item.label}
-              aria-current={section === item.key ? "page" : undefined}
-            >
-              <span className="pixel-nav-icon">
-                <PixelIcon src={item.icon} alt="" />
-              </span>
-              <strong>{item.label}</strong>
-            </button>
-          ))}
-        </nav>
-      </aside>
+      <aside className="farm-game-sidebar farm-game-sidebar--panel">
+  <nav className="farm-menu-panel" aria-label="Navegação principal">
+    <img
+      className="farm-menu-panel__art"
+      src="/game-assets/panels/painel_menu_home.png"
+      alt=""
+      draggable={false}
+    />
+
+    {FARM_PANEL_NAVIGATION.map((key) => {
+      const item = FARM_WORLD_NAVIGATION.find(
+        (candidate) => candidate.key === key
+      );
+
+      if (!item) return null;
+
+      return (
+        <button
+          key={key}
+          type="button"
+          className={`farm-menu-panel__hotspot farm-menu-panel__hotspot--${key} ${
+            section === key ? "is-active" : ""
+          }`}
+          onClick={() => setSection(key)}
+          aria-label={item.label}
+          aria-current={section === key ? "page" : undefined}
+          title={item.label}
+        />
+      );
+    })}
+  </nav>
+</aside>
 
       <section className="farm-game-stage">
   {props.notice ? (
-    <div className="game-toast success">{props.notice}</div>
-  ) : null}
+  <div
+    className="farm-notice-popup farm-notice-popup--success"
+    role="status"
+    aria-live="polite"
+  >
+    <img
+      className="farm-notice-popup__panel"
+      src="/game-assets/panels/painel_notificacao.png"
+      alt=""
+      draggable={false}
+    />
 
-  {props.error ? (
-    <div className="game-toast error">{props.error}</div>
-  ) : null}
+    <span className="farm-notice-popup__text">
+      {props.notice}
+    </span>
+  </div>
+) : null}
+
+{props.error ? (
+  <div
+    className="farm-notice-popup farm-notice-popup--error"
+    role="alert"
+  >
+    <img
+      className="farm-notice-popup__panel"
+      src="/game-assets/panels/painel_notificacao.png"
+      alt=""
+      draggable={false}
+    />
+
+    <span className="farm-notice-popup__text">
+      {props.error}
+    </span>
+  </div>
+) : null}
 
   {section === "inicio" ? (
     <FarmScene
