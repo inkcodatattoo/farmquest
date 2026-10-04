@@ -484,7 +484,6 @@ export function FarmQuestClient() {
       </main>
     );
   }
-
   return (
     <FarmWorld
       userName={user.displayName}
@@ -499,63 +498,89 @@ export function FarmQuestClient() {
       busy={busy}
       notice={notice}
       error={error}
+
       onRefresh={() => void loadGame()}
       onLogout={() => void logout()}
+
       onPlantAll={() =>
-        void mutate("plant-all", `/api/v1/farms/${farm.id}/plant`, {
-          cropDefinitionId: DEV_CORN_CROP_ID
-        })
+        void mutate(
+          "plant-all",
+          `/api/v1/farms/${farm.id}/plant`,
+          {
+            cropDefinitionId: DEV_CORN_CROP_ID
+          }
+        )
       }
+
       onHarvestAll={() =>
-        void mutate("harvest-all", `/api/v1/farms/${farm.id}/harvest`)
+        void mutate(
+          "harvest-all",
+          `/api/v1/farms/${farm.id}/harvest`
+        )
       }
+
       onPlantPlot={(plotId) =>
         void mutate(
           `plant-${plotId}`,
           `/api/v1/farms/${farm.id}/plots/${plotId}/plant`,
-          { cropDefinitionId: DEV_CORN_CROP_ID }
+          {
+            cropDefinitionId: DEV_CORN_CROP_ID
+          }
         )
       }
+
       onHarvestPlot={(plotId) =>
         void mutate(
           `harvest-${plotId}`,
           `/api/v1/farms/${farm.id}/plots/${plotId}/harvest`
         )
       }
+
       onSell={(itemId) =>
         void mutate(
           `sell-${itemId}`,
           `/api/v1/farms/${farm.id}/market/quick-sell`,
-          { inventoryItemId: itemId, quantity: 1 }
+          {
+            inventoryItemId: itemId,
+            quantity: 1
+          }
         )
       }
+
       onDiscard={(itemId) =>
         void mutate(
           `discard-${itemId}`,
           `/api/v1/farms/${farm.id}/inventory/${itemId}/discard`,
-          { quantity: 1 }
+          {
+            quantity: 1
+          }
         )
       }
+
       onBuy={(offerId) =>
         void mutate(
           `buy-${offerId}`,
           `/api/v1/farms/${farm.id}/shop/buy`,
-          { offerId, quantity: 1 }
+          {
+            offerId,
+            quantity: 1
+          }
         )
       }
-      onFeedCow={() =>
-  void mutate(
-    "cow-feed",
-    `/api/v1/farms/${farm.id}/animals/cow/feed`
-  )
-}
 
-onCollectCowMilk={() =>
-  void mutate(
-    "cow-collect",
-    `/api/v1/farms/${farm.id}/animals/cow/collect`
-  )
-}
+      onFeedCow={() =>
+        void mutate(
+          "cow-feed",
+          `/api/v1/farms/${farm.id}/animals/cow/feed`
+        )
+      }
+
+      onCollectCowMilk={() =>
+        void mutate(
+          "cow-collect",
+          `/api/v1/farms/${farm.id}/animals/cow/collect`
+        )
+      }
     />
   );
 }

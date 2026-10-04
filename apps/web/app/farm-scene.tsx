@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { FARM_ICONS } from "./farm-icons";
 import { FarmPlot, PixelIcon, type FarmPlotPlacement } from "./farm-plot";
 import {
@@ -193,7 +193,45 @@ export function FarmScene({
 }: FarmSceneProps) {
   const slots = buildFarmPlotSlots(props.plots, props.nowMs);
   const [cowChewStep, setCowChewStep] = useState(0);
+  const [showCowTimer, setShowCowTimer] = useState(false);
 
+const cowPopupTimeoutRef = useRef<number | null>(null);
+const cowMilkRemainingMs =
+  props.cow.readyAt
+    ? Math.max(0, Date.parse(props.cow.readyAt) - props.nowMs)
+    : 0;
+
+function formatCowRemaining(milliseconds: number) {
+  const totalSeconds = Math.max(
+    0,
+    Math.ceil(milliseconds / 1000)
+  );
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return [
+    hours,
+    minutes,
+    seconds
+  ]
+    .map((value) => String(value).padStart(2, "0"))
+    .join(":");
+}
+
+function handleCowClick() {
+  if (cowPopupTimeoutRef.current !== null) {
+    window.clearTimeout(cowPopupTimeoutRef.current);
+  }
+
+  setShowCowTimer(true);
+
+  cowPopupTimeoutRef.current = window.setTimeout(() => {
+    setShowCowTimer(false);
+    cowPopupTimeoutRef.current = null;
+  }, 4000);
+}
 useEffect(() => {
   const timer = window.setInterval(() => {
     setCowChewStep((current) =>
@@ -301,6 +339,9 @@ const cowFrame =
   />
 </span>
 <span
+onClick={handleCowClick}
+role="button"
+tabIndex={0}
   style={{
     position: "absolute",
     left: "76%",
@@ -309,7 +350,8 @@ const cowFrame =
     height: "12%",
     display: "block",
     zIndex: 25,
-    pointerEvents: "none"
+    pointerEvents: "auto",
+cursor: "pointer"
   }}
 >
   <img
@@ -326,6 +368,20 @@ const cowFrame =
     }}
   />
 </span>
+{showCowTimer ? (
+  <div className="farm-scene__messages">
+    <div
+      className="farm-scene__toast is-error"
+      role="status"
+    >
+      {props.cow.status === "PRODUCING" && cowMilkRemainingMs > 0
+        ? `Leite pronto em ${formatCowRemaining(cowMilkRemainingMs)}`
+        : props.cow.status === "READY"
+          ? "Leite pronto para coleta!"
+          : "Alimente a vaca para iniciar a produção"}
+    </div>
+  </div>
+) : null}
 
 {/* FENO DO CURRAL */}
 <img

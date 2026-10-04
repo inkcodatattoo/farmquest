@@ -385,6 +385,13 @@ export default function FarmPreviewClient() {
     <FarmWorld
       userName="Coda"
       farm={farm}
+      cow={{
+  status: "IDLE",
+  feedCost: 20,
+  productionSeconds: 10800,
+  readyAt: null,
+  storedMilk: 0
+}}
       plots={plots}
       inventory={inventory}
       shop={PREVIEW_SHOP}
@@ -414,6 +421,16 @@ export default function FarmPreviewClient() {
       onSell={sell}
       onDiscard={discard}
       onBuy={buy}
+
+      onFeedCow={() => {
+  setNotice("Vaca alimentada na prévia.");
+  setError("");
+}}
+
+onCollectCowMilk={() => {
+  setNotice("Leite coletado na prévia.");
+  setError("");
+}}
     />
   );
 }

@@ -21,6 +21,32 @@ export type FarmPanelsProps = FarmWorldProps & {
   section: Section;
   onSectionChange: (section: Section) => void;
 };
+function cowCountdownText(
+  readyAt: string | null,
+  nowMs: number
+): string {
+  if (!readyAt) return "00:00:00";
+
+  const remaining = Date.parse(readyAt) - nowMs;
+
+  if (remaining <= 0) {
+    return "00:00:00";
+  }
+
+  const totalSeconds = Math.ceil(remaining / 1000);
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return [
+    hours,
+    minutes,
+    seconds
+  ]
+    .map((value) => String(value).padStart(2, "0"))
+    .join(":");
+}
 
 export function FarmPanels(props: FarmPanelsProps) {
   const {
