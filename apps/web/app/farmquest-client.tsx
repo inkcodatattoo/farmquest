@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FarmWorld } from "./farm-world";
 import type {
   FarmWorldFarm,
+  FarmWorldCowStatus,
   FarmWorldInventoryItem,
   FarmWorldPlot,
   FarmWorldShopOffer
@@ -159,12 +160,21 @@ async function readJson<T>(response: Response): Promise<T> {
 
   throw new Error(friendlyApiMessage(code, details));
 }
+const EMPTY_COW_STATUS: FarmWorldCowStatus = {
+  status: "IDLE",
+  feedCost: 20,
+  productionSeconds: 10800,
+  readyAt: null,
+  storedMilk: 0
+};
 
 export function FarmQuestClient() {
   const [status, setStatus] = useState<
     "checking" | "signed-out" | "ready" | "error"
   >("checking");
   const [user, setUser] = useState<User | null>(null);
+  const [cow, setCow] =
+  useState<FarmWorldCowStatus>(EMPTY_COW_STATUS);
   const [farm, setFarm] = useState<Farm | null>(null);
   const [plots, setPlots] = useState<Plot[]>([]);
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
@@ -202,8 +212,13 @@ export function FarmQuestClient() {
       throw new Error("Nenhuma fazenda ativa encontrada.");
     }
 
-    const [plotPayload, inventoryPayload, shopPayload, csrfPayload] =
-      await Promise.all([
+    const [
+  plotPayload,
+  inventoryPayload,
+  shopPayload,
+  cowPayload,
+  csrfPayload
+] = await Promise.all([
         readJson<{ serverTime: string; plots: Plot[] }>(
           await fetch(`/api/v1/farms/${activeFarm.id}/plots`, {
             credentials: "include",
@@ -225,6 +240,15 @@ export function FarmQuestClient() {
             }
           )
         ),
+        readJson<ApiEnvelope<FarmWorldCowStatus>>(
+  await fetch(
+    `/api/v1/farms/${activeFarm.id}/animals/cow`,
+    {
+      credentials: "include",
+      cache: "no-store"
+    }
+  )
+),
         readJson<{ csrfToken: string }>(
           await fetch("/api/v1/auth/csrf", {
             credentials: "include",
@@ -242,6 +266,7 @@ export function FarmQuestClient() {
 );
     setInventory(inventoryPayload.data);
     setShop(shopPayload.data);
+    setCow(cowPayload.data);
     setCsrfToken(csrfPayload.csrfToken);
     setStatus("ready");
     setError("");
@@ -464,6 +489,7 @@ export function FarmQuestClient() {
     <FarmWorld
       userName={user.displayName}
       farm={farm}
+      cow={cow}
       plots={plots}
       inventory={inventory}
       shop={shop}
@@ -517,6 +543,19 @@ export function FarmQuestClient() {
           { offerId, quantity: 1 }
         )
       }
+      onFeedCow={() =>
+  void mutate(
+    "cow-feed",
+    `/api/v1/farms/${farm.id}/animals/cow/feed`
+  )
+}
+
+onCollectCowMilk={() =>
+  void mutate(
+    "cow-collect",
+    `/api/v1/farms/${farm.id}/animals/cow/collect`
+  )
+}
     />
   );
 }

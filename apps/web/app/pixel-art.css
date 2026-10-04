@@ -1,5 +1,5 @@
-/* FarmQuest — integração oficial Pixel Art v2
-   Este arquivo entra DEPOIS de globals.css para substituir somente os visuais provisórios. */
+/* FarmQuest â€” integraÃ§Ã£o oficial Pixel Art v2
+   Este arquivo entra DEPOIS de globals.css para substituir somente os visuais provisÃ³rios. */
 
 .fq-pixel-icon {
   display: block;
@@ -69,7 +69,7 @@
   margin: auto;
 }
 
-/* Construções: substitui os desenhos CSS pela arte oficial. */
+/* ConstruÃ§Ãµes: substitui os desenhos CSS pela arte oficial. */
 .pixel-scene-building {
   display: grid !important;
   place-items: center;
@@ -128,7 +128,7 @@
   bottom: -16px;
 }
 
-/* Curral: mantém a cerca funcional e usa animais PNG por cima. */
+/* Curral: mantÃ©m a cerca funcional e usa animais PNG por cima. */
 .pixel-animal-pen {
   overflow: visible !important;
 }
@@ -193,7 +193,7 @@
   filter: drop-shadow(0 4px 2px rgba(37, 27, 17, 0.22));
 }
 
-/* Tela de plantações. */
+/* Tela de plantaÃ§Ãµes. */
 .pixel-game-plot-art {
   font-size: 0 !important;
 }
@@ -204,7 +204,7 @@
   filter: drop-shadow(0 7px 3px rgba(37, 27, 17, 0.22));
 }
 
-/* Inventário / loja. */
+/* InventÃ¡rio / loja. */
 .pixel-item-art {
   overflow: visible;
   background: rgba(233, 209, 139, 0.5) !important;
@@ -241,7 +241,7 @@
   height: 20px;
 }
 
-/* Botões e atalhos. */
+/* BotÃµes e atalhos. */
 .icon-action {
   display: inline-flex !important;
   align-items: center;
@@ -299,7 +299,7 @@
   height: 86px;
 }
 
-/* Mantém a leitura nítida em telas pequenas. */
+/* MantÃ©m a leitura nÃ­tida em telas pequenas. */
 @media (max-width: 1050px) {
   .farmhouse.pixel-scene-building,
   .barn-building.pixel-scene-building {
@@ -341,7 +341,7 @@
   }
 }
 
-/* Tela de entrada do protótipo: usa a casa oficial no lugar do FQ provisório. */
+/* Tela de entrada do protÃ³tipo: usa a casa oficial no lugar do FQ provisÃ³rio. */
 .logo-mark {
   overflow: visible;
   font-size: 0 !important;
@@ -354,7 +354,7 @@
 }
 
 
-/* FarmQuest Home v1 — painel oficial + layout funcional */
+/* FarmQuest Home v1 â€” painel oficial + layout funcional */
 
 .fq-home-shell {
   min-height: 100vh;
@@ -1079,7 +1079,7 @@
 }
 
 
-/* FarmQuest Home v1.1 — placas e detalhes cozy */
+/* FarmQuest Home v1.1 â€” placas e detalhes cozy */
 
 .fq-location-sign {
   position: absolute;
@@ -1260,10 +1260,10 @@
 }
 
 
-/* FarmQuest Home v1.2 — composição refinada após teste real */
+/* FarmQuest Home v1.2 â€” composiÃ§Ã£o refinada apÃ³s teste real */
 
-/* O primeiro teste real mostrou o cenário muito espalhado. Este passe aproxima
-   construções, reduz a água e transforma os caminhos em áreas orgânicas. */
+/* O primeiro teste real mostrou o cenÃ¡rio muito espalhado. Este passe aproxima
+   construÃ§Ãµes, reduz a Ã¡gua e transforma os caminhos em Ã¡reas orgÃ¢nicas. */
 .fq-home-scene {
   background:
     radial-gradient(circle at 14% 65%, rgba(255,255,255,.11) 0 2px, transparent 3px) 0 0/26px 26px,
@@ -1549,7 +1549,7 @@
 }
 
 
-/* FarmQuest v1.3 — páginas internas coerentes com a Home */
+/* FarmQuest v1.3 â€” pÃ¡ginas internas coerentes com a Home */
 
 .pixel-ui-shell.farm-game-shell {
   grid-template-columns: 176px minmax(0, 1fr);
@@ -2040,7 +2040,7 @@
 }
 
 
-/* FarmQuest v1.4 — microanimações pixel art */
+/* FarmQuest v1.4 â€” microanimaÃ§Ãµes pixel art */
 
 @keyframes fq-water-drift {
   from { background-position: 0 0, 0 0; }
@@ -2088,7 +2088,7 @@
 }
 
 
-/* FarmQuest v1.5 — cercas e pequenos props */
+/* FarmQuest v1.5 â€” cercas e pequenos props */
 
 .fq-fence-segment {
   position: absolute;
@@ -2179,7 +2179,7 @@
 }
 
 
-/* FarmQuest v1.6 — navegação interna sem sidebar */
+/* FarmQuest v1.6 â€” navegaÃ§Ã£o interna sem sidebar */
 
 .pixel-ui-shell.farm-game-shell {
   grid-template-columns: minmax(0, 1fr);
@@ -2216,7 +2216,7 @@
 }
 
 
-/* FarmQuest v1.7 — animais, comunidade e ranking */
+/* FarmQuest v1.7 â€” animais, comunidade e ranking */
 
 .fq-feature-page .game-page-heading {
   margin-bottom: 24px;
@@ -2448,7 +2448,7 @@
 }
 
 
-/* FarmQuest v1.8 — tela de entrada no estilo do jogo */
+/* FarmQuest v1.8 â€” tela de entrada no estilo do jogo */
 
 .center-shell {
   position: relative;
@@ -2591,7 +2591,7 @@
 }
 
 
-/* FarmQuest v1.9 — feedback de interação e acessibilidade */
+/* FarmQuest v1.9 â€” feedback de interaÃ§Ã£o e acessibilidade */
 
 @keyframes fq-page-enter {
   from { opacity: .25; transform: translateY(5px); }
@@ -2643,7 +2643,7 @@
 }
 
 
-/* FarmQuest v1.10 — correções de posicionamento e qualidades */
+/* FarmQuest v1.10 â€” correÃ§Ãµes de posicionamento e qualidades */
 
 .pixel-ui-shell .resource-chip,
 .pixel-ui-shell .farm-game-sidebar button {
@@ -2679,7 +2679,7 @@
 }
 
 
-/* FarmQuest v1.11 — avisos no estilo dos painéis */
+/* FarmQuest v1.11 â€” avisos no estilo dos painÃ©is */
 
 .pixel-ui-shell .game-toast,
 .fq-home-shell .game-toast {
@@ -2719,7 +2719,7 @@
 }
 
 
-/* FarmQuest v1.12 — refinamento visual baseado no teste real 1600x900 */
+/* FarmQuest v1.12 â€” refinamento visual baseado no teste real 1600x900 */
 
 /* Rio mais discreto e margem menos artificial */
 .fq-river {
@@ -2746,7 +2746,7 @@
   opacity: .95;
 }
 
-/* Caminhos com aparência mais contínua */
+/* Caminhos com aparÃªncia mais contÃ­nua */
 .fq-home-scene::before {
   inset: 18% 0 8%;
   background:
@@ -2761,7 +2761,7 @@
   opacity: .80;
 }
 
-/* Canteiros maiores e com mais sensação de plantação */
+/* Canteiros maiores e com mais sensaÃ§Ã£o de plantaÃ§Ã£o */
 .fq-home-plots {
   left: 35%;
   top: 48%;
@@ -2808,7 +2808,7 @@
   font-size: 11px;
 }
 
-/* Construções com pequenas sombras de base para integrar no terreno */
+/* ConstruÃ§Ãµes com pequenas sombras de base para integrar no terreno */
 .fq-home-scene .pixel-scene-building::after {
   left: 14%;
   right: 14%;
@@ -2819,7 +2819,7 @@
   filter: blur(2px);
 }
 
-/* Curral mais orgânico */
+/* Curral mais orgÃ¢nico */
 .fq-home-animal-pen {
   right: 2.8%;
   top: 30.5%;
@@ -2851,7 +2851,7 @@
     radial-gradient(ellipse 28px 12px at 72% 28%, rgba(238,212,123,.34) 0 70%, transparent 72%);
 }
 
-/* Botões principais ligeiramente mais destacados */
+/* BotÃµes principais ligeiramente mais destacados */
 .fq-home-actions {
   left: 37%;
   bottom: 108px;
@@ -2933,7 +2933,7 @@
 }
 
 
-/* FarmQuest v1.13 — limpeza final do HUD e leitura do cenário */
+/* FarmQuest v1.13 â€” limpeza final do HUD e leitura do cenÃ¡rio */
 
 .fq-farm-name {
   justify-content: center;
@@ -2997,7 +2997,7 @@
 }
 
 
-/* FarmQuest Home v2 — composição compacta guiada pela referência oficial */
+/* FarmQuest Home v2 â€” composiÃ§Ã£o compacta guiada pela referÃªncia oficial */
 
 .fq-home-shell {
   min-height: 100vh;
@@ -3059,7 +3059,7 @@
     radial-gradient(circle at 81% 101%, rgba(27, 73, 33, .34) 0 91px, transparent 92px);
 }
 
-/* Navegação principal */
+/* NavegaÃ§Ã£o principal */
 .fq-home-sidebar {
   position: absolute;
   inset: 10px auto auto 10px;
@@ -3544,7 +3544,7 @@
   min-width: 80px;
 }
 
-/* Bloco único de plantação, compacto e cercado */
+/* Bloco Ãºnico de plantaÃ§Ã£o, compacto e cercado */
 .fq-crop-zone {
   position: absolute;
   left: 37.5%;
@@ -3711,7 +3711,7 @@
   font-size: 9px;
 }
 
-/* Painel de tarefas reduzido para não competir com a fazenda */
+/* Painel de tarefas reduzido para nÃ£o competir com a fazenda */
 .fq-task-panel {
   right: 1.4%;
   bottom: 3.3%;
@@ -3743,7 +3743,7 @@
   font-size: 14px;
 }
 
-/* Pequenos elementos reposicionados para preencher o mapa sem ruído */
+/* Pequenos elementos reposicionados para preencher o mapa sem ruÃ­do */
 .fq-lantern-left { left: calc(var(--fq-rail-width) + 25%); top: 43%; }
 .fq-lantern-right { right: 23%; top: 48%; transform: scale(.82); }
 .fq-barrel-house { left: calc(var(--fq-rail-width) + 13%); top: 42%; transform: scale(.78); }
@@ -3767,7 +3767,7 @@
   max-width: 560px !important;
 }
 
-/* A mesma navegação lateral permanece como navegação principal nas telas internas. */
+/* A mesma navegaÃ§Ã£o lateral permanece como navegaÃ§Ã£o principal nas telas internas. */
 .pixel-ui-shell.farm-game-shell {
   grid-template-columns: 176px minmax(0, 1fr);
   grid-template-rows: 86px minmax(0, 1fr);
@@ -3805,7 +3805,7 @@
   display: none;
 }
 
-/* O logotipo oficial também substitui a marca provisória da entrada. */
+/* O logotipo oficial tambÃ©m substitui a marca provisÃ³ria da entrada. */
 .login-brand-logo {
   display: block;
   width: min(100%, 390px);
@@ -4065,7 +4065,7 @@
 }
 
 
-/* FarmQuest Home v2 — composição oficial compacta */
+/* FarmQuest Home v2 â€” composiÃ§Ã£o oficial compacta */
 
 /* Layout-base da Home oficial */
 .fq-home-scene {
@@ -4113,7 +4113,7 @@
   min-height: 48px;
 }
 
-/* HUD mais baixo para liberar área de fazenda */
+/* HUD mais baixo para liberar Ã¡rea de fazenda */
 .fq-home-hud {
   left: calc(var(--fq-rail-width) + 10px);
   right: 12px;
@@ -4140,7 +4140,7 @@
   min-height: 58px;
 }
 
-/* Faixa azul reduzida: só pano de fundo superior */
+/* Faixa azul reduzida: sÃ³ pano de fundo superior */
 .fq-river {
   left: var(--fq-rail-width);
   height: 11.5%;
@@ -4158,7 +4158,7 @@
   display: none;
 }
 
-/* Malha curta de caminhos, semelhante à referência */
+/* Malha curta de caminhos, semelhante Ã  referÃªncia */
 .fq-road-network {
   inset: 0 0 0 var(--fq-rail-width);
 }
@@ -4202,7 +4202,7 @@
   transform: rotate(72deg);
 }
 
-/* Árvores ficam nas bordas em vez do meio da composição */
+/* Ãrvores ficam nas bordas em vez do meio da composiÃ§Ã£o */
 .fq-tree-left {
   left: calc(var(--fq-rail-width) + .6%) !important;
   top: 9.5% !important;
@@ -4227,7 +4227,7 @@
   transform: scale(.58);
 }
 
-/* Construções: maiores e mais próximas */
+/* ConstruÃ§Ãµes: maiores e mais prÃ³ximas */
 .fq-home-scene .fq-home-house {
   left: calc(var(--fq-rail-width) + 4%) !important;
   top: 15% !important;
@@ -4254,7 +4254,7 @@
   font-size: 11px;
 }
 
-/* Curral colocado ao lado do celeiro, como na referência */
+/* Curral colocado ao lado do celeiro, como na referÃªncia */
 .fq-home-animal-pen {
   right: 7%;
   top: 24%;
@@ -4343,7 +4343,7 @@
   font-size: 10px;
 }
 
-/* Ações logo abaixo dos canteiros */
+/* AÃ§Ãµes logo abaixo dos canteiros */
 .fq-home-actions {
   left: calc(var(--fq-rail-width) + 8.5%);
   bottom: 5%;
@@ -4391,7 +4391,7 @@
   height: 36px;
 }
 
-/* Decoração aproximada à composição oficial */
+/* DecoraÃ§Ã£o aproximada Ã  composiÃ§Ã£o oficial */
 .fq-fence-a {
   left: calc(var(--fq-rail-width) + 24%);
   top: 41%;
@@ -4513,7 +4513,7 @@
 }
 
 
-/* FarmQuest official interactive Home — approved scene */
+/* FarmQuest official interactive Home â€” approved scene */
 
 .fq-home-shell {
   min-height: 100vh;
@@ -4600,7 +4600,7 @@
   display: none;
 }
 
-/* Sidebar invisível funcional sobre a sidebar já desenhada na arte */
+/* Sidebar invisÃ­vel funcional sobre a sidebar jÃ¡ desenhada na arte */
 .fq-map-nav-button {
   left: 1.9%;
   width: 8.4%;
@@ -4615,7 +4615,7 @@
 .fq-map-nav-comunidade { top: 43.5%; }
 .fq-map-nav-ranking { top: 49.5%; }
 
-/* Hotspots de construções e áreas dos animais */
+/* Hotspots de construÃ§Ãµes e Ã¡reas dos animais */
 .fq-map-house-hotspot {
   left: 20.5%;
   top: 10.4%;
@@ -4644,7 +4644,7 @@
   height: 23.8%;
 }
 
-/* Três canteiros iniciais funcionais */
+/* TrÃªs canteiros iniciais funcionais */
 .fq-map-plot {
   z-index: 31;
   border-radius: 18px;
@@ -4737,7 +4737,7 @@
 .fq-map-locked-6 { left: 41.3%; top: 60.4%; width: 10.8%; height: 10.8%; }
 .fq-map-locked-7 { left: 35.5%; top: 67.3%; width: 10.9%; height: 10.9%; }
 
-/* Botões Plantar e Colher já desenhados no cenário */
+/* BotÃµes Plantar e Colher jÃ¡ desenhados no cenÃ¡rio */
 .fq-map-plant-all {
   left: 16.5%;
   top: 87.7%;
@@ -4815,7 +4815,7 @@
   font-size: 1.08em;
 }
 
-/* Mantém a arte inteira, sem esticar ou cortar */
+/* MantÃ©m a arte inteira, sem esticar ou cortar */
 @media (max-aspect-ratio: 1672/941) {
   .fq-official-home-stage {
     width: 100vw;
@@ -4911,9 +4911,9 @@
 }
 
 
-/* FarmQuest official Home polish — exact overlay alignment */
+/* FarmQuest official Home polish â€” exact overlay alignment */
 
-/* Hotspots ficam realmente invisíveis: a própria arte é a interface. */
+/* Hotspots ficam realmente invisÃ­veis: a prÃ³pria arte Ã© a interface. */
 .fq-map-hotspot::after,
 .fq-map-plot::after {
   border: 0 !important;
@@ -4935,7 +4935,7 @@
   border-radius: 12px;
 }
 
-/* Ajuste fino dos três canteiros ativos sobre os terrenos da arte. */
+/* Ajuste fino dos trÃªs canteiros ativos sobre os terrenos da arte. */
 .fq-map-plot-1 {
   left: 22.05%;
   top: 44.15%;
@@ -4981,7 +4981,7 @@
   bottom: -16%;
 }
 
-/* HUD vivo sem cobrir a moldura de madeira já desenhada. */
+/* HUD vivo sem cobrir a moldura de madeira jÃ¡ desenhada. */
 .fq-map-live-coins {
   left: 15.25%;
   top: 3.55%;
@@ -5035,7 +5035,7 @@
   border-radius: 4px;
 }
 
-/* No painel de tarefas atualizamos só os números, preservando a arte e os rótulos. */
+/* No painel de tarefas atualizamos sÃ³ os nÃºmeros, preservando a arte e os rÃ³tulos. */
 .fq-map-live-tasks {
   left: 89.10%;
   top: 80.45%;
@@ -5063,7 +5063,7 @@
   color: #4e321e;
 }
 
-/* Hotspots dos animais acompanham apenas as áreas úteis e não exibem borda. */
+/* Hotspots dos animais acompanham apenas as Ã¡reas Ãºteis e nÃ£o exibem borda. */
 .fq-map-cow-hotspot {
   left: 43.8%;
   top: 20.6%;
@@ -5079,9 +5079,9 @@
 }
 
 
-/* FarmQuest official Home polish v2 — screenshot calibrated */
+/* FarmQuest official Home polish v2 â€” screenshot calibrated */
 
-/* Ajuste fino usando a arte oficial 1672x941 como referência. */
+/* Ajuste fino usando a arte oficial 1672x941 como referÃªncia. */
 .fq-map-plot-1 {
   left: 22.20%;
   top: 44.65%;
@@ -5121,7 +5121,7 @@
   height: 94%;
 }
 
-/* Mantém a madeira original visível; cobre apenas os valores impressos na arte. */
+/* MantÃ©m a madeira original visÃ­vel; cobre apenas os valores impressos na arte. */
 .fq-map-live-coins {
   left: 16.45%;
   top: 3.55%;
@@ -5157,7 +5157,7 @@
   font-size: clamp(7px, .68vw, 11px);
 }
 
-/* Nome ocupa só a área do texto central, preservando quase toda a prancha de madeira. */
+/* Nome ocupa sÃ³ a Ã¡rea do texto central, preservando quase toda a prancha de madeira. */
 .fq-map-live-farm-name {
   left: 57.95%;
   top: 3.55%;
@@ -5202,7 +5202,7 @@
   line-height: 1;
 }
 
-/* O nível também cobre somente o número original. */
+/* O nÃ­vel tambÃ©m cobre somente o nÃºmero original. */
 .fq-map-live-level {
   left: 7.55%;
   top: 58.12%;
@@ -5234,9 +5234,9 @@
 }
 
 
-/* FarmQuest official Home polish v3 — integrated live values */
+/* FarmQuest official Home polish v3 â€” integrated live values */
 
-/* Os terrenos já fazem parte da arte oficial. Só a plantação fica dinâmica. */
+/* Os terrenos jÃ¡ fazem parte da arte oficial. SÃ³ a plantaÃ§Ã£o fica dinÃ¢mica. */
 .fq-map-plot-base {
   display: none !important;
 }
@@ -5329,7 +5329,7 @@
   text-shadow: 0 1px 0 rgba(255, 204, 112, .36);
 }
 
-/* Painel de tarefas: números discretos e integrados ao papel. */
+/* Painel de tarefas: nÃºmeros discretos e integrados ao papel. */
 .fq-map-live-tasks {
   left: 88.15%;
   top: 79.15%;
@@ -5347,7 +5347,7 @@
   color: #4c301b;
 }
 
-/* O toast da Home só aparece depois de uma ação e não cobre o cenário inteiro. */
+/* O toast da Home sÃ³ aparece depois de uma aÃ§Ã£o e nÃ£o cobre o cenÃ¡rio inteiro. */
 .fq-home-toast {
   left: 50%;
   top: 11.1%;
@@ -5362,7 +5362,7 @@
   z-index: 90;
 }
 
-/* Mantém as áreas clicáveis invisíveis mesmo durante interação por mouse. */
+/* MantÃ©m as Ã¡reas clicÃ¡veis invisÃ­veis mesmo durante interaÃ§Ã£o por mouse. */
 .fq-map-hotspot,
 .fq-map-plot {
   -webkit-tap-highlight-color: transparent;
@@ -5401,7 +5401,7 @@
   user-select: none;
 }
 
-/* HUD compacto sobre o novo céu. */
+/* HUD compacto sobre o novo cÃ©u. */
 .fq-map-live-coins {
   left: 12.05%;
   top: 2.58%;
@@ -5546,15 +5546,15 @@
   transform: translateY(1px);
 }
 
-/* Mensagens aparecem logo abaixo do novo cabeçalho, sem cobrir o céu. */
+/* Mensagens aparecem logo abaixo do novo cabeÃ§alho, sem cobrir o cÃ©u. */
 .fq-home-toast {
   top: 10.15%;
 }
 
 
-/* FarmQuest top sky redesign v2 — pixel HUD integration */
+/* FarmQuest top sky redesign v2 â€” pixel HUD integration */
 
-/* Cobre completamente a faixa antiga sem invadir o cenário abaixo. */
+/* Cobre completamente a faixa antiga sem invadir o cenÃ¡rio abaixo. */
 .fq-map-top-sky {
   left: 10.35%;
   top: .62%;
@@ -5573,7 +5573,7 @@
   image-rendering: pixelated;
 }
 
-/* HUD com linguagem visual mais próxima de pixel art, sem cartões creme. */
+/* HUD com linguagem visual mais prÃ³xima de pixel art, sem cartÃµes creme. */
 .fq-map-live-coins {
   left: 12.10%;
   top: 2.18%;
@@ -5645,7 +5645,7 @@
   text-shadow: 1px 1px 0 rgba(25, 70, 103, .95);
 }
 
-/* O nome vira uma pequena placa de vidro pixelada, não uma cápsula moderna. */
+/* O nome vira uma pequena placa de vidro pixelada, nÃ£o uma cÃ¡psula moderna. */
 .fq-map-live-farm-name {
   left: 43.65%;
   top: 2.18%;
@@ -5670,7 +5670,7 @@
   letter-spacing: .01em;
 }
 
-/* Ações do topo seguem a mesma paleta azul. */
+/* AÃ§Ãµes do topo seguem a mesma paleta azul. */
 .fq-map-refresh,
 .fq-map-logout {
   top: 2.10%;
@@ -5694,15 +5694,15 @@
   filter: none;
 }
 
-/* Toast passa a começar depois da nova faixa de céu. */
+/* Toast passa a comeÃ§ar depois da nova faixa de cÃ©u. */
 .fq-home-toast {
   top: 10.35%;
 }
 
 
-/* FarmQuest top sky redesign v3 — natural sky scale */
+/* FarmQuest top sky redesign v3 â€” natural sky scale */
 
-/* Mantém a proporção original do céu: a textura se repete horizontalmente sem esticar. */
+/* MantÃ©m a proporÃ§Ã£o original do cÃ©u: a textura se repete horizontalmente sem esticar. */
 .fq-map-top-sky {
   left: 10.35%;
   top: .62%;
@@ -5722,7 +5722,7 @@
   display: none;
 }
 
-/* HUD menor e mais discreto para o céu continuar sendo protagonista. */
+/* HUD menor e mais discreto para o cÃ©u continuar sendo protagonista. */
 .fq-map-live-coins {
   left: 12.15%;
   top: 2.35%;
@@ -5789,7 +5789,7 @@
   font-size: clamp(9px, .90vw, 15px);
 }
 
-/* Botões menores e alinhados com o novo HUD. */
+/* BotÃµes menores e alinhados com o novo HUD. */
 .fq-map-refresh,
 .fq-map-logout {
   top: 2.28%;
@@ -5810,7 +5810,7 @@
   font-size: clamp(11px, 1.08vw, 18px);
 }
 
-/* A transição do céu para a fazenda fica mais suave. */
+/* A transiÃ§Ã£o do cÃ©u para a fazenda fica mais suave. */
 .fq-map-top-sky::after {
   content: "";
   position: absolute;
@@ -5832,11 +5832,11 @@
 }
 
 
-/* FARMQUEST HOME V4 — official wood sky header */
+/* FARMQUEST HOME V4 â€” official wood sky header */
 
 /* =========================================================
    FARMQUEST HOME V4
-   Visual oficial: madeira + céu pixel art
+   Visual oficial: madeira + cÃ©u pixel art
    ========================================================= */
 
 .fq-official-home-map {
@@ -5849,7 +5849,7 @@
   overflow: hidden;
 }
 
-/* CÉU */
+/* CÃ‰U */
 .fq-map-top-sky {
   position: absolute;
   left: 10.25%;
@@ -5917,7 +5917,7 @@
   display: none !important;
 }
 
-/* PAINÉIS DE MADEIRA */
+/* PAINÃ‰IS DE MADEIRA */
 .fq-map-live-coins,
 .fq-map-live-xp,
 .fq-map-live-farm-name,
@@ -6093,7 +6093,7 @@
   text-shadow: 2px 2px 0 #4a240c;
 }
 
-/* BOTÕES */
+/* BOTÃ•ES */
 .fq-map-refresh,
 .fq-map-logout {
   top: 1.82%;
@@ -6192,10 +6192,10 @@
 }
 
 
-/* FARMQUEST HOME V5 — reference match polish */
+/* FARMQUEST HOME V5 â€” reference match polish */
 
 /* =========================================================
-   Aproxima o topo da referência oficial aprovada
+   Aproxima o topo da referÃªncia oficial aprovada
    ========================================================= */
 
 /* Moldura de madeira fechando toda a Home */
@@ -6208,7 +6208,7 @@
     0 0 0 2px #2c190b !important;
 }
 
-/* O céu fica como uma janela dentro da madeira */
+/* O cÃ©u fica como uma janela dentro da madeira */
 .fq-map-top-sky {
   left: 10.35%;
   top: .78%;
@@ -6239,7 +6239,7 @@
     inset 0 2px 0 rgba(230, 145, 59, .28);
 }
 
-/* Viga inferior mais próxima da referência */
+/* Viga inferior mais prÃ³xima da referÃªncia */
 .fq-map-top-sky::after {
   bottom: -1px;
   height: 9px;
@@ -6347,7 +6347,7 @@
 .fq-map-live-farm-name::before { left: 17%; }
 .fq-map-live-farm-name::after { right: 17%; }
 
-/* Botões do canto direito mais parecidos com placas de madeira */
+/* BotÃµes do canto direito mais parecidos com placas de madeira */
 .fq-map-refresh,
 .fq-map-logout {
   top: 1.55%;
@@ -6390,7 +6390,7 @@
     2px 2px 0 rgba(44,22,8,.24) !important;
 }
 
-/* Dá mais presença ao logo sem alterar o asset */
+/* DÃ¡ mais presenÃ§a ao logo sem alterar o asset */
 .fq-map-logo img,
 .fq-map-nav img[alt*="FarmQuest"] {
   transform: scale(1.06);
@@ -6409,9 +6409,9 @@
 }
 
 
-/* FARMQUEST HOME V6 — final alignment polish */
+/* FARMQUEST HOME V6 â€” final alignment polish */
 
-/* Corrige os números dinâmicos sobre os números impressos do painel. */
+/* Corrige os nÃºmeros dinÃ¢micos sobre os nÃºmeros impressos do painel. */
 .fq-map-live-tasks {
   left: 89.02% !important;
   top: 79.10% !important;
@@ -6440,7 +6440,7 @@
   line-height: 1;
 }
 
-/* O cabeçalho e a sidebar passam a parecer uma única moldura. */
+/* O cabeÃ§alho e a sidebar passam a parecer uma Ãºnica moldura. */
 .fq-map-nav {
   border-right: 4px solid #4b270e !important;
   border-top: 4px solid #4b270e !important;
@@ -6452,7 +6452,7 @@
     2px 2px 0 rgba(44,22,8,.22) !important;
 }
 
-/* Pequena junção de madeira entre sidebar e cabeçalho. */
+/* Pequena junÃ§Ã£o de madeira entre sidebar e cabeÃ§alho. */
 .fq-map-nav::after {
   content: "";
   position: absolute;
@@ -6473,7 +6473,7 @@
   border-right: 2px solid #331a09;
 }
 
-/* Ícones maiores dentro das mesmas placas. */
+/* Ãcones maiores dentro das mesmas placas. */
 .fq-map-live-coins img {
   width: 38% !important;
   height: 94% !important;
@@ -6486,7 +6486,7 @@
   transform: scale(1.10) !important;
 }
 
-/* Um pouco mais de relevo nas três placas principais. */
+/* Um pouco mais de relevo nas trÃªs placas principais. */
 .fq-map-live-coins,
 .fq-map-live-xp,
 .fq-map-live-farm-name {
@@ -6521,9 +6521,9 @@
 }
 
 
-/* FARMQUEST HOME V7 — task numbers precision fix */
+/* FARMQUEST HOME V7 â€” task numbers precision fix */
 
-/* Atualiza somente o algarismo impresso do painel sem cobrir os rótulos. */
+/* Atualiza somente o algarismo impresso do painel sem cobrir os rÃ³tulos. */
 .fq-map-live-tasks {
   left: 89.10% !important;
   top: 79.08% !important;
@@ -6563,9 +6563,9 @@
 }
 
 
-/* FARMQUEST HOME V8 — scene consistency polish */
+/* FARMQUEST HOME V8 â€” scene consistency polish */
 
-/* Leve ganho de definição na arte principal sem alterar a paleta original. */
+/* Leve ganho de definiÃ§Ã£o na arte principal sem alterar a paleta original. */
 .fq-official-home-art {
   filter: contrast(1.035) saturate(1.025);
   image-rendering: -webkit-optimize-contrast;
@@ -6580,7 +6580,7 @@
   overflow: hidden;
 }
 
-/* Barril cilíndrico em linguagem de pixel art. */
+/* Barril cilÃ­ndrico em linguagem de pixel art. */
 .fq-polish-barrel {
   position: absolute;
   width: 1.72%;
@@ -6638,7 +6638,7 @@
     0 -1px 0 rgba(28,17,9,.25);
 }
 
-/* Posições sobre os três barris/recipientes mais quadrados da arte atual. */
+/* PosiÃ§Ãµes sobre os trÃªs barris/recipientes mais quadrados da arte atual. */
 .fq-polish-barrel-house {
   left: 20.35%;
   top: 31.05%;
@@ -6657,7 +6657,7 @@
   transform: scale(.90);
 }
 
-/* Culturas dinâmicas passam a ter o mesmo peso de sombra dos objetos do cenário. */
+/* Culturas dinÃ¢micas passam a ter o mesmo peso de sombra dos objetos do cenÃ¡rio. */
 .fq-map-plot-crop {
   filter:
     drop-shadow(0 3px 0 rgba(54,35,14,.24))
@@ -6670,7 +6670,7 @@
     drop-shadow(1px 1px 0 rgba(42,28,10,.16));
 }
 
-/* Timer deixa de parecer uma cápsula moderna e vira uma pequena placa de madeira. */
+/* Timer deixa de parecer uma cÃ¡psula moderna e vira uma pequena placa de madeira. */
 .fq-map-plot-timer {
   bottom: -7% !important;
   min-width: 38px !important;
@@ -6693,7 +6693,7 @@
     0 2px 0 rgba(43,26,12,.27) !important;
 }
 
-/* Bloqueados recebem uma sombra suave na terra, mantendo o cadeado original visível. */
+/* Bloqueados recebem uma sombra suave na terra, mantendo o cadeado original visÃ­vel. */
 .fq-map-locked-plot::before {
   content: "";
   position: absolute;
@@ -6712,7 +6712,7 @@
   border-radius: 4px !important;
 }
 
-/* Pequeno ganho de definição nos ícones dinâmicos sem aumentar artificialmente o tamanho. */
+/* Pequeno ganho de definiÃ§Ã£o nos Ã­cones dinÃ¢micos sem aumentar artificialmente o tamanho. */
 .fq-map-live-coins img,
 .fq-map-live-xp > img,
 .fq-map-plot-crop {
@@ -6720,9 +6720,9 @@
 }
 
 
-/* FARMQUEST HOME V9 — prop scale and crop polish */
+/* FARMQUEST HOME V9 â€” prop scale and crop polish */
 
-/* Barris menores e mais cilíndricos, adequados à escala dos props do cenário. */
+/* Barris menores e mais cilÃ­ndricos, adequados Ã  escala dos props do cenÃ¡rio. */
 .fq-polish-barrel {
   width: 1.28% !important;
   aspect-ratio: .80 !important;
@@ -6776,7 +6776,7 @@
   border-bottom: 2px solid #49301d !important;
 }
 
-/* Reposicionamento fino dos dois barris úteis. */
+/* Reposicionamento fino dos dois barris Ãºteis. */
 .fq-polish-barrel-house {
   left: 20.55% !important;
   top: 31.70% !important;
@@ -6789,12 +6789,12 @@
   transform: scale(.94) !important;
 }
 
-/* Segurança caso uma versão antiga ainda tenha o terceiro barril no DOM. */
+/* SeguranÃ§a caso uma versÃ£o antiga ainda tenha o terceiro barril no DOM. */
 .fq-polish-barrel-dock {
   display: none !important;
 }
 
-/* Timer discreto, preso à borda do canteiro e sem cobrir a cultura. */
+/* Timer discreto, preso Ã  borda do canteiro e sem cobrir a cultura. */
 .fq-map-plot-timer {
   bottom: -11% !important;
   min-width: 33px !important;
@@ -6806,7 +6806,7 @@
     0 1px 0 rgba(43,26,12,.24) !important;
 }
 
-/* Plantação ativa com contorno um pouco menos agressivo para casar com o fundo. */
+/* PlantaÃ§Ã£o ativa com contorno um pouco menos agressivo para casar com o fundo. */
 .fq-map-plot-crop {
   filter:
     saturate(.98)
@@ -6821,17 +6821,17 @@
     drop-shadow(1px 1px 0 rgba(42,28,10,.12)) !important;
 }
 
-/* Definição geral um pouco mais firme, sem estourar as cores. */
+/* DefiniÃ§Ã£o geral um pouco mais firme, sem estourar as cores. */
 .fq-official-home-art {
   filter: contrast(1.045) saturate(1.018) brightness(1.003) !important;
 }
 
 
-/* FARMQUEST HOME V10 — depth, tasks and lock polish */
+/* FARMQUEST HOME V10 â€” depth, tasks and lock polish */
 
 /* ---------------------------------------------------------
    Profundidade: sombras de contato discretas.
-   Ficam sobre o chão e não alteram a composição dos prédios.
+   Ficam sobre o chÃ£o e nÃ£o alteram a composiÃ§Ã£o dos prÃ©dios.
    --------------------------------------------------------- */
 .fq-contact-shadow {
   position: absolute;
@@ -6878,8 +6878,8 @@
 
 /* ---------------------------------------------------------
    Painel "Minhas Tarefas":
-   cobre só o miolo do painel original e redesenha as linhas
-   com dados reais + ícones oficiais do FarmQuest.
+   cobre sÃ³ o miolo do painel original e redesenha as linhas
+   com dados reais + Ã­cones oficiais do FarmQuest.
    --------------------------------------------------------- */
 .fq-map-live-tasks {
   left: 86.15% !important;
@@ -6958,7 +6958,7 @@
 }
 
 /* ---------------------------------------------------------
-   Aviso superior: maior legibilidade e aparência de placa.
+   Aviso superior: maior legibilidade e aparÃªncia de placa.
    --------------------------------------------------------- */
 .fq-home-toast {
   top: 10.38% !important;
@@ -6990,8 +6990,8 @@
 }
 
 /* ---------------------------------------------------------
-   Canteiros bloqueados: reforço discreto de indisponibilidade.
-   Não cobre nem substitui os cadeados da própria arte.
+   Canteiros bloqueados: reforÃ§o discreto de indisponibilidade.
+   NÃ£o cobre nem substitui os cadeados da prÃ³pria arte.
    --------------------------------------------------------- */
 .fq-map-locked-plot::before {
   inset: 14% 10% 14% !important;
@@ -7033,7 +7033,7 @@
   text-shadow: 1px 1px 0 #3e240f !important;
 }
 
-/* Plantação pronta se destaca pela escala, não por brilho artificial. */
+/* PlantaÃ§Ã£o pronta se destaca pela escala, nÃ£o por brilho artificial. */
 .fq-map-plot.is-ready .fq-map-plot-crop {
   filter:
     saturate(1.01)
@@ -7041,7 +7041,7 @@
     drop-shadow(1px 1px 0 rgba(42,28,10,.10)) !important;
 }
 
-/* Mantém a definição geral sem estourar verdes e vermelhos. */
+/* MantÃ©m a definiÃ§Ã£o geral sem estourar verdes e vermelhos. */
 .fq-official-home-art {
   filter:
     contrast(1.048)
@@ -7050,11 +7050,11 @@
 }
 
 
-/* FARMQUEST HOME V11 — sidebar, tasks and interaction polish */
+/* FARMQUEST HOME V11 â€” sidebar, tasks and interaction polish */
 
 /* ---------------------------------------------------------
-   Menu lateral: mantém a arte original, mas adiciona um estado
-   ativo/hover discreto sobre os botões já desenhados.
+   Menu lateral: mantÃ©m a arte original, mas adiciona um estado
+   ativo/hover discreto sobre os botÃµes jÃ¡ desenhados.
    --------------------------------------------------------- */
 .fq-map-nav-button {
   overflow: visible;
@@ -7106,7 +7106,7 @@
 }
 
 /* ---------------------------------------------------------
-   Nível: reforça apenas o número sem competir com a arte.
+   NÃ­vel: reforÃ§a apenas o nÃºmero sem competir com a arte.
    --------------------------------------------------------- */
 .fq-map-live-level {
   color: #f7e0a8 !important;
@@ -7125,7 +7125,7 @@
 }
 
 /* ---------------------------------------------------------
-   Painel de tarefas: um pouco mais legível sem ficar pesado.
+   Painel de tarefas: um pouco mais legÃ­vel sem ficar pesado.
    --------------------------------------------------------- */
 .fq-map-live-tasks {
   left: 86.02% !important;
@@ -7178,8 +7178,8 @@
 }
 
 /* ---------------------------------------------------------
-   Botões Plantar / Colher:
-   a arte continua sendo o botão; o overlay só dá feedback.
+   BotÃµes Plantar / Colher:
+   a arte continua sendo o botÃ£o; o overlay sÃ³ dÃ¡ feedback.
    --------------------------------------------------------- */
 .fq-map-plant-all::before,
 .fq-map-harvest-all::before {
@@ -7232,7 +7232,7 @@
 }
 
 /* ---------------------------------------------------------
-   Pequenos props: mantém a leitura pixelada sem oversharpen.
+   Pequenos props: mantÃ©m a leitura pixelada sem oversharpen.
    --------------------------------------------------------- */
 .fq-official-home-art {
   filter:
@@ -7242,7 +7242,7 @@
 }
 
 /* ---------------------------------------------------------
-   Toast: um toque de respiro para não parecer esmagado.
+   Toast: um toque de respiro para nÃ£o parecer esmagado.
    --------------------------------------------------------- */
 .fq-home-toast {
   padding-left: 16px !important;
@@ -7251,9 +7251,9 @@
 }
 
 
-/* FARMQUEST HOME V12 — final sidebar and action polish */
+/* FARMQUEST HOME V12 â€” final sidebar and action polish */
 
-/* Estado ativo do menu: mais perceptível, mas sem esconder a arte original. */
+/* Estado ativo do menu: mais perceptÃ­vel, mas sem esconder a arte original. */
 .fq-map-nav-button.is-active::before,
 .fq-map-nav-button[aria-current="page"]::before {
   inset: 8% 3% !important;
@@ -7271,7 +7271,7 @@
     0 1px 0 rgba(52,30,11,.12) !important;
 }
 
-/* Nível com um pouco mais de presença e leitura. */
+/* NÃ­vel com um pouco mais de presenÃ§a e leitura. */
 .fq-map-live-level {
   left: 7.42% !important;
   top: 58.02% !important;
@@ -7296,7 +7296,7 @@
     0 1px 0 rgba(40,20,8,.22) !important;
 }
 
-/* Botões da Home: relevo sutil somente durante interação. */
+/* BotÃµes da Home: relevo sutil somente durante interaÃ§Ã£o. */
 .fq-map-plant-all,
 .fq-map-harvest-all {
   transition:
@@ -7315,7 +7315,7 @@
   filter: brightness(.985) saturate(1.01);
 }
 
-/* Mantém o painel de tarefas equilibrado após o aumento de legibilidade. */
+/* MantÃ©m o painel de tarefas equilibrado apÃ³s o aumento de legibilidade. */
 .fq-map-live-tasks {
   top: 80.28% !important;
   height: 11.35% !important;
@@ -7337,7 +7337,7 @@
    ========================================================= */
 
 /*
-   A nova arte já possui contraste, vegetação e props
+   A nova arte jÃ¡ possui contraste, vegetaÃ§Ã£o e props
    tratados diretamente na imagem.
 */
 .fq-official-home-art {
@@ -7363,7 +7363,7 @@
 
 
 /*
-   Os antigos barris criados em CSS deixam de ser necessários.
+   Os antigos barris criados em CSS deixam de ser necessÃ¡rios.
 */
 .fq-polish-barrel {
   display: none !important;
@@ -7371,8 +7371,8 @@
 
 
 /*
-   Mantém a Home exatamente na proporção oficial da arte.
-   O arquivo v2 possui 1672 × 941.
+   MantÃ©m a Home exatamente na proporÃ§Ã£o oficial da arte.
+   O arquivo v2 possui 1672 Ã— 941.
 */
 .fq-official-home-stage {
   aspect-ratio: 1672 / 941 !important;
@@ -7380,7 +7380,7 @@
 
 
 /*
-   Evita qualquer deformação da imagem.
+   Evita qualquer deformaÃ§Ã£o da imagem.
 */
 .fq-official-home-map {
   overflow: hidden;
@@ -7413,7 +7413,7 @@
 .fq-polish-barrel {
   display: none !important;
 }/* =========================================================
-   FARMQUEST HOME — POLIMENTO DOS CANTEIROS
+   FARMQUEST HOME â€” POLIMENTO DOS CANTEIROS
    Objetivo:
    - destacar canteiros interativos
    - manter visual cozy/pixel art
@@ -7433,7 +7433,7 @@
 
 
 /* ---------------------------------------------------------
-   CANTEIRO DISPONÍVEL
+   CANTEIRO DISPONÃVEL
    --------------------------------------------------------- */
 
 .fq-crop-zone .fq-home-plot:not(.is-locked) {
@@ -7469,7 +7469,7 @@
 }
 
 
-/* Não permitir animação de hover nos bloqueados */
+/* NÃ£o permitir animaÃ§Ã£o de hover nos bloqueados */
 
 .fq-crop-zone .fq-home-plot.is-locked:hover {
   transform: none;
@@ -7477,8 +7477,8 @@
 
 
 /* ---------------------------------------------------------
-   PLANTAÇÃO ATIVA
-   Mantemos o desenho/ícone dinâmico totalmente visível.
+   PLANTAÃ‡ÃƒO ATIVA
+   Mantemos o desenho/Ã­cone dinÃ¢mico totalmente visÃ­vel.
    --------------------------------------------------------- */
 
 .fq-crop-zone .fq-home-plot.is-planted,
@@ -7488,7 +7488,7 @@
 }
 
 
-/* Plantação pronta ganha destaque discreto */
+/* PlantaÃ§Ã£o pronta ganha destaque discreto */
 
 .fq-crop-zone .fq-home-plot.is-ready {
   animation: fq-ready-plot-pulse 1.8s ease-in-out infinite;
@@ -7520,7 +7520,7 @@
   outline: 3px solid rgba(255, 225, 130, 0.95);
   outline-offset: 4px;
 }/* =========================================================
-   FARMQUEST HOME V3 — ENCAIXE DA NOVA CENA
+   FARMQUEST HOME V3 â€” ENCAIXE DA NOVA CENA
    ========================================================= */
 
 .farm-scene-shell {
@@ -7550,7 +7550,7 @@
   object-position: center;
   image-rendering: pixelated;
 }/* =========================================================
-   FARMQUEST HOME V3 — CASA E CELEIRO
+   FARMQUEST HOME V3 â€” CASA E CELEIRO
    ========================================================= */
 
 .farm-scene__building {
@@ -7569,7 +7569,7 @@
 }
 
 
-/* CASA — terreno superior esquerdo */
+/* CASA â€” terreno superior esquerdo */
 .farm-scene__building--house {
   left: 15.2%;
   top: 13%;
@@ -7577,7 +7577,7 @@
   height: 25%;
 }
 
-/* CELEIRO — terreno superior direito */
+/* CELEIRO â€” terreno superior direito */
 .farm-scene__building--barn {
   left: 68.4%;
   top: 14%;
@@ -7597,7 +7597,7 @@
 }
 
 
-/* BRILHO DE ELEMENTO CLICÁVEL */
+/* BRILHO DE ELEMENTO CLICÃVEL */
 
 .farm-scene__building--house:hover .farm-scene__building-art,
 .farm-scene__building--house:focus-visible .farm-scene__building-art {
@@ -7618,7 +7618,7 @@
 .farm-scene__building:focus {
   outline: none;
 }/* =========================================================
-   FARMQUEST HOME V3 — CANTEIROS CLICÁVEIS
+   FARMQUEST HOME V3 â€” CANTEIROS CLICÃVEIS
    ========================================================= */
 
 .farm-scene__plot {
@@ -7643,7 +7643,7 @@
 
   z-index: 20;
 }/* =========================================================
-   FARMQUEST HOME V3 — PRÉDIOS
+   FARMQUEST HOME V3 â€” PRÃ‰DIOS
    ========================================================= */
 
 .farm-scene__building {
@@ -7664,7 +7664,7 @@
 }
 
 
-/* CASA — terreno superior esquerdo */
+/* CASA â€” terreno superior esquerdo */
 
 .farm-scene__building--house {
   left: 15.2%;
@@ -7674,7 +7674,7 @@
 }
 
 
-/* CELEIRO — terreno superior direito */
+/* CELEIRO â€” terreno superior direito */
 
 .farm-scene__building--barn {
   left: 68.4%;
@@ -7719,7 +7719,7 @@
 .farm-scene__building:active .farm-scene__building-art {
   transform: scale(0.98);
 }/* =========================================================
-   FARMQUEST HOME V4 — CENÁRIO PRINCIPAL
+   FARMQUEST HOME V4 â€” CENÃRIO PRINCIPAL
    ========================================================= */
 
 .farm-scene-shell {
@@ -7749,9 +7749,9 @@
   object-position: center;
   image-rendering: pixelated;
 }/* =========================================================
-   FARMQUEST HOME V4 — 10 CANTEIROS CLICÁVEIS
-   O desenho do canteiro já pertence ao cenário.
-   Aqui criamos somente a área de interação.
+   FARMQUEST HOME V4 â€” 10 CANTEIROS CLICÃVEIS
+   O desenho do canteiro jÃ¡ pertence ao cenÃ¡rio.
+   Aqui criamos somente a Ã¡rea de interaÃ§Ã£o.
    ========================================================= */
 
 .farm-scene__plots {
@@ -7820,7 +7820,7 @@
   outline: 2px solid rgba(255, 235, 145, 0.95);
   outline-offset: 2px;
 }/* =========================================================
-   HOME V4 — USA O CANTEIRO QUE JÁ EXISTE NA IMAGEM
+   HOME V4 â€” USA O CANTEIRO QUE JÃ EXISTE NA IMAGEM
    ========================================================= */
 
 /* esconde o PNG antigo de terra/cadeado */
@@ -7828,7 +7828,7 @@
   display: none !important;
 }
 
-/* mantém a plantação visível sobre o canteiro */
+/* mantÃ©m a plantaÃ§Ã£o visÃ­vel sobre o canteiro */
 .farm-scene__plot-crop {
   display: block !important;
   position: absolute;
@@ -7856,7 +7856,7 @@
   pointer-events: none;
 }
 
-/* HOME V4 — PLANTAÇÃO SOBRE O CANTEIRO */
+/* HOME V4 â€” PLANTAÃ‡ÃƒO SOBRE O CANTEIRO */
 .farm-scene__plot-crop {
   display: block !important;
   position: absolute;
@@ -7875,7 +7875,7 @@
 
   z-index: 2;
 }/* =========================================================
-   DEBUG TEMPORÁRIO — MOSTRAR OS 10 HOTSPOTS
+   DEBUG TEMPORÃRIO â€” MOSTRAR OS 10 HOTSPOTS
    APAGAR DEPOIS DO ALINHAMENTO
    ========================================================= */
 
@@ -7894,7 +7894,7 @@
   box-shadow:
     inset 0 0 0 3px rgba(255, 255, 0, 1) !important;
 }/* =========================================================
-   DEBUG FORÇADO — LOCALIZAÇÃO DOS 10 CANTEIROS
+   DEBUG FORÃ‡ADO â€” LOCALIZAÃ‡ÃƒO DOS 10 CANTEIROS
    REMOVER DEPOIS
    ========================================================= */
 
@@ -7934,8 +7934,8 @@ height: var(--plot-height) !important;
 .farm-scene__plot-base {
   display: none !important;
 }/* =========================================================
-   FARMQUEST HOME V4 — CORREÇÃO REAL DOS HOTSPOTS
-   DEBUG TEMPORÁRIO PARA ALINHAMENTO
+   FARMQUEST HOME V4 â€” CORREÃ‡ÃƒO REAL DOS HOTSPOTS
+   DEBUG TEMPORÃRIO PARA ALINHAMENTO
    ========================================================= */
 
 .farm-scene__plots {
@@ -7977,12 +7977,12 @@ height: var(--plot-height) !important;
   border-color: yellow !important;
 }
 
-/* não desenha terra/cadeado antigo */
+/* nÃ£o desenha terra/cadeado antigo */
 .farm-scene__plot-base {
   display: none !important;
 }
 
-/* mantém somente a plantação sobre o terreno */
+/* mantÃ©m somente a plantaÃ§Ã£o sobre o terreno */
 .farm-scene__plot-crop {
   display: block !important;
   position: absolute !important;
@@ -8001,7 +8001,7 @@ height: var(--plot-height) !important;
 
   z-index: 2;
 }/* =========================================================
-   DEBUG FINAL — POSIÇÃO REAL DOS 10 CANTEIROS
+   DEBUG FINAL â€” POSIÃ‡ÃƒO REAL DOS 10 CANTEIROS
    ========================================================= */
 
 .farm-scene__plots {
@@ -8046,7 +8046,7 @@ height: var(--plot-height) !important;
   display: none !important;
 }/* =========================================================
    FARMQUEST HOME V4
-   CORREÇÃO DO CONTAINER DOS 10 CANTEIROS
+   CORREÃ‡ÃƒO DO CONTAINER DOS 10 CANTEIROS
    ========================================================= */
 
 .farm-scene__map {
@@ -8072,7 +8072,7 @@ height: var(--plot-height) !important;
   pointer-events: none !important;
 }
 
-/* DEBUG — mostra a posição real dos canteiros */
+/* DEBUG â€” mostra a posiÃ§Ã£o real dos canteiros */
 .farm-scene__plots .farm-scene__plot {
   position: absolute !important;
 
@@ -8103,11 +8103,11 @@ height: var(--plot-height) !important;
   border-color: yellow !important;
 }
 
-/* O terreno já existe na imagem */
+/* O terreno jÃ¡ existe na imagem */
 .farm-scene__plot-base {
   display: none !important;
 }/* =========================================================
-   FARMQUEST HOME V4 — HOTSPOTS DEFINITIVOS DOS 10 CANTEIROS
+   FARMQUEST HOME V4 â€” HOTSPOTS DEFINITIVOS DOS 10 CANTEIROS
    ========================================================= */
 
 .farm-scene__plots .farm-scene__plot {
@@ -8157,12 +8157,12 @@ height: var(--plot-height) !important;
   transform: scale(0.985);
 }
 
-/* O canteiro de terra já faz parte da imagem principal */
+/* O canteiro de terra jÃ¡ faz parte da imagem principal */
 .farm-scene__plot-base {
   display: none !important;
 }
 
-/* Plantação permanece sobre o canteiro */
+/* PlantaÃ§Ã£o permanece sobre o canteiro */
 .farm-scene__plot-crop {
   display: block !important;
   position: absolute !important;
@@ -8181,10 +8181,10 @@ height: var(--plot-height) !important;
 
   z-index: 2;
 }/* =========================================================
-   FARMQUEST HOME V4 — VISUAL FINAL DOS CANTEIROS
+   FARMQUEST HOME V4 â€” VISUAL FINAL DOS CANTEIROS
    ========================================================= */
 
-/* estado normal: hotspot completamente invisível */
+/* estado normal: hotspot completamente invisÃ­vel */
 .farm-scene__plots .farm-scene__plot {
   background: transparent !important;
   border: 0 !important;
@@ -8219,7 +8219,7 @@ height: var(--plot-height) !important;
 }
 
 /* =========================================================
-   FARMQUEST — MOVIMENTO SUAVE DE VENTO NAS PLANTAÇÕES
+   FARMQUEST â€” MOVIMENTO SUAVE DE VENTO NAS PLANTAÃ‡Ã•ES
    ========================================================= */
 
 @keyframes farmCropWind {
@@ -8245,8 +8245,8 @@ height: var(--plot-height) !important;
 }
 
 /* =========================================================
-   FARMQUEST - TAMANHO DAS PLANTAÇÕES NO HOME
-   Proporção baseada na referência aprovada
+   FARMQUEST - TAMANHO DAS PLANTAÃ‡Ã•ES NO HOME
+   ProporÃ§Ã£o baseada na referÃªncia aprovada
    ========================================================= */
 
 .farm-scene__plot {
@@ -8263,7 +8263,7 @@ height: var(--plot-height) !important;
   top: auto !important;
   bottom: 0% !important;
 
-  /* PROPORÇÃO APROVADA */
+  /* PROPORÃ‡ÃƒO APROVADA */
   width: 128% !important;
   height: 210% !important;
 
@@ -8272,7 +8272,7 @@ height: var(--plot-height) !important;
   object-fit: contain !important;
   object-position: center bottom !important;
 
-  /* Pixel art nítida */
+  /* Pixel art nÃ­tida */
   image-rendering: pixelated !important;
 
   pointer-events: none;
@@ -8283,11 +8283,11 @@ height: var(--plot-height) !important;
   max-height: none !important;
 
   /* IMPORTANTE:
-     o vento já está animado DENTRO do GIF */
+     o vento jÃ¡ estÃ¡ animado DENTRO do GIF */
   animation: none !important;
 }
 
-/* Cada plantação balança em um ritmo levemente diferente */
+/* Cada plantaÃ§Ã£o balanÃ§a em um ritmo levemente diferente */
 .farm-scene__plot:nth-child(2n) .farm-scene__plot-crop {
   animation-duration: 3.1s;
   animation-delay: -0.4s;
@@ -8320,14 +8320,14 @@ height: var(--plot-height) !important;
   cursor: pointer;
 }
 
-/* Pequeno aumento no hover para reforçar a interação */
+/* Pequeno aumento no hover para reforÃ§ar a interaÃ§Ã£o */
 .farm-scene__plot.is-ready:hover .farm-scene__plot-crop {
   transform: translateX(-50%) scale(1.04) !important;
 }
 
 
 /* =========================================================
-   COMUM — BRANCO
+   COMUM â€” BRANCO
    ========================================================= */
 
 .farm-scene__plot.is-ready.quality-common:hover
@@ -8349,7 +8349,7 @@ height: var(--plot-height) !important;
 
 
 /* =========================================================
-   BOA — VERDE
+   BOA â€” VERDE
    ========================================================= */
 
 .farm-scene__plot.is-ready.quality-good:hover
@@ -8371,7 +8371,7 @@ height: var(--plot-height) !important;
 
 
 /* =========================================================
-   EXCELENTE — AZUL
+   EXCELENTE â€” AZUL
    ========================================================= */
 
 .farm-scene__plot.is-ready.quality-excellent:hover
@@ -8393,7 +8393,7 @@ height: var(--plot-height) !important;
 
 
 /* =========================================================
-   EXTRAORDINÁRIA — ROXO
+   EXTRAORDINÃRIA â€” ROXO
    ========================================================= */
 
 .farm-scene__plot.is-ready.quality-extraordinary:hover
@@ -8414,8 +8414,8 @@ height: var(--plot-height) !important;
 }
 
 /* =========================================================
-   FARMQUEST — CASA E CELEIRO CENTRALIZADOS NOS TERRENOS
-   Referência visual aprovada
+   FARMQUEST â€” CASA E CELEIRO CENTRALIZADOS NOS TERRENOS
+   ReferÃªncia visual aprovada
    ========================================================= */
 
 /* CASA */
@@ -8435,7 +8435,7 @@ height: var(--plot-height) !important;
 }
 
 /* =========================================================
-   FARMQUEST — HOVER DE QUALIDADE SOMENTE NA PLANTA READY
+   FARMQUEST â€” HOVER DE QUALIDADE SOMENTE NA PLANTA READY
    ========================================================= */
 
 .farm-scene__plot.is-ready .farm-scene__plot-crop {
@@ -8444,7 +8444,7 @@ height: var(--plot-height) !important;
 }
 
 /* =========================================================
-   FARMQUEST HOME — AJUSTE AO VIEWPORT
+   FARMQUEST HOME â€” AJUSTE AO VIEWPORT
    Remove bordas verdes e evita rolagem vertical
    ========================================================= */
 
@@ -8454,7 +8454,7 @@ height: var(--plot-height) !important;
   overflow: hidden;
 }
 
-/* Remove o espaço verde externo SOMENTE da Home */
+/* Remove o espaÃ§o verde externo SOMENTE da Home */
 .pixel-ui-shell.farm-game-shell.is-home .farm-game-stage {
   padding: 0 !important;
   overflow: hidden;
@@ -8467,7 +8467,7 @@ height: var(--plot-height) !important;
   background: #4d2b17 !important;
 }
 
-/* Área disponível abaixo do cabeçalho */
+/* Ãrea disponÃ­vel abaixo do cabeÃ§alho */
 .pixel-ui-shell.farm-game-shell.is-home .farm-scene-shell {
   width: 100%;
   height: 100%;
@@ -8493,9 +8493,9 @@ height: var(--plot-height) !important;
 }
 
 /*
-   O cabeçalho ocupa 86px.
-   O cenário usa todo o restante da altura da tela,
-   mantendo exatamente a proporção 1672 × 941.
+   O cabeÃ§alho ocupa 86px.
+   O cenÃ¡rio usa todo o restante da altura da tela,
+   mantendo exatamente a proporÃ§Ã£o 1672 Ã— 941.
 */
 .pixel-ui-shell.farm-game-shell.is-home .farm-scene__map {
   position: relative;
@@ -8512,7 +8512,7 @@ height: var(--plot-height) !important;
   flex: 0 0 auto;
 }
 /* =========================================================
-   FARMQUEST — NOVO PAINEL LATERAL
+   FARMQUEST â€” NOVO PAINEL LATERAL
    ========================================================= */
 
 .pixel-ui-shell.farm-game-shell {
@@ -8563,7 +8563,7 @@ height: 420px;;
 }
 
 
-/* arte original sem distorção */
+/* arte original sem distorÃ§Ã£o */
 .pixel-ui-shell .farm-menu-panel__art {
   position: absolute;
 
@@ -8587,7 +8587,7 @@ height: 420px;;
 
 
 /* =========================================================
-   ÁREAS CLICÁVEIS
+   ÃREAS CLICÃVEIS
    ========================================================= */
 
 .pixel-ui-shell
@@ -8621,7 +8621,7 @@ height: 420px;;
 }
 
 
-/* INÍCIO */
+/* INÃCIO */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--inicio {
   top: 26.6%;
@@ -8644,7 +8644,7 @@ height: 420px;;
 
 /* PEDIDOS */
 .pixel-ui-shell
-.farm-menu-panel__hotspot--pedidos {
+.farm-menu-panel__hotspot--mercado {
   top: 53.4%;
 }
 
@@ -8656,7 +8656,7 @@ height: 420px;;
 }
 
 
-/* EXPLORAÇÃO */
+/* EXPLORAÃ‡ÃƒO */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--exploracao {
   top: 71.4%;
@@ -8690,7 +8690,7 @@ height: 420px;;
 }
 
 
-/* BOTÃO ATUAL */
+/* BOTÃƒO ATUAL */
 .pixel-ui-shell
 .farm-game-sidebar
 .farm-menu-panel__hotspot.is-active {
@@ -8713,7 +8713,7 @@ height: 420px;;
 
 /* =========================================================
    HOTSPOTS
-   Áreas transparentes exatamente sobre os botões do PNG
+   Ãreas transparentes exatamente sobre os botÃµes do PNG
    ========================================================= */
 
 .pixel-ui-shell
@@ -8746,49 +8746,49 @@ height: 420px;;
   z-index: 5;
 }
 
-/* 1 — INÍCIO */
+/* 1 â€” INÃCIO */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--inicio {
   top: 26.6%;
 }
 
-/* 2 — CELEIRO */
+/* 2 â€” CELEIRO */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--celeiro {
   top: 35.5%;
 }
 
-/* 3 — ANIMAIS */
+/* 3 â€” ANIMAIS */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--animais {
   top: 44.4%;
 }
 
-/* 4 — PEDIDOS */
+/* 4 â€” PEDIDOS */
 .pixel-ui-shell
-.farm-menu-panel__hotspot--pedidos {
+.farm-menu-panel__hotspot--mercado {
   top: 53.4%;
 }
 
-/* 5 — COMUNIDADE */
+/* 5 â€” COMUNIDADE */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--comunidade {
   top: 62.4%;
 }
 
-/* 6 — EXPLORAÇÃO */
+/* 6 â€” EXPLORAÃ‡ÃƒO */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--exploracao {
   top: 71.4%;
 }
 
-/* 7 — RANKING */
+/* 7 â€” RANKING */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--ranking {
   top: 80.4%;
 }
 
-/* 8 — CONQUISTAS */
+/* 8 â€” CONQUISTAS */
 .pixel-ui-shell
 .farm-menu-panel__hotspot--conquistas {
   top: 89.5%;
@@ -8806,7 +8806,7 @@ height: 420px;;
   filter: none !important;
 }
 
-/* página selecionada */
+/* pÃ¡gina selecionada */
 .pixel-ui-shell
 .farm-game-sidebar
 .farm-menu-panel__hotspot.is-active {
@@ -8826,7 +8826,7 @@ height: 420px;;
   outline-offset: -3px;
 }
 /* =========================================================
-   FARMQUEST HOME — ENCAIXE PAINEL + CENÁRIO
+   FARMQUEST HOME â€” ENCAIXE PAINEL + CENÃRIO
    ========================================================= */
 
 .pixel-ui-shell.farm-game-shell.is-home .farm-game-stage {
@@ -8844,7 +8844,7 @@ height: 420px;;
   align-items: flex-start !important;
 }
 
-/* cenário encostado imediatamente após o painel */
+/* cenÃ¡rio encostado imediatamente apÃ³s o painel */
 .pixel-ui-shell.farm-game-shell.is-home .farm-scene__map {
   margin: 0 !important;
 
@@ -8879,7 +8879,7 @@ height: 420px;;
   height: 30px;
 }
 
-/* FARMQUEST — canteiros sem marcação ciano */
+/* FARMQUEST â€” canteiros sem marcaÃ§Ã£o ciano */
 .farm-scene__map .farm-scene__plots .farm-scene__plot,
 .farm-scene__map .farm-scene__plots .farm-scene__plot:hover,
 .farm-scene__map .farm-scene__plots .farm-scene__plot:focus,
@@ -8913,7 +8913,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — CANTEIROS SEM MARCAÇÃO CIANO
+   FARMQUEST â€” CANTEIROS SEM MARCAÃ‡ÃƒO CIANO
    ========================================================= */
 
 .farm-scene__map .farm-scene__plots .farm-scene__plot,
@@ -8939,8 +8939,8 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — POP-UP DE NOTIFICAÇÃO
-   Flutua sobre o Home sem mover o cenário
+   FARMQUEST â€” POP-UP DE NOTIFICAÃ‡ÃƒO
+   Flutua sobre o Home sem mover o cenÃ¡rio
    ========================================================= */
 
 .pixel-ui-shell .farm-game-stage {
@@ -9049,7 +9049,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — AUMENTAR PAINEL LATERAL ESQUERDO
+   FARMQUEST â€” AUMENTAR PAINEL LATERAL ESQUERDO
    ========================================================= */
 
 .farm-home-panel {
@@ -9067,20 +9067,20 @@ height: 420px;;
   height: auto !important;
 }
 
-/* área dos botões do painel */
+/* Ã¡rea dos botÃµes do painel */
 .farm-home-panel-buttons {
   width: 146px !important;
   gap: 6px !important;
 }
 
-/* melhora a área clicável */
+/* melhora a Ã¡rea clicÃ¡vel */
 .farm-home-panel-buttons button {
   min-height: 30px !important;
 }
 
 /* =========================================================
-   FARMQUEST — TAMANHO FINAL DO PAINEL LATERAL
-   Baseado na marcação vermelha de referência
+   FARMQUEST â€” TAMANHO FINAL DO PAINEL LATERAL
+   Baseado na marcaÃ§Ã£o vermelha de referÃªncia
    ========================================================= */
 
 /* largura da coluna esquerda */
@@ -9090,7 +9090,7 @@ height: 420px;;
     minmax(0, 1fr) !important;
 }
 
-/* área lateral */
+/* Ã¡rea lateral */
 .pixel-ui-shell .farm-game-sidebar.farm-game-sidebar--panel {
   width: 100% !important;
   padding: 0 4px !important;
@@ -9116,7 +9116,7 @@ height: 420px;;
   transform-origin: top left !important;
 }
 
-/* PNG ocupa toda a largura disponível */
+/* PNG ocupa toda a largura disponÃ­vel */
 .pixel-ui-shell .farm-menu-panel__art {
   position: absolute !important;
   inset: 0 !important;
@@ -9132,8 +9132,8 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — PAINEL LATERAL / ENCAIXE FINAL
-   Mantém a proporção original 966 x 1498
+   FARMQUEST â€” PAINEL LATERAL / ENCAIXE FINAL
+   MantÃ©m a proporÃ§Ã£o original 966 x 1498
    ========================================================= */
 
 /* largura reservada para a lateral */
@@ -9157,7 +9157,7 @@ height: 420px;;
   align-items: flex-start !important;
 
   /*
-    O PNG possui transparência nas bordas.
+    O PNG possui transparÃªncia nas bordas.
     Cortamos somente essa sobra transparente.
   */
   overflow: hidden !important;
@@ -9209,7 +9209,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — CABEÇALHO FINAL / POSICIONAMENTO OFICIAL
+   FARMQUEST â€” CABEÃ‡ALHO FINAL / POSICIONAMENTO OFICIAL
    ========================================================= */
 
 .pixel-ui-shell .farm-game-topbar.farm-home-topbar {
@@ -9237,7 +9237,7 @@ height: 420px;;
 
 
 /* =========================================================
-   BASE DOS PAINÉIS
+   BASE DOS PAINÃ‰IS
    ========================================================= */
 
 .farm-top-resource {
@@ -9256,7 +9256,7 @@ height: 420px;;
 }
 
 
-/* Mantém a proporção ORIGINAL dos PNGs */
+/* MantÃ©m a proporÃ§Ã£o ORIGINAL dos PNGs */
 .farm-top-resource__panel {
   display: block !important;
 
@@ -9339,7 +9339,7 @@ height: 420px;;
 }
 
 
-/* Fazenda — espaço depois do ícone já desenhado no PNG */
+/* Fazenda â€” espaÃ§o depois do Ã­cone jÃ¡ desenhado no PNG */
 .farm-top-resource__text--farm {
   left: 27% !important;
   right: 7% !important;
@@ -9360,14 +9360,14 @@ height: 420px;;
 }
 
 
-/* Ampulheta — texto fica dentro da área clara */
+/* Ampulheta â€” texto fica dentro da Ã¡rea clara */
 .farm-top-resource__text--timer {
   left: 39% !important;
   right: 8% !important;
 }
 
 
-/* tamanho do conteúdo */
+/* tamanho do conteÃºdo */
 .farm-top-resource__text strong {
   display: block;
 
@@ -9398,7 +9398,7 @@ height: 420px;;
 
 
 /* =========================================================
-   GARANTIA: NÃO MOSTRAR ÍCONES DUPLICADOS ANTIGOS
+   GARANTIA: NÃƒO MOSTRAR ÃCONES DUPLICADOS ANTIGOS
    ========================================================= */
 
 .farm-home-topbar .farm-top-resource__icon {
@@ -9426,7 +9426,7 @@ height: 420px;;
 
 
 /* =========================================================
-   PAINÉIS DE RECURSOS
+   PAINÃ‰IS DE RECURSOS
    ========================================================= */
 
 .farm-top-resource {
@@ -9443,7 +9443,7 @@ height: 420px;;
 }
 
 
-/* Mantém a proporção ORIGINAL de cada PNG */
+/* MantÃ©m a proporÃ§Ã£o ORIGINAL de cada PNG */
 .farm-top-resource__panel {
   display: block;
 
@@ -9458,7 +9458,7 @@ height: 420px;;
 
 
 /* =========================================================
-   ÍCONES
+   ÃCONES
    ========================================================= */
 
 .farm-top-resource__icon {
@@ -9485,7 +9485,7 @@ height: 420px;;
 }
 
 
-/* ícone da fazenda pode ser um pouco maior */
+/* Ã­cone da fazenda pode ser um pouco maior */
 .farm-top-resource--farm
 .farm-top-resource__icon {
   height: 78%;
@@ -9546,7 +9546,7 @@ height: 420px;;
 }
 
 
-/* Fazenda tem mais espaço para o nome */
+/* Fazenda tem mais espaÃ§o para o nome */
 .farm-top-resource__text--farm {
   left: 25%;
   right: 7%;
@@ -9562,7 +9562,7 @@ height: 420px;;
 
 
 /* =========================================================
-   BOTÕES ATUALIZAR / SAIR
+   BOTÃ•ES ATUALIZAR / SAIR
    ========================================================= */
 
 .farm-home-topbar
@@ -9576,12 +9576,12 @@ height: 420px;;
   flex: 0 0 auto;
 }
 
-/* FARMQUEST — sobe os painéis superiores 5px */
+/* FARMQUEST â€” sobe os painÃ©is superiores 5px */
 .farm-home-topbar .farm-top-resource {
   top: -5px !important;
 }
 
-/* FARMQUEST — ajuste fino dos painéis superiores */
+/* FARMQUEST â€” ajuste fino dos painÃ©is superiores */
 
 /* Nome da Fazenda: sobe +1px */
 .farm-home-topbar .farm-top-resource--farm {
@@ -9594,15 +9594,15 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — ESTRUTURA FINAL DAS LATERAIS DA HOME
+   FARMQUEST â€” ESTRUTURA FINAL DAS LATERAIS DA HOME
    ========================================================= */
 
 .pixel-ui-shell.farm-game-shell {
   /*
    * No monitor atual ~1648px:
-   * 16vw ≈ 264px.
+   * 16vw â‰ˆ 264px.
    *
-   * Dá ao painel esquerdo a presença da referência
+   * DÃ¡ ao painel esquerdo a presenÃ§a da referÃªncia
    * sem deformar a arte.
    */
   grid-template-columns:
@@ -9634,7 +9634,7 @@ height: 420px;;
 
 
 /* =========================================================
-   MENU PRINCIPAL — GRANDE
+   MENU PRINCIPAL â€” GRANDE
    ========================================================= */
 
 .pixel-ui-shell
@@ -9643,7 +9643,7 @@ height: 420px;;
   position: relative !important;
 
   /*
-   * O PNG possui transparência nas bordas.
+   * O PNG possui transparÃªncia nas bordas.
    * Ele fica um pouco maior que a coluna para que
    * a madeira ocupe visualmente toda a lateral.
    */
@@ -9751,7 +9751,7 @@ height: 420px;;
 
 
 /* =========================================================
-   BARRA DE ÍCONES DA DIREITA
+   BARRA DE ÃCONES DA DIREITA
    ========================================================= */
 
 .farm-home-rightbar {
@@ -9775,7 +9775,7 @@ height: 420px;;
 }
 
 
-/* botão invisível — a própria arte é o botão */
+/* botÃ£o invisÃ­vel â€” a prÃ³pria arte Ã© o botÃ£o */
 .farm-home-tool {
   position: relative;
 
@@ -9829,7 +9829,7 @@ height: 420px;;
 }
 
 
-/* PRESENTE — separado dos outros como na referência */
+/* PRESENTE â€” separado dos outros como na referÃªncia */
 .farm-home-tool--gift {
   width: 96%;
 
@@ -9873,7 +9873,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — LATERAL ESQUERDA MAIOR E SOBRESSAINDO
+   FARMQUEST â€” LATERAL ESQUERDA MAIOR E SOBRESSAINDO
    ========================================================= */
 
 .farm-home-sidebar {
@@ -9892,7 +9892,7 @@ height: 420px;;
   width: 240px !important;
   margin-left: translateX(16px);
 
-  /* faz o painel avançar um pouco por cima do cenário */
+  /* faz o painel avanÃ§ar um pouco por cima do cenÃ¡rio */
   transform: translateX(14px);
 
   z-index: 40;
@@ -9932,7 +9932,7 @@ height: 420px;;
   margin-top: -60px !important;
   margin-left: 22px !important;
 
-  /* acompanha o avanço do painel principal */
+  /* acompanha o avanÃ§o do painel principal */
   transform: translate(10px 0px);
 
   z-index: 35;
@@ -9976,7 +9976,7 @@ height: 420px;;
 
 
 /* =========================================================
-   FARMQUEST — CENTRALIZAÇÃO DOS HOTSPOTS DO MENU ESQUERDO
+   FARMQUEST â€” CENTRALIZAÃ‡ÃƒO DOS HOTSPOTS DO MENU ESQUERDO
    ========================================================= */
 
 .pixel-ui-shell
@@ -9992,10 +9992,10 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — AJUSTE FINO INDIVIDUAL DOS BOTÕES DO MENU
+   FARMQUEST â€” AJUSTE FINO INDIVIDUAL DOS BOTÃ•ES DO MENU
    ========================================================= */
 
-/* mantém todas centralizadas horizontalmente */
+/* mantÃ©m todas centralizadas horizontalmente */
 .pixel-ui-shell
 .farm-home-leftbar
 .farm-menu-panel__hotspot {
@@ -10007,7 +10007,7 @@ height: 420px;;
 }
 
 
-/* INÍCIO */
+/* INÃCIO */
 .pixel-ui-shell
 .farm-home-leftbar
 .farm-menu-panel__hotspot--inicio {
@@ -10034,7 +10034,7 @@ height: 420px;;
 /* PEDIDOS */
 .pixel-ui-shell
 .farm-home-leftbar
-.farm-menu-panel__hotspot--pedidos {
+.farm-menu-panel__hotspot--mercado {
   top: 52.4% !important;
 }
 
@@ -10047,7 +10047,7 @@ height: 420px;;
 }
 
 
-/* EXPLORAÇÃO */
+/* EXPLORAÃ‡ÃƒO */
 .pixel-ui-shell
 .farm-home-leftbar
 .farm-menu-panel__hotspot--exploracao {
@@ -10070,7 +10070,7 @@ height: 420px;;
   top: 86.4% !important;
 }
 
-/* FARMQUEST — remove destaque permanente do botão ativo */
+/* FARMQUEST â€” remove destaque permanente do botÃ£o ativo */
 .pixel-ui-shell
 .farm-home-leftbar
 .farm-menu-panel__hotspot.is-active {
@@ -10081,7 +10081,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — TIPOGRAFIA DO CABEÇALHO
+   FARMQUEST â€” TIPOGRAFIA DO CABEÃ‡ALHO
    ========================================================= */
 
 /* Base da fonte dos recursos */
@@ -10129,8 +10129,8 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — BARRA DE EXPERIÊNCIA
-   Referência: moldura marrom + preenchimento laranja
+   FARMQUEST â€” BARRA DE EXPERIÃŠNCIA
+   ReferÃªncia: moldura marrom + preenchimento laranja
    ========================================================= */
 
 .farm-top-resource--xp {
@@ -10138,7 +10138,7 @@ height: 420px;;
 }
 
 
-/* área da barra sobre o painel de XP */
+/* Ã¡rea da barra sobre o painel de XP */
 .farm-xp-progress {
   position: absolute;
 
@@ -10231,7 +10231,7 @@ height: 420px;;
 }
 
 
-/* número de XP sobre a barra */
+/* nÃºmero de XP sobre a barra */
 .farm-xp-progress__value {
   position: absolute;
 
@@ -10271,7 +10271,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — AJUSTE VISUAL FINAL DA BARRA DE XP
+   FARMQUEST â€” AJUSTE VISUAL FINAL DA BARRA DE XP
    ========================================================= */
 
 .farm-home-topbar
@@ -10295,7 +10295,7 @@ height: 420px;;
 }
 
 
-/* texto central mais legível */
+/* texto central mais legÃ­vel */
 .farm-home-topbar
 .farm-xp-progress__value {
   font-size: clamp(7px, .80vw, 16px) !important;
@@ -10368,10 +10368,10 @@ height: 420px;;
   background-position: center bottom;
   background-size: contain;
 
-  /* recorte menor, focado só na parte de baixo da boca */
+  /* recorte menor, focado sÃ³ na parte de baixo da boca */
   clip-path: inset(59% 72% 20% 7%);
 
-  /* ponto de articulação da mandíbula */
+  /* ponto de articulaÃ§Ã£o da mandÃ­bula */
   transform-origin: 22% 63%;
 
   animation: farmCowChew 0.78s ease-in-out infinite;
@@ -10405,11 +10405,11 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — VACA MASTIGANDO POR FRAMES
-   sem respiração
+   FARMQUEST â€” VACA MASTIGANDO POR FRAMES
+   sem respiraÃ§Ã£o
    ========================================================= */
 
-/* desliga a animação anterior e usa os frames */
+/* desliga a animaÃ§Ã£o anterior e usa os frames */
 .farm-scene__shadow--cow {
   background-image: url("/game-assets/animals/vaca_mastigando/vaca_mastiga_01.png") !important;
   background-repeat: no-repeat !important;
@@ -10428,7 +10428,7 @@ height: 420px;;
   animation: none !important;
 }
 
-/* mastigação por troca de frames */
+/* mastigaÃ§Ã£o por troca de frames */
 @keyframes farmCowChewFrames {
   0%,
   24.99% {
@@ -10452,7 +10452,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — VACA POR FRAMES REAIS
+   FARMQUEST â€” VACA POR FRAMES REAIS
    ========================================================= */
 
 .farm-scene__shadow--cow {
@@ -10523,7 +10523,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — VACA ANIMADA DEFINITIVA
+   FARMQUEST â€” VACA ANIMADA DEFINITIVA
    ========================================================= */
 
 .farm-scene__cow-animated {
@@ -10556,7 +10556,7 @@ height: 420px;;
 }
 
 /* =========================================================
-   FARMQUEST — VACA ANIMADA
+   FARMQUEST â€” VACA ANIMADA
    ========================================================= */
 
 .farm-scene__map {
@@ -10566,7 +10566,7 @@ height: 420px;;
 .farm-scene__cow-animated {
   position: absolute !important;
 
-  /* posição que já havíamos acertado */
+  /* posiÃ§Ã£o que jÃ¡ havÃ­amos acertado */
   left: 76% !important;
   top: 40.5% !important;
 
@@ -10595,7 +10595,7 @@ height: 420px;;
   image-rendering: pixelated;
 }
 /* =========================================================
-   FARMQUEST — VACA ANIMADA NO CURRAL
+   FARMQUEST â€” VACA ANIMADA NO CURRAL
    ========================================================= */
 
 .farm-scene__map {
@@ -10605,7 +10605,7 @@ height: 420px;;
 .farm-scene__cow-animated {
   position: absolute !important;
 
-  /* posição original que estava perfeita */
+  /* posiÃ§Ã£o original que estava perfeita */
   left: 76% !important;
   top: 40.5% !important;
 
@@ -10633,7 +10633,7 @@ height: 420px;;
   image-rendering: pixelated;
 }
 /* =========================================================
-   FARMQUEST — VACA ANIMADA POR FRAMES
+   FARMQUEST â€” VACA ANIMADA POR FRAMES
    ========================================================= */
 
 .farm-scene__cow-animated {
@@ -10670,14 +10670,14 @@ height: 420px;;
   image-rendering: pixelated;
 }
 /* =========================================================
-   FARMQUEST — VACA MASTIGANDO POR FRAMES
-   versão final — sem respiração
+   FARMQUEST â€” VACA MASTIGANDO POR FRAMES
+   versÃ£o final â€” sem respiraÃ§Ã£o
    ========================================================= */
 
 .farm-scene__shadow--cow {
   position: absolute !important;
 
-  /* posição original aprovada */
+  /* posiÃ§Ã£o original aprovada */
   left: 76% !important;
   top: 40.5% !important;
 
@@ -10704,7 +10704,7 @@ height: 420px;;
   z-index: 25 !important;
 }
 
-/* remove definitivamente a boca artificial e a respiração antigas */
+/* remove definitivamente a boca artificial e a respiraÃ§Ã£o antigas */
 .farm-scene__shadow--cow::before,
 .farm-scene__shadow--cow::after {
   content: none !important;
@@ -10713,7 +10713,7 @@ height: 420px;;
   animation: none !important;
 }
 /* =========================================================
-   FARMQUEST — VACA POR FRAMES REAIS
+   FARMQUEST â€” VACA POR FRAMES REAIS
    ========================================================= */
 
 .farm-scene__shadow--cow {
@@ -10773,13 +10773,13 @@ height: 420px;;
   display: none !important;
 }
 /* =========================================================
-   FARMQUEST — FENO DO CURRAL
+   FARMQUEST â€” FENO DO CURRAL
    ========================================================= */
 
 .farm-scene__hay-bale {
   position: absolute !important;
 
-  /* posição baseada na referência */
+  /* posiÃ§Ã£o baseada na referÃªncia */
   left: 71.5% !important;
   top: 46.2% !important;
 

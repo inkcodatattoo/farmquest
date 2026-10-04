@@ -57,6 +57,15 @@ export type FarmWorldShopOffer = {
   minLevel: number;
 };
 
+
+export type FarmWorldCowStatus = {
+  status: "IDLE" | "PRODUCING" | "READY";
+  feedCost: number;
+  productionSeconds: number;
+  readyAt: string | null;
+  storedMilk: number;
+};
+
 export type Section =
   | "inicio"
   | "plantacoes"
@@ -90,6 +99,10 @@ export type FarmWorldProps = {
   onSell: (itemId: string) => void;
   onDiscard: (itemId: string) => void;
   onBuy: (offerId: string) => void;
+  cow: FarmWorldCowStatus;
+
+onFeedCow: () => void;
+onCollectCowMilk: () => void;
 };
 
 export type FarmPlotVisualState =

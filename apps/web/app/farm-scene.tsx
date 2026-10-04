@@ -242,6 +242,20 @@ const cowFrame =
   draggable={false}
 />
 </button>
+<button
+  type="button"
+  className="farm-scene__building farm-scene__building--barn"
+  onClick={() => onSectionChange("celeiro")}
+  aria-label="Celeiro"
+  title="Abrir celeiro"
+>
+  <img
+    src={FARM_ICONS.buildings.barn}
+    alt=""
+    className="farm-scene__building-art"
+    draggable={false}
+  />
+</button>
 
 <button
   type="button"

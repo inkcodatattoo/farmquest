@@ -21,7 +21,7 @@ const FARM_PANEL_NAVIGATION: readonly Section[] = [
   "inicio",
   "celeiro",
   "animais",
-  "pedidos",
+  "mercado",
   "comunidade",
   "exploracao",
   "ranking",
@@ -163,7 +163,7 @@ const xpProgress = Math.max(
       title="Atualizar"
       aria-label="Atualizar fazenda"
     >
-      ↻
+      â†»
     </button>
 
     <button
@@ -173,7 +173,7 @@ const xpProgress = Math.max(
       title="Sair"
       aria-label="Sair"
     >
-      ×
+      Ã—
     </button>
   </div>
 
@@ -181,7 +181,7 @@ const xpProgress = Math.max(
 
       <aside className="farm-game-sidebar farm-game-sidebar--panel farm-home-leftbar">
 
-  <nav className="farm-menu-panel" aria-label="Navegação principal">
+  <nav className="farm-menu-panel" aria-label="NavegaÃ§Ã£o principal">
     <img
       className="farm-menu-panel__art"
       src="/game-assets/panels/painel_menu_home.png"
@@ -224,7 +224,7 @@ const xpProgress = Math.max(
     />
 
     <div className="farm-home-notice-board__content">
-      {/* Conteúdo do quadro será implementado depois */}
+      {/* ConteÃºdo do quadro serÃ¡ implementado depois */}
     </div>
   </section>
 

@@ -1,6 +1,7 @@
 import type { PrismaClient } from "@farmquest/database";
 
 const IDS = {
+  milkBucket: "00000000-0000-4000-8000-000000000050",
   user: "00000000-0000-4000-8000-000000000001",
   streamer: "00000000-0000-4000-8000-000000000002",
   community: "00000000-0000-4000-8000-000000000003",
@@ -9,6 +10,7 @@ const IDS = {
     "00000000-0000-4000-8000-000000000005",
     "00000000-0000-4000-8000-000000000006",
     "00000000-0000-4000-8000-000000000007"
+    
   ],
   qualityNone: "00000000-0000-4000-8000-000000000010",
   qualityCommon: "00000000-0000-4000-8000-000000000011",
@@ -21,6 +23,20 @@ const IDS = {
   cropCorn: "00000000-0000-4000-8000-000000000022",
   seedInventory: "00000000-0000-4000-8000-000000000023",
   shopCornSeed: "00000000-0000-4000-8000-000000000024",
+  wheatSeed: "00000000-0000-4000-8000-000000000040",
+shopWheatSeed: "00000000-0000-4000-8000-000000000041",
+
+carrotSeed: "00000000-0000-4000-8000-000000000042",
+shopCarrotSeed: "00000000-0000-4000-8000-000000000043",
+
+strawberrySeed: "00000000-0000-4000-8000-000000000044",
+shopStrawberrySeed: "00000000-0000-4000-8000-000000000045",
+
+tomatoSeed: "00000000-0000-4000-8000-000000000046",
+shopTomatoSeed: "00000000-0000-4000-8000-000000000047",
+
+potatoSeed: "00000000-0000-4000-8000-000000000048",
+shopPotatoSeed: "00000000-0000-4000-8000-000000000049",
   xpPlant: "00000000-0000-4000-8000-000000000030",
   xpNpcSell: "00000000-0000-4000-8000-000000000031"
 } as const;
@@ -228,6 +244,87 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
       }
     });
 
+    const additionalSeeds = [
+  {
+    itemId: IDS.wheatSeed,
+    offerId: IDS.shopWheatSeed,
+    key: "wheat_seed",
+    name: "Semente de Trigo",
+    aliases: ["trigo", "semente de trigo"],
+    price: 6n
+  },
+  {
+    itemId: IDS.carrotSeed,
+    offerId: IDS.shopCarrotSeed,
+    key: "carrot_seed",
+    name: "Semente de Cenoura",
+    aliases: ["cenoura", "semente de cenoura"],
+    price: 7n
+  },
+  {
+    itemId: IDS.strawberrySeed,
+    offerId: IDS.shopStrawberrySeed,
+    key: "strawberry_seed",
+    name: "Semente de Morango",
+    aliases: ["morango", "semente de morango"],
+    price: 9n
+  },
+  {
+    itemId: IDS.tomatoSeed,
+    offerId: IDS.shopTomatoSeed,
+    key: "tomato_seed",
+    name: "Semente de Tomate",
+    aliases: ["tomate", "semente de tomate"],
+    price: 8n
+  },
+  {
+    itemId: IDS.potatoSeed,
+    offerId: IDS.shopPotatoSeed,
+    key: "potato_seed",
+    name: "Semente de Batata",
+    aliases: ["batata", "semente de batata"],
+    price: 7n
+  }
+] as const;
+
+for (const seed of additionalSeeds) {
+  await tx.itemDefinition.upsert({
+    where: { key: seed.key },
+    update: {
+      name: seed.name,
+      enabled: true
+    },
+    create: {
+      id: seed.itemId,
+      key: seed.key,
+      name: seed.name,
+      category: "SEED",
+      hasQuality: false,
+      basePrice: 0n,
+      npcSellable: false,
+      p2pTradeable: false,
+      discardable: true,
+      aliases: [...seed.aliases]
+    }
+  });
+
+  await tx.shopOffer.upsert({
+    where: { id: seed.offerId },
+    update: {
+      buyPrice: seed.price,
+      minLevel: 1,
+      enabled: true
+    },
+    create: {
+      id: seed.offerId,
+      itemDefinitionId: seed.itemId,
+      buyPrice: seed.price,
+      minLevel: 1,
+      enabled: true
+    }
+  });
+}
+
     const inventory = await tx.inventoryItem.findUnique({
       where: {
         farmId_itemDefinitionId_qualityId: {
@@ -287,6 +384,25 @@ export async function ensureDevFixture(prisma: PrismaClient): Promise<void> {
         }
       });
     }
+    await tx.itemDefinition.upsert({
+  where: { key: "milk_bucket" },
+  update: {
+    name: "Balde de Leite",
+    enabled: true
+  },
+  create: {
+    id: IDS.milkBucket,
+    key: "milk_bucket",
+    name: "Balde de Leite",
+    category: "ANIMAL_PRODUCT",
+    hasQuality: false,
+    basePrice: 0n,
+    npcSellable: false,
+    p2pTradeable: false,
+    discardable: true,
+    aliases: ["leite", "balde de leite"]
+  }
+});
 
     const levels = [
       [1, 0n, 60],
