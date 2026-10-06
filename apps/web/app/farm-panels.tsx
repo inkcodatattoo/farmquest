@@ -373,7 +373,39 @@ export function FarmPanels(props: FarmPanelsProps) {
               </span>
             </div>
             <small>Armazena 1 produção por vez e não apodrece.</small>
-            <span className="fq-coming-soon">Sistema ainda não conectado</span>
+            {props.cow.status === "IDLE" ? (
+  <button
+    className="game-action"
+    onClick={props.onFeedCow}
+    disabled={
+      Boolean(busy) ||
+      Number(farm.coins) < props.cow.feedCost
+    }
+  >
+    {busy === "cow-feed"
+      ? "Alimentando..."
+      : `Alimentar vaca · ${props.cow.feedCost} moedas`}
+  </button>
+) : null}
+
+{props.cow.status === "PRODUCING" ? (
+  <span className="fq-coming-soon">
+    Produzindo leite
+  </span>
+) : null}
+
+{props.cow.status === "READY" ? (
+  <button
+    className="game-action"
+    onClick={props.onCollectCowMilk}
+    disabled={Boolean(busy)}
+  >
+    {busy === "cow-collect"
+      ? "Coletando..."
+      : "Coletar leite"}
+  </button>
+) : null}
+            
           </article>
         </div>
       </section>

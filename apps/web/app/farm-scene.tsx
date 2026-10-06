@@ -1,6 +1,12 @@
 ﻿"use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent
+} from "react";
 import { FARM_ICONS } from "./farm-icons";
 import { FarmPlot, PixelIcon, type FarmPlotPlacement } from "./farm-plot";
 import {
@@ -193,6 +199,10 @@ export function FarmScene({
 }: FarmSceneProps) {
   const slots = buildFarmPlotSlots(props.plots, props.nowMs);
   const [cowChewStep, setCowChewStep] = useState(0);
+  const [cowPopupPosition, setCowPopupPosition] = useState<{
+  left: number;
+  top: number;
+} | null>(null);
   const [showCowTimer, setShowCowTimer] = useState(false);
 
 const cowPopupTimeoutRef = useRef<number | null>(null);
@@ -239,9 +249,17 @@ useEffect(() => {
     );
   }, 600);
 
+
   return () => window.clearInterval(timer);
 }, []);
 
+const cowNotificationText =
+  props.cow.status === "PRODUCING" && cowMilkRemainingMs > 0
+    ? `Leite pronto em ${formatCowRemaining(cowMilkRemainingMs)}`
+    : props.cow.status === "READY"
+      ? "Leite pronto para coleta!"
+      : "Alimente a vaca para iniciar a produção";
+      
 const cowFrame =
   COW_CHEW_FRAMES[COW_CHEW_SEQUENCE[cowChewStep] ?? 0];
   const homeNavigation = FARM_WORLD_NAVIGATION.filter((item) => item.home);
@@ -368,20 +386,7 @@ cursor: "pointer"
     }}
   />
 </span>
-{showCowTimer ? (
-  <div className="farm-scene__messages">
-    <div
-      className="farm-scene__toast is-error"
-      role="status"
-    >
-      {props.cow.status === "PRODUCING" && cowMilkRemainingMs > 0
-        ? `Leite pronto em ${formatCowRemaining(cowMilkRemainingMs)}`
-        : props.cow.status === "READY"
-          ? "Leite pronto para coleta!"
-          : "Alimente a vaca para iniciar a produção"}
-    </div>
-  </div>
-) : null}
+
 
 {/* FENO DO CURRAL */}
 <img
@@ -519,20 +524,38 @@ cursor: "pointer"
             nowMs={props.nowMs}
           />
 
-          {props.notice || props.error ? (
-            <div className="farm-scene__messages">
-              {props.notice ? (
-                <div className="farm-scene__toast is-success" role="status">
-                  {props.notice}
-                </div>
-              ) : null}
-              {props.error ? (
-                <div className="farm-scene__toast is-error" role="alert">
-                  {props.error}
-                </div>
-              ) : null}
-            </div>
-          ) : null}
+          {props.notice || props.error || showCowTimer ? (
+  <div className="farm-scene__messages">
+
+    {true ? (
+      <div
+        className="farm-scene__toast is-error"
+        role="status"
+      >
+        {cowNotificationText}
+      </div>
+    ) : null}
+
+    {!showCowTimer && props.notice ? (
+      <div
+        className="farm-scene__toast is-success"
+        role="status"
+      >
+        {props.notice}
+      </div>
+    ) : null}
+
+    {!showCowTimer && props.error ? (
+      <div
+        className="farm-scene__toast is-error"
+        role="alert"
+      >
+        {props.error}
+      </div>
+    ) : null}
+
+  </div>
+) : null}
         </div>
       </section>
     </main>
